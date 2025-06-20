@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "into-mini",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Eric"
+  },
+  "scripts": {
+    "lint:staged": "nice-move lint staged",
+    "lint:type": "tsc -p tsconfig.json",
+    "prepare": "nice-move git hooks",
+    "snapshot": "ava --fail-fast -u",
+    "test": "ava --fail-fast"
+  },
+  "devDependencies": {
+    "@bring-it/npm": "^0.6.1",
+    "@nice-move/all-in-base": "^0.5.1",
+    "ava": "^6.4.0",
+    "eslint": "^9.29.0",
+    "garou": "^0.9.11",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "pnpm@10.12.1",
+  "engines": {
+    "node": "^22.0.0"
+  },
+  "prettier": "@nice-move/all-in-base/prettier"
+}

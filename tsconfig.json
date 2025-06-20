@@ -1,0 +1,7 @@
+{
+  "extends": "@nice-move/all-in-base/tsconfig",
+  "include": ["./"],
+  "compilerOptions": {
+    "skipLibCheck": true,
+  },
+}
