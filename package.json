@@ -11,20 +11,28 @@
     "lint:type": "tsc -p tsconfig.json",
     "prepare": "nice-move git hooks",
     "snapshot": "ava --fail-fast -u",
-    "test": "ava --fail-fast"
+    "test": "ava --fail-fast",
+    "version:pin": "syncpack fix-mismatches"
   },
   "devDependencies": {
     "@bring-it/npm": "^0.6.1",
     "@nice-move/all-in-base": "^0.5.1",
+    "@nice-move/syncpack-config": "^0.4.0",
     "ava": "^6.4.0",
     "eslint": "^9.29.0",
     "garou": "^0.9.11",
     "prettier": "^3.5.3",
-    "typescript": "^5.8.3"
+    "syncpack": "^13.0.4",
+    "typescript": "~5.8.3"
   },
   "packageManager": "pnpm@10.12.1",
   "engines": {
-    "node": "^22.0.0"
+    "node": ">=22.11.0"
+  },
+  "ava": {
+    "require": [
+      "./tests/helper/setup.mjs"
+    ]
   },
   "prettier": "@nice-move/all-in-base/prettier"
 }

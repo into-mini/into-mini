@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "into-mini-test",
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "clsx": "^2.1.1"
+  },
+  "peerDependencies": {
+    "@into-mini/clsx": "workspace:^",
+    "ava": "^6.4.0",
+    "prettier": "^3.5.3"
+  },
+  "engines": {
+    "node": ">=22.11.0"
+  }
+}
