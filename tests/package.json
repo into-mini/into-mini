@@ -4,10 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "dependencies": {
-    "clsx": "^2.1.1"
+    "@babel/traverse": "^7.27.4",
+    "@babel/types": "^7.27.6",
+    "@padcom/vue-ast-serializer": "^0.0.1",
+    "@vue/compiler-sfc": "~3.5.17",
+    "clsx": "^2.1.1",
+    "diff": "^8.0.2",
+    "javascript-stringify": "^2.1.0"
   },
   "peerDependencies": {
     "@into-mini/clsx": "workspace:^",
+    "@into-mini/sfc-template-traverse": "workspace:^",
     "ava": "^6.4.0",
     "prettier": "^3.5.3"
   },

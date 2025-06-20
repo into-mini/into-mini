@@ -1,0 +1,28 @@
+{
+  "name": "@into-mini/sfc-template-traverse",
+  "version": "0.0.0",
+  "license": "MIT",
+  "keywords": [
+    "sfc",
+    "template",
+    "traverse",
+    "vue"
+  ],
+  "main": "index.mjs",
+  "type": "module",
+  "dependencies": {
+    "neotraverse": "^0.6.18",
+    "tab-to-space": "^1.0.1",
+    "wxml-parse": "^0.2.3"
+  },
+  "peerDependencies": {
+    "@vue/compiler-core": "~3.5.17"
+  },
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

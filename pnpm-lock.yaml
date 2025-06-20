@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  ava:
+    hash: 3efb6a6fff2c691907321ccb0ffbb8732e6d8f186cff6a6d7d09221c23efc00d
+    path: patches/ava.patch
+
 importers:
 
   .:
@@ -13,13 +18,13 @@ importers:
         version: 0.6.1(@bring-it/cli@0.10.0)
       '@nice-move/all-in-base':
         specifier: ^0.5.1
-        version: 0.5.1(@babel/core@7.27.4)(@typescript-eslint/parser@8.34.1(eslint@9.29.0)(typescript@5.8.3))(eslint@9.29.0)(garou@0.9.11(eslint@9.29.0)(typescript@5.8.3))(postcss@8.5.6)(prettier@3.5.3)(typescript@5.8.3)
+        version: 0.5.1(@babel/core@7.27.4)(@typescript-eslint/parser@8.34.1(eslint@9.29.0)(typescript@5.8.3))(@vue/compiler-sfc@3.5.17)(eslint@9.29.0)(garou@0.9.11(eslint@9.29.0)(typescript@5.8.3))(postcss@8.5.6)(prettier@3.5.3)(typescript@5.8.3)
       '@nice-move/syncpack-config':
         specifier: ^0.4.0
         version: 0.4.0(syncpack@13.0.4(typescript@5.8.3))
       ava:
         specifier: ^6.4.0
-        version: 6.4.0
+        version: 6.4.0(patch_hash=3efb6a6fff2c691907321ccb0ffbb8732e6d8f186cff6a6d7d09221c23efc00d)
       eslint:
         specifier: ^9.29.0
         version: 9.29.0
@@ -38,17 +43,53 @@ importers:
 
   packages/clsx: {}
 
+  packages/sfc-template-traverse:
+    dependencies:
+      '@vue/compiler-core':
+        specifier: ~3.5.17
+        version: 3.5.17
+      neotraverse:
+        specifier: ^0.6.18
+        version: 0.6.18
+      tab-to-space:
+        specifier: ^1.0.1
+        version: 1.0.1
+      wxml-parse:
+        specifier: ^0.2.3
+        version: 0.2.3
+
   tests:
     dependencies:
+      '@babel/traverse':
+        specifier: ^7.27.4
+        version: 7.27.4
+      '@babel/types':
+        specifier: ^7.27.6
+        version: 7.27.6
       '@into-mini/clsx':
         specifier: workspace:^
         version: link:../packages/clsx
+      '@into-mini/sfc-template-traverse':
+        specifier: workspace:^
+        version: link:../packages/sfc-template-traverse
+      '@padcom/vue-ast-serializer':
+        specifier: ^0.0.1
+        version: 0.0.1(@vue/compiler-core@3.5.17)(@vue/compiler-sfc@3.5.17)
+      '@vue/compiler-sfc':
+        specifier: ~3.5.17
+        version: 3.5.17
       ava:
         specifier: ^6.4.0
-        version: 6.4.0
+        version: 6.4.0(patch_hash=3efb6a6fff2c691907321ccb0ffbb8732e6d8f186cff6a6d7d09221c23efc00d)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      diff:
+        specifier: ^8.0.2
+        version: 8.0.2
+      javascript-stringify:
+        specifier: ^2.1.0
+        version: 2.1.0
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
@@ -340,6 +381,12 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
+  '@padcom/vue-ast-serializer@0.0.1':
+    resolution: {integrity: sha512-SGoG3gCOWpibNUDL1UDxtLZRhMcpLKsnslHQv23/4UghFmlwmsVlkzHcB8T9pOlxnKi4MB6rhnMymjd+SSPXug==}
+    peerDependencies:
+      '@vue/compiler-core': ^3.0.0
+      '@vue/compiler-sfc': ^3.0.0
+
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -452,6 +499,21 @@ packages:
     resolution: {integrity: sha512-6lLqMNX3TuycBPABycx7A9F1bHQR7kiQln6abjFbPrf5C/05qHM9M5E4PeTE59c7z8g6vHnx1Ioihb2AQl7BTA==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@vue/compiler-core@3.5.17':
+    resolution: {integrity: sha512-Xe+AittLbAyV0pabcN7cP7/BenRBNcteM4aSDCtRvGw0d9OL+HG1u/XHLY/kt1q4fyMeZYXyIYrsHuPSiDPosA==}
+
+  '@vue/compiler-dom@3.5.17':
+    resolution: {integrity: sha512-+2UgfLKoaNLhgfhV5Ihnk6wB4ljyW1/7wUIog2puUqajiC29Lp5R/IKDdkebh9jTbTogTbsgB+OY9cEWzG95JQ==}
+
+  '@vue/compiler-sfc@3.5.17':
+    resolution: {integrity: sha512-rQQxbRJMgTqwRugtjw0cnyQv9cP4/4BxWfTdRBkqsTfLOHWykLzbOc3C4GGzAmdMDxhzU/1Ija5bTjMVrddqww==}
+
+  '@vue/compiler-ssr@3.5.17':
+    resolution: {integrity: sha512-hkDbA0Q20ZzGgpj5uZjb9rBzQtIHLS78mMilwrlpWk2Ep37DYntUz0PonQ6kr113vfOEdM+zTBuJDaceNIW0tQ==}
+
+  '@vue/shared@3.5.17':
+    resolution: {integrity: sha512-CabR+UN630VnsJO/jHWYBC1YVXyMq94KKp6iF5MQgZJs5I8cmjw6oVMO1oDbtBkENSHSSn/UadWlW/OAgdmKrg==}
 
   '@xml-tools/parser@1.0.11':
     resolution: {integrity: sha512-aKqQ077XnR+oQtHJlrAflaZaL7qZsulWc/i/ZEooar5JiWj1eLt0+Wg28cpa+XLney107wXqneC+oG1IZvxkTA==}
@@ -819,6 +881,10 @@ packages:
   detect-libc@2.0.4:
     resolution: {integrity: sha512-3UDv+G9CsCKO1WKMGw9fwq/SWJYbI0c5Y7LU1AXYoDdbhE2AHQ6N6Nb34sG8Fj7T5APy8qXDCKuuIHd1BR0tVA==}
     engines: {node: '>=8'}
+
+  diff@8.0.2:
+    resolution: {integrity: sha512-sSuxWU5j5SR9QQji/o2qMvqRNYRDOcBTgsJ/DeCf4iSN4gW+gNMXM7wFIP+fdXZxoNiAnHUTGjCr+TSWXdRDKg==}
+    engines: {node: '>=0.3.1'}
 
   doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
@@ -1453,6 +1519,9 @@ packages:
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
+  javascript-stringify@2.1.0:
+    resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
+
   js-string-escape@1.0.1:
     resolution: {integrity: sha512-Smw4xcfIQ5LVjAOuJCvN/zIodzA/BBSsluuoSykP+lUvScIi4U6RJLfwHet5cxFnCswUjISV8oAXaqaJDY3chg==}
     engines: {node: '>= 0.8'}
@@ -1544,6 +1613,9 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
+  magic-string@0.30.17:
+    resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
+
   matcher@5.0.0:
     resolution: {integrity: sha512-s2EMBOWtXFc8dgqvoAzKJXxNHibcdJMV0gwqKUaw9E2JBJuGUK7DrNKrA6g/i+v72TT16+6sVm5mS3thaMLQUw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -1621,6 +1693,10 @@ packages:
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
+
+  neotraverse@0.6.18:
+    resolution: {integrity: sha512-Z4SmBUweYa09+o6pG+eASabEpP6QkQ70yHj351pQoEXIs8uHbaU2DWVmzBANKgflPa47A50PtB2+NgRpQvr7vA==}
+    engines: {node: '>= 10'}
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -2077,6 +2153,10 @@ packages:
     engines: {node: '>=18.18.0'}
     hasBin: true
 
+  tab-to-space@1.0.1:
+    resolution: {integrity: sha512-JoYzbAIeVRPhpCN9cQ/+I0J1j/IXc0WnttmPy75vjXLzeAmUm7LgookGFOmrB4FcPNMSHskGJnBTBQi/0LrfBA==}
+    engines: {node: '>=0.10.0'}
+
   tapable@2.2.2:
     resolution: {integrity: sha512-Re10+NauLTMCudc7T5WLFLAwDhQ0JWdrMK+9B2M8zR5hRExKmsRDCBA7/aV/pNJFltmBFO5BAMlQFi/vq3nKOg==}
     engines: {node: '>=6'}
@@ -2236,6 +2316,9 @@ packages:
   write-file-atomic@6.0.0:
     resolution: {integrity: sha512-GmqrO8WJ1NuzJ2DrziEI2o57jKAVIQNf8a18W3nCYU3H7PNWqCCVTeH6/NQE93CIllIgQS98rrmVkYgTX9fFJQ==}
     engines: {node: ^18.17.0 || >=20.5.0}
+
+  wxml-parse@0.2.3:
+    resolution: {integrity: sha512-JaF/AWWIiy3TtNJnviciG9i2mZDVK0F6UO0Tt8PQBuAodD4D1NVpFgPEtOfwcZGDlECTajCqvq8Kgo0KW6UmmA==}
 
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
@@ -2515,11 +2598,11 @@ snapshots:
       - encoding
       - supports-color
 
-  '@nice-move/all-in-base@0.5.1(@babel/core@7.27.4)(@typescript-eslint/parser@8.34.1(eslint@9.29.0)(typescript@5.8.3))(eslint@9.29.0)(garou@0.9.11(eslint@9.29.0)(typescript@5.8.3))(postcss@8.5.6)(prettier@3.5.3)(typescript@5.8.3)':
+  '@nice-move/all-in-base@0.5.1(@babel/core@7.27.4)(@typescript-eslint/parser@8.34.1(eslint@9.29.0)(typescript@5.8.3))(@vue/compiler-sfc@3.5.17)(eslint@9.29.0)(garou@0.9.11(eslint@9.29.0)(typescript@5.8.3))(postcss@8.5.6)(prettier@3.5.3)(typescript@5.8.3)':
     dependencies:
       '@nice-move/cli': 0.11.26
       '@nice-move/eslint-config-base': 0.12.23(@typescript-eslint/parser@8.34.1(eslint@9.29.0)(typescript@5.8.3))(eslint@9.29.0)(typescript@5.8.3)
-      '@nice-move/prettier-config': 0.14.15(@babel/core@7.27.4)(postcss@8.5.6)(prettier@3.5.3)
+      '@nice-move/prettier-config': 0.14.15(@babel/core@7.27.4)(@vue/compiler-sfc@3.5.17)(postcss@8.5.6)(prettier@3.5.3)
       '@nice-move/tsconfig': 0.2.13(typescript@5.8.3)
       eslint: 9.29.0
       prettier: 3.5.3
@@ -2572,12 +2655,12 @@ snapshots:
       globals: 15.15.0
       node-html-parser: 7.0.1
 
-  '@nice-move/prettier-config@0.14.15(@babel/core@7.27.4)(postcss@8.5.6)(prettier@3.5.3)':
+  '@nice-move/prettier-config@0.14.15(@babel/core@7.27.4)(@vue/compiler-sfc@3.5.17)(postcss@8.5.6)(prettier@3.5.3)':
     dependencies:
       '@babel/plugin-syntax-import-attributes': 7.27.1(@babel/core@7.27.4)
       '@babel/plugin-syntax-jsx': 7.27.1(@babel/core@7.27.4)
       '@babel/plugin-syntax-typescript': 7.27.1(@babel/core@7.27.4)
-      '@ianvs/prettier-plugin-sort-imports': '@nice-move/prettier-plugin-sort-imports@4.4.1-rc0(prettier@3.5.3)'
+      '@ianvs/prettier-plugin-sort-imports': '@nice-move/prettier-plugin-sort-imports@4.4.1-rc0(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)'
       '@nice-move/prettier-plugin-package-json': 0.9.2(prettier@3.5.3)
       '@prettier/plugin-xml': 3.4.1(prettier@3.5.3)
       prettier: 3.5.3
@@ -2594,7 +2677,7 @@ snapshots:
     dependencies:
       prettier: 3.5.3
 
-  '@nice-move/prettier-plugin-sort-imports@4.4.1-rc0(prettier@3.5.3)':
+  '@nice-move/prettier-plugin-sort-imports@4.4.1-rc0(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)':
     dependencies:
       '@babel/generator': 7.27.5
       '@babel/parser': 7.27.5
@@ -2602,6 +2685,8 @@ snapshots:
       '@babel/types': 7.27.6
       prettier: 3.5.3
       semver: 7.7.2
+    optionalDependencies:
+      '@vue/compiler-sfc': 3.5.17
     transitivePeerDependencies:
       - supports-color
 
@@ -2626,6 +2711,11 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@padcom/vue-ast-serializer@0.0.1(@vue/compiler-core@3.5.17)(@vue/compiler-sfc@3.5.17)':
+    dependencies:
+      '@vue/compiler-core': 3.5.17
+      '@vue/compiler-sfc': 3.5.17
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -2782,6 +2872,38 @@ snapshots:
       - rollup
       - supports-color
 
+  '@vue/compiler-core@3.5.17':
+    dependencies:
+      '@babel/parser': 7.27.5
+      '@vue/shared': 3.5.17
+      entities: 4.5.0
+      estree-walker: 2.0.2
+      source-map-js: 1.2.1
+
+  '@vue/compiler-dom@3.5.17':
+    dependencies:
+      '@vue/compiler-core': 3.5.17
+      '@vue/shared': 3.5.17
+
+  '@vue/compiler-sfc@3.5.17':
+    dependencies:
+      '@babel/parser': 7.27.5
+      '@vue/compiler-core': 3.5.17
+      '@vue/compiler-dom': 3.5.17
+      '@vue/compiler-ssr': 3.5.17
+      '@vue/shared': 3.5.17
+      estree-walker: 2.0.2
+      magic-string: 0.30.17
+      postcss: 8.5.6
+      source-map-js: 1.2.1
+
+  '@vue/compiler-ssr@3.5.17':
+    dependencies:
+      '@vue/compiler-dom': 3.5.17
+      '@vue/shared': 3.5.17
+
+  '@vue/shared@3.5.17': {}
+
   '@xml-tools/parser@1.0.11':
     dependencies:
       chevrotain: 7.1.1
@@ -2889,7 +3011,7 @@ snapshots:
 
   async-sema@3.1.1: {}
 
-  ava@6.4.0:
+  ava@6.4.0(patch_hash=3efb6a6fff2c691907321ccb0ffbb8732e6d8f186cff6a6d7d09221c23efc00d):
     dependencies:
       '@vercel/nft': 0.29.4
       acorn: 8.15.0
@@ -3176,6 +3298,8 @@ snapshots:
       object-keys: 1.1.1
 
   detect-libc@2.0.4: {}
+
+  diff@8.0.2: {}
 
   doctrine@2.1.0:
     dependencies:
@@ -3917,6 +4041,8 @@ snapshots:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
+  javascript-stringify@2.1.0: {}
+
   js-string-escape@1.0.1: {}
 
   js-tokens@4.0.0: {}
@@ -3985,6 +4111,10 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  magic-string@0.30.17:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.0
 
   matcher@5.0.0:
     dependencies:
@@ -4060,6 +4190,8 @@ snapshots:
   nanoid@3.3.11: {}
 
   natural-compare@1.4.0: {}
+
+  neotraverse@0.6.18: {}
 
   node-fetch@2.7.0:
     dependencies:
@@ -4568,6 +4700,8 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  tab-to-space@1.0.1: {}
+
   tapable@2.2.2: {}
 
   tar@7.4.3:
@@ -4772,6 +4906,8 @@ snapshots:
     dependencies:
       imurmurhash: 0.1.4
       signal-exit: 4.1.0
+
+  wxml-parse@0.2.3: {}
 
   y18n@5.0.8: {}
 

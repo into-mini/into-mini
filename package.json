@@ -10,7 +10,7 @@
     "lint:staged": "nice-move lint staged",
     "lint:type": "tsc -p tsconfig.json",
     "prepare": "nice-move git hooks",
-    "snapshot": "ava --fail-fast -u",
+    "snapshot": "ava --fail-fast -u -w",
     "test": "ava --fail-fast",
     "version:pin": "syncpack fix-mismatches"
   },
