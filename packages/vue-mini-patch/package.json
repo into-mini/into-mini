@@ -1,0 +1,17 @@
+{
+  "name": "@into-mini/vue-mini-patch",
+  "version": "0.0.0",
+  "license": "MIT",
+  "keywords": [],
+  "type": "module",
+  "peerDependencies": {
+    "@vue-mini/core": ">=1.2.3"
+  },
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

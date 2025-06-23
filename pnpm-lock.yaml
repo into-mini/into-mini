@@ -45,33 +45,15 @@ importers:
 
   packages/sfc-split-plugin:
     dependencies:
-      '@babel/generator':
-        specifier: ^7.27.5
-        version: 7.27.5
-      '@babel/traverse':
-        specifier: ^7.27.4
-        version: 7.27.4
       '@into-mini/clsx':
         specifier: workspace:^
         version: link:../clsx
       '@into-mini/sfc-template-traverse':
         specifier: workspace:^
         version: link:../sfc-template-traverse
-      '@padcom/vue-ast-serializer':
-        specifier: ^0.0.1
-        version: 0.0.1(@vue/compiler-core@3.5.17)(@vue/compiler-sfc@3.5.17)
-      '@vue/compiler-core':
-        specifier: ~3.5.17
-        version: 3.5.17
-      '@vue/compiler-sfc':
-        specifier: ~3.5.17
-        version: 3.5.17
-      change-case:
-        specifier: ^5.4.4
-        version: 5.4.4
-      deepmerge-ts:
-        specifier: ^7.1.5
-        version: 7.1.5
+      '@into-mini/sfc-transformer':
+        specifier: workspace:^
+        version: link:../sfc-transformer
       slash:
         specifier: ^5.1.0
         version: 5.1.0
@@ -99,6 +81,42 @@ importers:
       wxml-parse:
         specifier: ^0.2.3
         version: 0.2.3
+
+  packages/sfc-transformer:
+    dependencies:
+      '@babel/generator':
+        specifier: ^7.27.5
+        version: 7.27.5
+      '@babel/traverse':
+        specifier: ^7.27.4
+        version: 7.27.4
+      '@into-mini/sfc-template-traverse':
+        specifier: workspace:^
+        version: link:../sfc-template-traverse
+      '@into-mini/vue-mini-patch':
+        specifier: workspace:^
+        version: link:../vue-mini-patch
+      '@padcom/vue-ast-serializer':
+        specifier: ^0.0.1
+        version: 0.0.1(@vue/compiler-core@3.5.17)(@vue/compiler-sfc@3.5.17)
+      '@vue/compiler-sfc':
+        specifier: ~3.5.17
+        version: 3.5.17
+      change-case:
+        specifier: ^5.4.4
+        version: 5.4.4
+      deepmerge-ts:
+        specifier: ^7.1.5
+        version: 7.1.5
+      yaml:
+        specifier: ^2.8.0
+        version: 2.8.0
+
+  packages/vue-mini-patch:
+    dependencies:
+      '@vue-mini/core':
+        specifier: '>=1.2.3'
+        version: 1.2.3
 
   tests:
     dependencies:
@@ -554,6 +572,9 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  '@vue-mini/core@1.2.3':
+    resolution: {integrity: sha512-nMlflliD1gd3PEpl4qzNHDwHLruSnD1lW9mc9swR4udqBoUgHxNSOLn7QyXapiwy35xiTfThbmRug3tkQOignw==}
+
   '@vue/compiler-core@3.5.17':
     resolution: {integrity: sha512-Xe+AittLbAyV0pabcN7cP7/BenRBNcteM4aSDCtRvGw0d9OL+HG1u/XHLY/kt1q4fyMeZYXyIYrsHuPSiDPosA==}
 
@@ -565,6 +586,12 @@ packages:
 
   '@vue/compiler-ssr@3.5.17':
     resolution: {integrity: sha512-hkDbA0Q20ZzGgpj5uZjb9rBzQtIHLS78mMilwrlpWk2Ep37DYntUz0PonQ6kr113vfOEdM+zTBuJDaceNIW0tQ==}
+
+  '@vue/reactivity@3.5.14':
+    resolution: {integrity: sha512-7cK1Hp343Fu/SUCCO52vCabjvsYu7ZkOqyYu7bXV9P2yyfjUMUXHZafEbq244sP7gf+EZEz+77QixBTuEqkQQw==}
+
+  '@vue/shared@3.5.14':
+    resolution: {integrity: sha512-oXTwNxVfc9EtP1zzXAlSlgARLXNC84frFYkS0HHz0h3E4WZSP9sywqjqzGCP9Y34M8ipNmd380pVgmMuwELDyQ==}
 
   '@vue/shared@3.5.17':
     resolution: {integrity: sha512-CabR+UN630VnsJO/jHWYBC1YVXyMq94KKp6iF5MQgZJs5I8cmjw6oVMO1oDbtBkENSHSSn/UadWlW/OAgdmKrg==}
@@ -1851,6 +1878,9 @@ packages:
   minipass@7.1.2:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
+
+  miniprogram-api-typings@4.0.7:
+    resolution: {integrity: sha512-sUxqpA1+JxnDWYjO6ihiLWNJl94WzjlhnDpozfBeC+w8Mpejjsc8JuxyC3Xisimj/gp5OYaJ7nd4fM6wepzhEQ==}
 
   minizlib@3.0.2:
     resolution: {integrity: sha512-oG62iEk+CYt5Xj2YqI5Xi9xWUeZhDI8jjQmC5oThVH5JGCTgIjr7ciJDzC7MBzYd//WvR1OTmP5Q38Q8ShQtVA==}
@@ -3153,6 +3183,11 @@ snapshots:
       - rollup
       - supports-color
 
+  '@vue-mini/core@1.2.3':
+    dependencies:
+      '@vue/reactivity': 3.5.14
+      miniprogram-api-typings: 4.0.7
+
   '@vue/compiler-core@3.5.17':
     dependencies:
       '@babel/parser': 7.27.5
@@ -3182,6 +3217,12 @@ snapshots:
     dependencies:
       '@vue/compiler-dom': 3.5.17
       '@vue/shared': 3.5.17
+
+  '@vue/reactivity@3.5.14':
+    dependencies:
+      '@vue/shared': 3.5.14
+
+  '@vue/shared@3.5.14': {}
 
   '@vue/shared@3.5.17': {}
 
@@ -4591,6 +4632,8 @@ snapshots:
   minimist@1.2.8: {}
 
   minipass@7.1.2: {}
+
+  miniprogram-api-typings@4.0.7: {}
 
   minizlib@3.0.2:
     dependencies:

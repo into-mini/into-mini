@@ -5,13 +5,13 @@ import {
   createEmitFile,
   readAndTrack,
 } from '../helper/hooks.mjs';
-import { COMPONENT_ROOT, getAllPages, patchConfig } from '../helper/index.mjs';
+import { getAllPages, patchConfig } from '../helper/index.mjs';
 
 /**
  * Webpack插件，用于处理小程序和插件的入口文件
  */
 export class AddEntryPlugin {
-  static PLUGIN_NAME = 'AddEntryPlugin';
+  PLUGIN_NAME = 'AddEntryPlugin';
 
   /**
    * @param {Object} options - 插件配置选项
@@ -19,22 +19,6 @@ export class AddEntryPlugin {
    */
   constructor({ type = false } = {}) {
     this.type = type;
-  }
-
-  /**
-   * 创建用于分包的假页面文件
-   * @private
-   */
-  #createFakeFiles(emitFile) {
-    const files = [
-      [`${COMPONENT_ROOT}/fake.json`, '{}'],
-      [`${COMPONENT_ROOT}/fake.js`, '/**用于创建分包的假页面**/'],
-      [`${COMPONENT_ROOT}/fake.wxml`, '<!--用于创建分包的假页面-->'],
-    ];
-
-    files.forEach(([path, content]) => {
-      emitFile(path, content);
-    });
   }
 
   /**
@@ -104,11 +88,20 @@ export class AddEntryPlugin {
       EntryPlugin,
       EntryDependency,
       sources: { RawSource },
-      Compilation,
     } = compiler.webpack;
 
     compiler.hooks.compilation.tap(
-      AddEntryPlugin.PLUGIN_NAME,
+      this.PLUGIN_NAME,
+      (compilation, { normalModuleFactory }) => {
+        compilation.dependencyFactories.set(
+          EntryDependency,
+          normalModuleFactory,
+        );
+      },
+    );
+
+    compiler.hooks.thisCompilation.tap(
+      this.PLUGIN_NAME,
       (compilation, { normalModuleFactory }) => {
         compilation.dependencyFactories.set(
           EntryDependency,
@@ -121,45 +114,29 @@ export class AddEntryPlugin {
 
     if (this.type === 'miniprogram') {
       // 设置初始环境
-      compiler.hooks.afterEnvironment.tap(AddEntryPlugin.PLUGIN_NAME, () => {
+      compiler.hooks.afterEnvironment.tap(this.PLUGIN_NAME, () => {
         delete compiler.options.entry?.main;
         addEntry('app', './app');
-      });
-
-      // 创建假页面文件
-      compiler.hooks.make.tap(AddEntryPlugin.PLUGIN_NAME, (compilation) => {
-        compilation.fileDependencies.add('./app');
-        const emitFile = createEmitFile({
-          PLUGIN_NAME: AddEntryPlugin.PLUGIN_NAME,
-          compilation,
-          RawSource,
-          Compilation,
-        });
-        this.#createFakeFiles(emitFile);
       });
     }
 
     // 处理入口文件和配置
-    compiler.hooks.compilation.tap(
-      AddEntryPlugin.PLUGIN_NAME,
-      (compilation) => {
-        const params = {
+    compiler.hooks.compilation.tap(this.PLUGIN_NAME, (compilation) => {
+      const params = {
+        compilation,
+        addEntry,
+        emitFile: createEmitFile({
+          PLUGIN_NAME: this.PLUGIN_NAME,
           compilation,
-          addEntry,
-          emitFile: createEmitFile({
-            PLUGIN_NAME: AddEntryPlugin.PLUGIN_NAME,
-            compilation,
-            RawSource,
-            Compilation,
-          }),
-          readFrom: readAndTrack(compiler, compilation),
-        };
+          RawSource,
+        }),
+        readFrom: readAndTrack(compiler, compilation),
+      };
 
-        this.#processConfig(
-          params,
-          this.type === 'miniprogram' ? 'app' : 'plugin',
-        );
-      },
-    );
+      this.#processConfig(
+        params,
+        this.type === 'miniprogram' ? 'app' : 'plugin',
+      );
+    });
   }
 }

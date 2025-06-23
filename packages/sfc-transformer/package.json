@@ -1,30 +1,27 @@
 {
-  "name": "@best-shot/sfc-split-plugin",
-  "version": "0.14.6",
+  "name": "@into-mini/sfc-transformer",
+  "version": "0.3.0",
   "license": "MIT",
   "keywords": [
-    "loader",
     "mini-program",
     "miniprogram",
     "sfc",
     "vue",
     "weapp",
-    "webpack",
-    "webpack-plugin",
     "wxml"
   ],
-  "main": "plugin.mjs",
+  "main": "index.mjs",
   "type": "module",
   "dependencies": {
-    "@into-mini/clsx": "workspace:^",
+    "@babel/generator": "^7.27.5",
+    "@babel/traverse": "^7.27.4",
     "@into-mini/sfc-template-traverse": "workspace:^",
-    "@into-mini/sfc-transformer": "workspace:^",
-    "slash": "^5.1.0",
-    "webpack-virtual-modules": "^0.6.2",
+    "@into-mini/vue-mini-patch": "workspace:^",
+    "@padcom/vue-ast-serializer": "^0.0.1",
+    "@vue/compiler-sfc": "~3.5.17",
+    "change-case": "^5.4.4",
+    "deepmerge-ts": "^7.1.5",
     "yaml": "^2.8.0"
-  },
-  "peerDependencies": {
-    "webpack": "^5.99.9"
   },
   "engines": {
     "node": ">=22.11.0"

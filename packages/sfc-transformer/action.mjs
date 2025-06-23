@@ -6,7 +6,7 @@ import {
 import { serializeTemplate } from '@padcom/vue-ast-serializer';
 import { kebabCase } from 'change-case';
 
-import { CLSX_PLACEHOLDER } from '../helper/index.mjs';
+import { CLSX_PLACEHOLDER } from './utils.mjs';
 
 const actions = {
   click: 'tap',

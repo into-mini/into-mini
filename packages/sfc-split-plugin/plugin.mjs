@@ -1,6 +1,7 @@
 import { AddEntryPlugin } from './plugin/add-entry.mjs';
 import { AddWxsPlugin } from './plugin/add-wxs.mjs';
 import { CopyConfigPlugin } from './plugin/copy-config.mjs';
+import { EmitFakePlugin } from './plugin/emit-fake.mjs';
 // import { ExposeEntryNamePlugin } from './plugin/expose-entry.mjs';
 import { SfcSplitPlugin } from './plugin/sfc-split.mjs';
 
@@ -18,6 +19,10 @@ export class AllInOnePlugin {
       new CopyConfigPlugin({ type }).apply(compiler);
       new AddWxsPlugin().apply(compiler);
       new SfcSplitPlugin().apply(compiler);
+    }
+
+    if (type === 'miniprogram') {
+      new EmitFakePlugin().apply(compiler);
     }
   }
 }

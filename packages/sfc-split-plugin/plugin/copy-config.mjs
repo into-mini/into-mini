@@ -10,7 +10,6 @@ export class CopyConfigPlugin {
   apply(compiler) {
     const {
       sources: { RawSource },
-      Compilation,
     } = compiler.webpack;
 
     const { type } = this;
@@ -20,7 +19,6 @@ export class CopyConfigPlugin {
         PLUGIN_NAME,
         compilation,
         RawSource,
-        Compilation,
       });
       const readFrom = readAndTrack(compiler, compilation);
 

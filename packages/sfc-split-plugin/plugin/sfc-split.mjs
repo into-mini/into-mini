@@ -1,21 +1,22 @@
-import { resolve } from 'node:path';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { kebabCase } from 'change-case';
+import { parse } from '@into-mini/sfc-transformer';
+import { mergeConfig } from '@into-mini/sfc-transformer/merge-config.mjs';
 import slash from 'slash';
 import VirtualModulesPlugin from 'webpack-virtual-modules';
 
-import { COMPONENT_ROOT, mergeConfig, toJSONString } from '../helper/index.mjs';
-import { parse } from '../parse/sfc.mjs';
+import { COMPONENT_ROOT } from '../helper/index.mjs';
 
 const PLUGIN_NAME = 'SfcSplitPlugin';
 
 export class SfcSplitPlugin extends VirtualModulesPlugin {
-  apply(compiler) {
-    super.apply(compiler);
+  constructor() {
+    super();
+    this.newEntries = new Map();
+  }
 
-    const newEntries = new Map();
-
+  #applyLoader(compiler) {
     compiler.options.module.rules.push(
       {
         exclude: /\.(vue|wxml)$/,
@@ -29,8 +30,8 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
         options: {
           api: this,
           componentRoot: COMPONENT_ROOT,
-          caller({ entryName, entryPath }) {
-            newEntries.set(entryName, entryPath);
+          caller: ({ entryName, entryPath }) => {
+            this.newEntries.set(entryName, entryPath);
           },
         },
       },
@@ -45,58 +46,87 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
         },
       },
     );
+  }
 
+  #addEntries(compiler, compilation, callback) {
     const {
       EntryPlugin: { createDependency },
     } = compiler.webpack;
 
-    function action(compilation) {
-      compilation.hooks.buildModule.tap(PLUGIN_NAME, () => {
-        for (const [entryName, entryPath] of newEntries.entries()) {
-          compilation.addEntry(
-            compiler.context,
-            createDependency(entryPath),
-            {
-              name: entryName,
-              layer: entryName,
-              import: [entryPath],
-            },
-            (err) => {
-              if (err) {
-                throw err;
-              }
-            },
-          );
+    // compilation.hooks.buildModule.tap(PLUGIN_NAME, () => {
 
-          compilation.fileDependencies.add(entryPath);
-        }
+    if (callback) {
+      const temp = [...this.newEntries.entries()].map(
+        ([entryName, entryPath]) => {
+          return new Promise((resolve, reject) => {
+            compilation.addEntry(
+              compiler.context,
+              createDependency(entryPath),
+              {
+                name: entryName,
+                layer: entryName,
+                import: [entryPath],
+              },
+              (err) => (err ? reject(err) : resolve()),
+            );
+
+            compilation.fileDependencies.add(entryPath);
+          });
+        },
+      );
+      Promise.all(temp).then(() => callback(), callback);
+    } else {
+      [...this.newEntries.entries()].forEach(([entryName, entryPath]) => {
+        compilation.addEntry(
+          compiler.context,
+          createDependency(entryPath),
+          {
+            name: entryName,
+            layer: entryName,
+            import: [entryPath],
+          },
+          (err) => {
+            if (err) {
+              throw err;
+            }
+          },
+        );
+
+        compilation.fileDependencies.add(entryPath);
       });
     }
+    // });
+  }
+
+  apply(compiler) {
+    super.apply(compiler);
+
+    this.#applyLoader(compiler);
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
-      action(compilation);
+      this.#addEntries(compiler, compilation);
     });
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
-      action(compilation);
+      this.#addEntries(compiler, compilation);
     });
-    compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
-      action(compilation);
+    compiler.hooks.make.tapAsync(PLUGIN_NAME, (compilation, callback) => {
+      this.#addEntries(compiler, compilation, callback);
     });
   }
 
   inject(resourcePath, ext, content) {
-    const path = resolve(resourcePath.replace(/\.vue$/, ext));
+    const src = path.resolve(resourcePath.replace(/\.vue$/, ext));
 
-    super.writeModule(path, content);
+    super.writeModule(src, content);
 
-    return path;
+    return src;
   }
 
   injectStyle(resourcePath, id, style) {
     return this.inject(
       resourcePath,
       `-${id}.${style.lang ?? 'css'}`,
-      style.content.trim(),
+      style.content,
     );
   }
 
@@ -107,8 +137,8 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
 
     css.forEach((style, idx) => {
       if (style?.content) {
-        const path = this.injectStyle(resourcePath, idx, style);
-        io.push(path);
+        const src = this.injectStyle(resourcePath, idx, style);
+        io.push(src);
       }
     });
 
@@ -121,41 +151,7 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
 
   // eslint-disable-next-line class-methods-use-this
   injectConfig(customBlocks, pair) {
-    const usingComponents =
-      pair.length > 0
-        ? Object.fromEntries(
-            pair
-              .filter(({ local }) => !local.endsWith('_generic'))
-              .map(({ local, source }) => [kebabCase(local), source]),
-          )
-        : {};
-
-    const componentGenerics =
-      pair.length > 0
-        ? Object.fromEntries(
-            pair
-              .filter(({ local }) => local.endsWith('_generic'))
-              .map(({ local, source }) => [
-                kebabCase(local.replace(/_generic$/, '')),
-                { default: source },
-              ]),
-          )
-        : undefined;
-
-    const config = mergeConfig([
-      ...(customBlocks?.length ? customBlocks : []),
-      {
-        type: 'config',
-        lang: 'json',
-        content: toJSONString({
-          component: true,
-          usingComponents,
-          componentGenerics,
-        }),
-      },
-    ]);
-
-    return { config };
+    return mergeConfig(customBlocks, pair);
   }
 
   processSfcFile(source, resourcePath) {
@@ -165,15 +161,15 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
 
     const paths = [];
 
-    const src = this.injectTemplate(resourcePath, tpl);
-    paths.push(src);
+    const wxml = this.injectTemplate(resourcePath, tpl);
+    paths.push(wxml);
 
     const css = this.injectStyles(resourcePath, styles);
     paths.push(...css);
 
     return {
       config,
-      paths: paths.map((path) => slash(path)),
+      paths: paths.map((src) => slash(src)),
       script: code,
     };
   }

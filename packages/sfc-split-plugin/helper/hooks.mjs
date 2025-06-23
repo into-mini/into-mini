@@ -1,17 +1,13 @@
-import { toJSONString } from './index.mjs';
+import { toJSONString } from '@into-mini/sfc-transformer/utils.mjs';
+
 import { readConfig } from './read.mjs';
 
-export function createEmitFile({
-  PLUGIN_NAME,
-  compilation,
-  RawSource,
-  Compilation,
-}) {
+export function createEmitFile({ PLUGIN_NAME, compilation, RawSource }) {
   return (name, content) => {
     compilation.hooks.processAssets.tap(
       {
         name: PLUGIN_NAME,
-        stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
+        stage: compilation.constructor.PROCESS_ASSETS_STAGE_ADDITIONAL,
       },
       () => {
         compilation.emitAsset(

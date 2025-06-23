@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineComponent } from '@vue-mini/core';
 
 import { hackOptions } from './hack.js';

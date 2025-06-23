@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/named
 import { getCurrentInstance } from '@vue-mini/core';
 
 const prefix = '__';
