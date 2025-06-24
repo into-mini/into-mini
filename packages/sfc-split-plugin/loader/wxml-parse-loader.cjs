@@ -7,6 +7,8 @@ module.exports = function loader(source) {
 
   const callback = this.async();
 
+  console.log(this.entryName);
+
   try {
     callback(null, pretty(source));
   } catch (error) {
