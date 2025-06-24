@@ -22,6 +22,9 @@ importers:
       '@nice-move/syncpack-config':
         specifier: ^0.4.0
         version: 0.4.0(syncpack@13.0.4(typescript@5.8.3))
+      '@types/node':
+        specifier: ^24.0.4
+        version: 24.0.4
       ava:
         specifier: ^6.4.0
         version: 6.4.0(patch_hash=3efb6a6fff2c691907321ccb0ffbb8732e6d8f186cff6a6d7d09221c23efc00d)
@@ -504,6 +507,9 @@ packages:
 
   '@types/node@24.0.3':
     resolution: {integrity: sha512-R4I/kzCYAdRLzfiCabn9hxWfbuHS573x+r0dJMkkzThEa7pbrcDWK+9zu3e7aBOouf+rQAciqPFMnxwr0aWgKg==}
+
+  '@types/node@24.0.4':
+    resolution: {integrity: sha512-ulyqAkrhnuNq9pB76DRBTkcS6YsmDALy6Ua63V8OhrOBgbcYt6IOdzpw5P1+dyRIyMerzLkeYWBeOXPpA9GMAA==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -3067,6 +3073,10 @@ snapshots:
       '@types/unist': 2.0.11
 
   '@types/node@24.0.3':
+    dependencies:
+      undici-types: 7.8.0
+
+  '@types/node@24.0.4':
     dependencies:
       undici-types: 7.8.0
 

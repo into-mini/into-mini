@@ -76,7 +76,7 @@ module.exports = async function loader(source, map, meta) {
 
   const callback = this.async();
 
-  const { api, caller, componentRoot } = this.getOptions();
+  const { api, componentRoot } = this.getOptions();
 
   const { layer } = this._module;
 
@@ -84,7 +84,10 @@ module.exports = async function loader(source, map, meta) {
 
   const resourcePath = slash(this.resourcePath);
 
-  const { paths, config, script } = api.processSfcFile(source, resourcePath);
+  const { paths, config, script } = api.sfc.processSfcFile({
+    source,
+    resourcePath,
+  });
 
   const { rootContext, context } = this;
 
@@ -96,6 +99,10 @@ module.exports = async function loader(source, map, meta) {
 
   function toThis(entryName) {
     return slash(relative(`/${layer}/..`, `/${entryName}`));
+  }
+
+  function caller(io) {
+    api.add.addEntry(io);
   }
 
   if (config?.usingComponents) {
