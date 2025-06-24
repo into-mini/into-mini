@@ -9,7 +9,7 @@ function createShortHash(input) {
 
 function handleImport({
   toThis,
-  addNewEntry,
+  caller,
   componentRoot,
   context,
   rootContext,
@@ -54,7 +54,15 @@ function handleImport({
           this.addDependency(resolve(absolutePath));
           this.addMissingDependency(resolve(absolutePath));
 
-          addNewEntry({ entryName, entryPath });
+          caller({
+            name,
+            path,
+            absolutePath,
+            relativePath,
+            entryName,
+            entryPath,
+            placer,
+          });
         } catch (error) {
           console.error(error);
         }
@@ -68,7 +76,7 @@ module.exports = async function loader(source, map, meta) {
 
   const callback = this.async();
 
-  const { componentRoot } = this.getOptions();
+  const { api, caller, componentRoot } = this.getOptions();
 
   const { layer } = this._module;
 
@@ -76,10 +84,7 @@ module.exports = async function loader(source, map, meta) {
 
   const resourcePath = slash(this.resourcePath);
 
-  const { paths, config, script } = this.processSfcFile({
-    source,
-    resourcePath,
-  });
+  const { paths, config, script } = api.processSfcFile(source, resourcePath);
 
   const { rootContext, context } = this;
 
@@ -96,7 +101,7 @@ module.exports = async function loader(source, map, meta) {
   if (config?.usingComponents) {
     handleImport.bind(this)({
       toThis,
-      addNewEntry: this.addNewEntry,
+      caller,
       componentRoot,
       context,
       rootContext,
@@ -116,7 +121,7 @@ module.exports = async function loader(source, map, meta) {
   if (config?.componentGenerics) {
     handleImport.bind(this)({
       toThis,
-      addNewEntry: this.addNewEntry,
+      caller,
       componentRoot,
       context,
       rootContext,
