@@ -25,10 +25,12 @@ function getEntryName(loaderContext) {
 export class ExposeEntryNamePlugin {
   // eslint-disable-next-line class-methods-use-this
   apply(compiler) {
-    const { NormalModule } = compiler.webpack;
+    const {
+      NormalModule: { getCompilationHooks },
+    } = compiler.webpack;
 
     compiler.hooks.compilation.tap(PluginName, (compilation) => {
-      NormalModule.getCompilationHooks(compilation).loader.tap(
+      getCompilationHooks(compilation).loader.tap(
         PluginName,
         (loaderContext) => {
           Object.defineProperty(loaderContext, 'entryName', {

@@ -26,7 +26,6 @@ export class AllInOnePlugin {
           import.meta.resolve('./loader/fake-vue-loader.cjs'),
         ),
         options: {
-          api: this,
           componentRoot: COMPONENT_ROOT,
         },
       },
@@ -49,10 +48,8 @@ export class AllInOnePlugin {
     const { type } = this;
 
     if (type) {
-      this.sfc = new SfcSplitPlugin();
-      this.sfc.apply(compiler);
-      this.add = new AddEntryPlugin();
-      this.add.apply(compiler);
+      new SfcSplitPlugin().apply(compiler);
+      new AddEntryPlugin().apply(compiler);
       new ExposeEntryNamePlugin().apply(compiler);
       new FindEntryPlugin({ type }).apply(compiler);
       new CopyConfigPlugin({ type }).apply(compiler);

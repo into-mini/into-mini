@@ -5,7 +5,7 @@ export class AddEntryPlugin {
     this.newEntries = new Map();
   }
 
-  addEntry({ entryName, entryPath }) {
+  #addSmartEntry({ entryName, entryPath }) {
     this.newEntries.set(entryName, entryPath);
   }
 
@@ -36,7 +36,32 @@ export class AddEntryPlugin {
     });
   }
 
+  #expose(compiler) {
+    const { PLUGIN_NAME } = this;
+
+    const {
+      NormalModule: { getCompilationHooks },
+    } = compiler.webpack;
+
+    compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
+      getCompilationHooks(compilation).loader.tap(
+        PLUGIN_NAME,
+        (loaderContext) => {
+          Object.defineProperty(loaderContext, 'addSmartEntry', {
+            enumerable: true,
+            configurable: false,
+            value: (options) => {
+              this.#addSmartEntry(options);
+            },
+          });
+        },
+      );
+    });
+  }
+
   apply(compiler) {
+    this.#expose(compiler);
+
     const { PLUGIN_NAME } = this;
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {

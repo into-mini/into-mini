@@ -72,7 +72,6 @@ export class AddWxsPlugin {
     const wxsContent = readFileSync(fileURLToPath(wxsPath), 'utf8');
 
     compilation.emitAsset(WXS_FILENAME, new RawSource(wxsContent));
-    console.log('Added clsx.wxs file because CLSX_PLACEHOLDER was found');
     this.#wxsAdded = true;
   }
 }

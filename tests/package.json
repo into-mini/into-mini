@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "dependencies": {
-    "@babel/traverse": "^7.27.4",
-    "@babel/types": "^7.27.6",
+    "@babel/traverse": "^7.28.0",
+    "@babel/types": "^7.28.0",
     "@padcom/vue-ast-serializer": "^0.0.1",
     "@vue/compiler-sfc": "~3.5.17",
     "clsx": "^2.1.1",

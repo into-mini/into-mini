@@ -9,7 +9,32 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
   PLUGIN_NAME = 'SfcSplitPlugin';
 
   apply(compiler) {
+    this.#expose(compiler);
+
     super.apply(compiler);
+  }
+
+  #expose(compiler) {
+    const { PLUGIN_NAME } = this;
+
+    const {
+      NormalModule: { getCompilationHooks },
+    } = compiler.webpack;
+
+    compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
+      getCompilationHooks(compilation).loader.tap(
+        PLUGIN_NAME,
+        (loaderContext) => {
+          Object.defineProperty(loaderContext, 'processSfcFile', {
+            enumerable: true,
+            configurable: false,
+            value: (options) => {
+              return this.#processSfcFile(options);
+            },
+          });
+        },
+      );
+    });
   }
 
   #inject(resourcePath, ext, content) {
@@ -52,7 +77,7 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
     return mergeConfig(customBlocks, pair);
   }
 
-  processSfcFile({ source, resourcePath }) {
+  #processSfcFile({ source, resourcePath }) {
     const { tpl, styles, customBlocks, code, pair = [] } = parse(source);
 
     const { config } = this.#injectConfig(customBlocks, pair);
