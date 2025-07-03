@@ -4,3 +4,5 @@ packages:
 
 patchedDependencies:
   ava: patches/ava.patch
+
+shamefullyHoist: true

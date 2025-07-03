@@ -21,7 +21,6 @@ export class AddEntryPlugin {
           createDependency(entryPath),
           {
             name: entryName,
-            layer: entryName,
             import: [entryPath],
           },
           (err) => {

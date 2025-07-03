@@ -9,6 +9,10 @@ import { ExposeEntryNamePlugin } from './plugin/expose-entry.mjs';
 import { FindEntryPlugin } from './plugin/find-entry.mjs';
 import { SfcSplitPlugin } from './plugin/sfc-split.mjs';
 
+function reach(path) {
+  return fileURLToPath(import.meta.resolve(path));
+}
+
 export class AllInOnePlugin {
   constructor({ type = false } = {}) {
     this.type = type;
@@ -16,15 +20,13 @@ export class AllInOnePlugin {
 
   #applyLoader(compiler) {
     compiler.options.module.rules.push(
-      {
-        exclude: /\.(vue|wxml)$/,
-        layer: 'other',
-      },
+      // {
+      //   exclude: /\.(vue|wxml)$/,
+      //   layer: 'other',
+      // },
       {
         test: /\.vue$/,
-        loader: fileURLToPath(
-          import.meta.resolve('./loader/fake-vue-loader.cjs'),
-        ),
+        loader: reach('./loader/fake-vue-loader.cjs'),
         options: {
           componentRoot: COMPONENT_ROOT,
         },
@@ -32,11 +34,9 @@ export class AllInOnePlugin {
       {
         test: /\.wxml$/,
         type: 'asset/resource',
-        loader: fileURLToPath(
-          import.meta.resolve('./loader/wxml-parse-loader.cjs'),
-        ),
+        loader: reach('./loader/wxml-parse-loader.cjs'),
         generator: {
-          filename: (args) => `${args.module.layer}[ext]`,
+          filename: '[entry][ext]',
         },
       },
     );

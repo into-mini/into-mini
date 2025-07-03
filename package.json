@@ -24,9 +24,14 @@
     "garou": "^0.9.11",
     "prettier": "^3.6.2",
     "syncpack": "^13.0.4",
-    "typescript": "~5.8.3"
+    "typescript": "~5.8.3",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
   },
-  "packageManager": "pnpm@10.12.3",
+  "peerDependencies": {
+    "@best-shot/sfc-split-plugin": "workspace:*"
+  },
+  "packageManager": "pnpm@10.12.4",
   "engines": {
     "node": ">=22.11.0"
   },

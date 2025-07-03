@@ -78,7 +78,7 @@ module.exports = async function loader(source, map, meta) {
 
   const { componentRoot } = this.getOptions();
 
-  const { layer } = this._module;
+  const { entryName: thisEntryName } = this;
 
   const { default: slash } = await import('slash');
 
@@ -98,7 +98,7 @@ module.exports = async function loader(source, map, meta) {
   }
 
   function toThis(entryName) {
-    return slash(relative(`/${layer}/..`, `/${entryName}`));
+    return slash(relative(`/${thisEntryName}/..`, `/${entryName}`));
   }
 
   const caller = (io) => {
@@ -151,7 +151,7 @@ module.exports = async function loader(source, map, meta) {
     script,
   ].join('\n');
 
-  this.emitFile(`${layer}.json`, JSON.stringify(config, null, 2));
+  this.emitFile(`${thisEntryName}.json`, JSON.stringify(config, null, 2));
 
   callback(null, file, map, meta);
 };

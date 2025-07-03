@@ -17,7 +17,6 @@ jobs:
         node:
           - current
           - lts/*
-          - lts/-1
         exclude:
           - os: ubuntu-latest
             node: lts/*
@@ -27,9 +26,6 @@ jobs:
         uses: airkro/bring-it@actions
         with:
           node-version: ${{ matrix.node }}
-          custom-command: |
-            mkdir -p packages/best-shot/dist
-            touch $_/cli.mjs
 
   publish:
     needs: [test]
@@ -39,6 +35,3 @@ jobs:
         uses: airkro/bring-it@actions
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
-          custom-command: |
-            mkdir -p packages/best-shot/dist
-            touch $_/cli.mjs

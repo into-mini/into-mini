@@ -41,7 +41,6 @@ export function createAddEntry(compiler, EntryPlugin) {
   return (name, path) => {
     new EntryPlugin(compiler.context, path, {
       import: [path],
-      layer: name,
       name,
     }).apply(compiler);
   };
