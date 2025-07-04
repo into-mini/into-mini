@@ -21,8 +21,8 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1(@bring-it/cli@0.10.0)
       '@nice-move/all-in-base':
-        specifier: ^0.5.2
-        version: 0.5.2(@babel/core@7.27.4)(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(@vue/compiler-sfc@3.5.17)(eslint@9.30.1)(garou@0.9.11(eslint@9.30.1)(typescript@5.8.3))(postcss@8.5.6)(prettier@3.6.2)(typescript@5.8.3)
+        specifier: ^0.5.3
+        version: 0.5.3(@babel/core@7.27.4)(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(@vue/compiler-sfc@3.5.17)(eslint@9.30.1)(garou@0.9.11(eslint@9.30.1)(typescript@5.8.3))(postcss@8.5.6)(prettier@3.6.2)(typescript@5.8.3)
       '@nice-move/syncpack-config':
         specifier: ^0.4.1
         version: 0.4.1(syncpack@13.0.4(typescript@5.8.3))
@@ -383,8 +383,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@nice-move/all-in-base@0.5.2':
-    resolution: {integrity: sha512-tTm+6VOwuGFqH1L+F0nYmsigPDFWbbkYGU2uJ6LUipLRYv5AvqkH/7OFQLpUiMoG6H7X7fZ6DyVmZhoHfUPiqw==}
+  '@nice-move/all-in-base@0.5.3':
+    resolution: {integrity: sha512-E+5ceSvOWImygM41mXpa6avAM8UtNlcJhMKm9U1RWnrGRbQKvOldh8G/8dB2xDmzKzF3ElfPCjbWgMT7/eQMrQ==}
     engines: {node: ^20.19.2 || ^22.14.0 || ^24.0.0}
     hasBin: true
     peerDependencies:
@@ -403,8 +403,8 @@ packages:
     engines: {node: ^20.19.2 || ^22.14.0 || ^24.0.0}
     hasBin: true
 
-  '@nice-move/eslint-config-base@0.12.24':
-    resolution: {integrity: sha512-tNjTRDZwlJDOY8rHOv66bdA7QOWwX6BbH/qSdgGfwjx6Sns66+IsQn0ZLuFhiouCaKWe6IYy+d6MeCYnHqoymw==}
+  '@nice-move/eslint-config-base@0.12.25':
+    resolution: {integrity: sha512-Qd/Ry/ey6qFdrg62akwfbATJhD3tnaW9trW6jJhhsrGFOBCyt9loQfhk4A7PCkH3Loc5+1ufc58+rYuatqJA4w==}
     engines: {node: ^20.19.2 || ^22.14.0 || ^24.0.0}
     peerDependencies:
       eslint: ^9.30.1
@@ -1286,8 +1286,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-n@17.20.0:
-    resolution: {integrity: sha512-IRSoatgB/NQJZG5EeTbv/iAx1byOGdbbyhQrNvWdCfTnmPxUT0ao9/eGOeG7ljD8wJBsxwE8f6tES5Db0FRKEw==}
+  eslint-plugin-n@17.21.0:
+    resolution: {integrity: sha512-1+iZ8We4ZlwVMtb/DcHG3y5/bZOdazIpa/4TySo22MLKdwrLcfrX0hbadnCvykSQCCmkAnWmIP8jZVb2AAq29A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.23.0'
@@ -3026,10 +3026,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@nice-move/all-in-base@0.5.2(@babel/core@7.27.4)(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(@vue/compiler-sfc@3.5.17)(eslint@9.30.1)(garou@0.9.11(eslint@9.30.1)(typescript@5.8.3))(postcss@8.5.6)(prettier@3.6.2)(typescript@5.8.3)':
+  '@nice-move/all-in-base@0.5.3(@babel/core@7.27.4)(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(@vue/compiler-sfc@3.5.17)(eslint@9.30.1)(garou@0.9.11(eslint@9.30.1)(typescript@5.8.3))(postcss@8.5.6)(prettier@3.6.2)(typescript@5.8.3)':
     dependencies:
       '@nice-move/cli': 0.11.26
-      '@nice-move/eslint-config-base': 0.12.24(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(eslint@9.30.1)(typescript@5.8.3)
+      '@nice-move/eslint-config-base': 0.12.25(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(eslint@9.30.1)(typescript@5.8.3)
       '@nice-move/prettier-config': 0.14.15(@babel/core@7.27.4)(@vue/compiler-sfc@3.5.17)(postcss@8.5.6)(prettier@3.6.2)
       '@nice-move/tsconfig': 0.2.14(typescript@5.8.3)
       eslint: 9.30.1
@@ -3050,7 +3050,7 @@ snapshots:
     dependencies:
       cheetor: 0.13.0
 
-  '@nice-move/eslint-config-base@0.12.24(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(eslint@9.30.1)(typescript@5.8.3)':
+  '@nice-move/eslint-config-base@0.12.25(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(eslint@9.30.1)(typescript@5.8.3)':
     dependencies:
       '@eslint-community/eslint-plugin-eslint-comments': 4.5.0(eslint@9.30.1)
       '@eslint/eslintrc': 3.3.1
@@ -3061,7 +3061,7 @@ snapshots:
       eslint-config-prettier: 10.1.5(eslint@9.30.1)
       eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.35.1(eslint@9.30.1)(typescript@5.8.3))(eslint@9.30.1)
       eslint-plugin-markdown: 5.1.0(eslint@9.30.1)
-      eslint-plugin-n: 17.20.0(eslint@9.30.1)(typescript@5.8.3)
+      eslint-plugin-n: 17.21.0(eslint@9.30.1)(typescript@5.8.3)
       eslint-plugin-promise: 7.2.1(eslint@9.30.1)
       eslint-plugin-regexp: 2.9.0(eslint@9.30.1)
       eslint-plugin-unicorn: 59.0.1(eslint@9.30.1)
@@ -4123,10 +4123,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-n@17.20.0(eslint@9.30.1)(typescript@5.8.3):
+  eslint-plugin-n@17.21.0(eslint@9.30.1)(typescript@5.8.3):
     dependencies:
       '@eslint-community/eslint-utils': 4.7.0(eslint@9.30.1)
-      '@typescript-eslint/utils': 8.35.1(eslint@9.30.1)(typescript@5.8.3)
       enhanced-resolve: 5.18.2
       eslint: 9.30.1
       eslint-plugin-es-x: 7.8.0(eslint@9.30.1)
@@ -4137,7 +4136,6 @@ snapshots:
       semver: 7.7.2
       ts-declaration-location: 1.0.7(typescript@5.8.3)
     transitivePeerDependencies:
-      - supports-color
       - typescript
 
   eslint-plugin-promise@7.2.1(eslint@9.30.1):

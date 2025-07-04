@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@bring-it/npm": "^0.6.1",
-    "@nice-move/all-in-base": "^0.5.2",
+    "@nice-move/all-in-base": "^0.5.3",
     "@nice-move/syncpack-config": "^0.4.1",
     "@types/node": "^24.0.10",
     "ava": "^6.4.0",
