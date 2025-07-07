@@ -39,10 +39,12 @@ export class PatchLoaderPlugin extends ExposeEntryNamePlugin {
     }
 
     // 从webpack获取NormalModule
-    const { NormalModule } = compiler.webpack;
+    const {
+      NormalModule: { getCompilationHooks },
+    } = compiler.webpack;
 
     compiler.hooks.compilation.tap(this.PLUGIN_NAME, (compilation) => {
-      NormalModule.getCompilationHooks(compilation).beforeLoaders.tap(
+      getCompilationHooks(compilation).beforeLoaders.tap(
         this.PLUGIN_NAME,
         (loaders, module) => this.handleModule(loaders, module, compilation),
       );

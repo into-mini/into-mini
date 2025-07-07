@@ -1,34 +1,31 @@
-import { PatchLoaderPlugin } from '@best-shot/sfc-split-plugin/todo/wip-plugin.mjs';
+import { resolve } from 'node:path';
+
+import { AllInOnePlugin } from '@best-shot/sfc-split-plugin';
 
 export default {
   mode: 'development',
   entry: {
-    abc: './src/a.json',
+    // a: './a.json',
+    // b: './b.json',
   },
+  context: resolve(process.cwd(), 'src'),
   output: {
     clean: true,
   },
-  module: {
-    rules: [
-      {
-        test: /\.json$/,
-        type: 'asset/resource',
-        use: [
-          {
-            loader: './src/abc-loader.mjs',
-          },
-        ],
-      },
-    ],
-  },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /a\.json$/,
+  //       type: 'asset/resource',
+  //       generator: {
+  //         filename: '[entry][ext]',
+  //       },
+  //     },
+  //   ],
+  // },
   plugins: [
-    new PatchLoaderPlugin({
-      abc: (loaders) => {
-        console.log(loaders);
-
-        // 返回空数组，删除所有 loaders
-        return [];
-      },
+    new AllInOnePlugin({
+      type: 'miniprogram',
     }),
   ],
 };

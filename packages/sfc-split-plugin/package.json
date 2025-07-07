@@ -1,6 +1,6 @@
 {
   "name": "@best-shot/sfc-split-plugin",
-  "version": "0.14.20",
+  "version": "0.14.21",
   "license": "MIT",
   "keywords": [
     "loader",
@@ -21,7 +21,8 @@
     "@into-mini/sfc-transformer": "workspace:^",
     "slash": "^5.1.0",
     "webpack-virtual-modules": "^0.6.2",
-    "yaml": "^2.8.0"
+    "yaml": "^2.8.0",
+    "yaml-loader": "^0.8.1"
   },
   "peerDependencies": {
     "webpack": "^5.99.9"

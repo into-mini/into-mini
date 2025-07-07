@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 
 import { traverse } from '@into-mini/sfc-template-traverse';
-import { pretty } from '@into-mini/sfc-template-traverse/pretty.cjs';
+import { pretty } from '@into-mini/sfc-template-traverse/pretty.mjs';
 import { serializeTemplate } from '@padcom/vue-ast-serializer';
 import test from 'ava';
 import { createPatch } from 'diff';

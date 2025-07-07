@@ -1,44 +1,36 @@
-import { createEmitFile, readAndTrack } from '../helper/hooks.mjs';
+import { fileURLToPath } from 'node:url';
 
 const PLUGIN_NAME = 'CopyConfigPlugin';
 
 export class CopyConfigPlugin {
-  constructor({ type = false } = {}) {
-    this.type = type;
-  }
-
   apply(compiler) {
-    const {
-      sources: { RawSource },
-    } = compiler.webpack;
+    compiler.hooks.entryOption.tap(PLUGIN_NAME, (context, entry) => {
+      entry.configs = {
+        import: ['./project.config.yaml', './project.private.config.yaml'],
+      };
 
-    const { type } = this;
+      const yamlLoader = fileURLToPath(import.meta.resolve('yaml-loader'));
 
-    compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
-      const emitJSON = createEmitFile({
-        PLUGIN_NAME,
-        compilation,
-        RawSource,
-      });
-      const readFrom = readAndTrack(compiler, compilation);
-
-      const io = readFrom('project.config');
-
-      if (!io.empty) {
-        emitJSON(io.name, {
-          srcMiniprogramRoot: '',
-          miniprogramRoot: '',
-          pluginRoot: '',
-          ...io.content,
-          compileType: type,
-        });
-      }
-
-      const io2 = readFrom('project.private.config');
-
-      if (!io2.empty) {
-        emitJSON(io2.name, io2.content);
-      }
+      compiler.options.module.rules.push(
+        {
+          test: /[/\\]project.config\.yaml$/,
+          loader: yamlLoader,
+          options: { asJSON: true },
+          type: 'asset/resource',
+          generator: {
+            filename: 'project.config.json',
+          },
+        },
+        {
+          test: /[/\\]project.private.config\.yaml$/,
+          loader: yamlLoader,
+          options: { asJSON: true },
+          type: 'asset/resource',
+          generator: {
+            filename: 'project.private.config.json',
+          },
+        },
+      );
     });
   }
 }
