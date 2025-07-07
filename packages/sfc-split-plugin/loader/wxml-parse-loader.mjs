@@ -1,10 +1,7 @@
-'use strict';
+import { pretty } from '@into-mini/sfc-template-traverse/pretty.mjs';
 
-const { pretty } = require('@into-mini/sfc-template-traverse/pretty.cjs');
-
-module.exports = function loader(source) {
+export default function loader(source) {
   this.cacheable();
-
   const callback = this.async();
 
   try {
@@ -13,4 +10,4 @@ module.exports = function loader(source) {
     console.error(error);
     callback(null, source);
   }
-};
+}

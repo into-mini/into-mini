@@ -15,16 +15,12 @@ export class CopyConfigPlugin {
     const { type } = this;
 
     compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
-      const emitFile = createEmitFile({
+      const emitJSON = createEmitFile({
         PLUGIN_NAME,
         compilation,
         RawSource,
       });
       const readFrom = readAndTrack(compiler, compilation);
-
-      function emitJSON(name, json) {
-        emitFile(type === 'plugin' ? `../${name}` : name, json);
-      }
 
       const io = readFrom('project.config');
 

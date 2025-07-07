@@ -1,10 +1,15 @@
-'use strict';
+import { createHash } from 'node:crypto';
+import { join, relative, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const { resolve, join, relative } = require('node:path');
-const { createHash } = require('node:crypto');
+import slash from 'slash';
 
 function createShortHash(input) {
   return createHash('sha256').update(input).digest('hex').slice(0, 8);
+}
+
+function reach(path) {
+  return fileURLToPath(import.meta.resolve(path));
 }
 
 function handleImport({
@@ -13,7 +18,6 @@ function handleImport({
   componentRoot,
   context,
   rootContext,
-  slash,
   maps,
   callback,
 }) {
@@ -22,15 +26,10 @@ function handleImport({
       if (path.endsWith('.vue') && !path.startsWith('plugin://')) {
         try {
           const absolutePath = slash(
-            path.startsWith('.')
-              ? resolve(context, path)
-              : require.resolve(path),
+            path.startsWith('.') ? resolve(context, path) : reach(path),
           );
-
           const relativePath = slash(relative(rootContext, absolutePath));
-
           const hack = relativePath.startsWith('..');
-
           const entryName = hack
             ? [
                 componentRoot,
@@ -42,18 +41,16 @@ function handleImport({
                 createShortHash(slash(absolutePath)),
               ].join('/')
             : relativePath.replace(/\.vue$/, '');
-
           const placer = toThis(entryName);
-
-          callback({ name, placer });
-
+          callback({
+            name,
+            placer,
+          });
           const entryPath = relativePath.startsWith('..')
             ? absolutePath
             : `./${relativePath}`;
-
           this.addDependency(resolve(absolutePath));
           this.addMissingDependency(resolve(absolutePath));
-
           caller({
             name,
             path,
@@ -71,24 +68,16 @@ function handleImport({
   }
 }
 
-module.exports = async function loader(source, map, meta) {
+export default function loader(source, map, meta) {
   this.cacheable();
-
   const callback = this.async();
-
   const { componentRoot } = this.getOptions();
-
   const { entryName: thisEntryName } = this;
-
-  const { default: slash } = await import('slash');
-
   const resourcePath = slash(this.resourcePath);
-
   const { paths, config, script } = this.processSfcFile({
     source,
     resourcePath,
   });
-
   const { rootContext, context } = this;
 
   for (const path of paths) {
@@ -112,7 +101,6 @@ module.exports = async function loader(source, map, meta) {
       componentRoot,
       context,
       rootContext,
-      slash,
       maps: config.usingComponents,
       callback({ name, placer }) {
         config.usingComponents[name] = placer;
@@ -132,7 +120,6 @@ module.exports = async function loader(source, map, meta) {
       componentRoot,
       context,
       rootContext,
-      slash,
       maps: Object.fromEntries(
         Object.entries(config.componentGenerics)
           .filter(([_, item]) => item?.default)
@@ -150,8 +137,6 @@ module.exports = async function loader(source, map, meta) {
       .map((path) => `import "./${path}";`),
     script,
   ].join('\n');
-
   this.emitFile(`${thisEntryName}.json`, JSON.stringify(config, null, 2));
-
   callback(null, file, map, meta);
-};
+}
