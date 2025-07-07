@@ -6,7 +6,9 @@ export class AddEntryPlugin {
   }
 
   #addSmartEntry({ entryName, entryPath }) {
-    this.newEntries.set(entryName, entryPath);
+    if (this.newEntries.get(entryName) !== entryPath) {
+      this.newEntries.set(entryName, entryPath);
+    }
   }
 
   #addEntries(compiler, compilation) {

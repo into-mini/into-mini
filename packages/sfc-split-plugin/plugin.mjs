@@ -26,7 +26,7 @@ export class AllInOnePlugin {
       // },
       {
         test: /\.vue$/,
-        loader: reach('./loader/fake-vue-loader.cjs'),
+        loader: reach('./loader/fake-vue-loader.mjs'),
         options: {
           componentRoot: COMPONENT_ROOT,
         },
