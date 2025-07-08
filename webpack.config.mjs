@@ -4,25 +4,15 @@ import { AllInOnePlugin } from '@best-shot/sfc-split-plugin';
 
 export default {
   mode: 'development',
-  entry: {
-    // a: './a.json',
-    // b: './b.json',
-  },
+  // entry: {
+  //   // a: './a.json',
+  //   // b: './b.json',
+  // },
   context: resolve(process.cwd(), 'src'),
   output: {
     clean: true,
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /a\.json$/,
-  //       type: 'asset/resource',
-  //       generator: {
-  //         filename: '[entry][ext]',
-  //       },
-  //     },
-  //   ],
-  // },
+  experiments: { layers: true },
   plugins: [
     new AllInOnePlugin({
       type: 'miniprogram',

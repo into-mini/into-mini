@@ -37,11 +37,12 @@ export function readAndTrack(compiler, compilation) {
   };
 }
 
-export function createAddEntry(compiler, EntryPlugin) {
+export function createAddEntry(compiler) {
   return (name, path) => {
-    new EntryPlugin(compiler.context, path, {
+    new compiler.webpack.EntryPlugin(compiler.context, path, {
       import: [path],
       name,
+      // layer: 'base',
     }).apply(compiler);
   };
 }

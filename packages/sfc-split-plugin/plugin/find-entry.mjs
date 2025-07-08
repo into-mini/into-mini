@@ -85,11 +85,10 @@ export class FindEntryPlugin {
 
   apply(compiler) {
     const {
-      EntryPlugin,
       sources: { RawSource },
     } = compiler.webpack;
 
-    const addEntry = createAddEntry(compiler, EntryPlugin);
+    const addEntry = createAddEntry(compiler);
 
     if (this.type === 'miniprogram') {
       // 设置初始环境

@@ -2,29 +2,60 @@ import { fileURLToPath } from 'node:url';
 
 const PLUGIN_NAME = 'CopyConfigPlugin';
 
+function reach(path) {
+  return fileURLToPath(import.meta.resolve(path));
+}
+
 export class CopyConfigPlugin {
+  constructor({ type = false } = {}) {
+    this.type = type;
+  }
+
   apply(compiler) {
+    const { type } = this;
+
+    const yamlLoader = reach('yaml-patch-loader');
+    const emptyYaml = reach('@best-shot/sfc-split-plugin/helper/empty.yaml');
+
     compiler.hooks.entryOption.tap(PLUGIN_NAME, (context, entry) => {
-      entry.configs = {
-        import: ['./project.config.yaml', './project.private.config.yaml'],
+      entry['project-config'] = {
+        import: ['./project.config.yaml'],
+        layer: 'project-config',
       };
 
-      const yamlLoader = fileURLToPath(import.meta.resolve('yaml-loader'));
+      entry['project-private-config'] = {
+        import: ['./project.private.config.yaml'],
+        layer: 'project-private-config',
+      };
+
+      compiler.options.resolve.fallback ??= {};
+
+      Object.assign(compiler.options.resolve.fallback, {
+        './project.config.yaml': emptyYaml,
+        './project.private.config.yaml': emptyYaml,
+      });
 
       compiler.options.module.rules.push(
         {
-          test: /[/\\]project.config\.yaml$/,
+          issuerLayer: 'project-config',
           loader: yamlLoader,
-          options: { asJSON: true },
+          options: {
+            modify: (json) => ({
+              srcMiniprogramRoot: '',
+              miniprogramRoot: '',
+              pluginRoot: '',
+              ...json,
+              compileType: type,
+            }),
+          },
           type: 'asset/resource',
           generator: {
             filename: 'project.config.json',
           },
         },
         {
-          test: /[/\\]project.private.config\.yaml$/,
+          issuerLayer: 'project-private-config',
           loader: yamlLoader,
-          options: { asJSON: true },
           type: 'asset/resource',
           generator: {
             filename: 'project.private.config.json',
