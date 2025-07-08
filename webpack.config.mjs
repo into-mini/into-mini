@@ -9,9 +9,11 @@ export default {
   //   // b: './b.json',
   // },
   context: resolve(process.cwd(), 'src'),
+  cache: false,
   output: {
     clean: true,
   },
+  devtool: false,
   experiments: { layers: true },
   plugins: [
     new AllInOnePlugin({

@@ -14,7 +14,7 @@ function reach(path) {
 
 function handleImport({
   toThis,
-  caller,
+  addSmartEntry,
   componentRoot,
   context,
   rootContext,
@@ -51,14 +51,9 @@ function handleImport({
             : `./${relativePath}`;
           this.addDependency(resolve(absolutePath));
           this.addMissingDependency(resolve(absolutePath));
-          caller({
-            name,
-            path,
-            absolutePath,
-            relativePath,
-            entryName,
-            entryPath,
-            placer,
+          addSmartEntry({
+            name: entryName,
+            path: entryPath,
           });
         } catch (error) {
           console.error(error);
@@ -90,14 +85,14 @@ export default function loader(source, map, meta) {
     return slash(relative(`/${thisEntryName}/..`, `/${entryName}`));
   }
 
-  const caller = (io) => {
+  const addSmartEntry = (io) => {
     this.addSmartEntry(io);
   };
 
   if (config?.usingComponents) {
     handleImport.bind(this)({
       toThis,
-      caller,
+      addSmartEntry,
       componentRoot,
       context,
       rootContext,
@@ -116,7 +111,7 @@ export default function loader(source, map, meta) {
   if (config?.componentGenerics) {
     handleImport.bind(this)({
       toThis,
-      caller,
+      addSmartEntry,
       componentRoot,
       context,
       rootContext,

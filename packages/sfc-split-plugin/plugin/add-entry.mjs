@@ -5,9 +5,9 @@ export class AddEntryPlugin {
     this.newEntries = new Map();
   }
 
-  #addSmartEntry({ entryName, entryPath }) {
-    if (this.newEntries.get(entryName) !== entryPath) {
-      this.newEntries.set(entryName, entryPath);
+  #addSmartEntry({ name, path, layer }) {
+    if (this.newEntries.get(name) !== path) {
+      this.newEntries.set(name, { path, layer });
     }
   }
 
@@ -15,20 +15,20 @@ export class AddEntryPlugin {
     const { createDependency } = compiler.webpack.EntryPlugin;
 
     compilation.hooks.buildModule.tap(this.PLUGIN_NAME, () => {
-      for (const [entryName, entryPath] of this.newEntries.entries()) {
+      for (const [entryName, { path, layer }] of this.newEntries.entries()) {
         compilation.addEntry(
           compiler.context,
-          createDependency(entryPath),
+          createDependency(path),
           {
             name: entryName,
-            import: [entryPath],
-            // layer: 'base',
+            import: [path],
+            layer,
           },
           (err) => {
             if (err) {
               throw err;
             } else {
-              compilation.fileDependencies.add(entryPath);
+              compilation.fileDependencies.add(path);
             }
           },
         );
@@ -42,6 +42,14 @@ export class AddEntryPlugin {
     const {
       NormalModule: { getCompilationHooks },
     } = compiler.webpack;
+
+    Object.defineProperty(compiler, 'addSmartEntry', {
+      enumerable: true,
+      configurable: false,
+      value: (options) => {
+        this.#addSmartEntry(options);
+      },
+    });
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       getCompilationHooks(compilation).loader.tap(

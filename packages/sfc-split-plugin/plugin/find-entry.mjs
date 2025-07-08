@@ -65,9 +65,11 @@ export class FindEntryPlugin {
    */
   #processConfig(params, configType) {
     const { readFrom, emitFile, addEntry, compilation } = params;
-    const { content: config, name } = readFrom(configType);
+    const { content: config, name } = readFrom(
+      configType === 'miniprogram' ? 'app' : configType,
+    );
 
-    if (configType === 'app') {
+    if (configType === 'miniprogram') {
       emitFile(name, patchConfig(config));
       this.#handleVuePages(params, getAllPages(config));
     } else if (configType === 'plugin') {
@@ -93,7 +95,6 @@ export class FindEntryPlugin {
     if (this.type === 'miniprogram') {
       // 设置初始环境
       compiler.hooks.afterEnvironment.tap(this.PLUGIN_NAME, () => {
-        delete compiler.options.entry?.main;
         addEntry('app', './app');
       });
     }
@@ -111,10 +112,7 @@ export class FindEntryPlugin {
         readFrom: readAndTrack(compiler, compilation),
       };
 
-      this.#processConfig(
-        params,
-        this.type === 'miniprogram' ? 'app' : 'plugin',
-      );
+      this.#processConfig(params, this.type);
     });
   }
 }

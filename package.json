@@ -12,6 +12,8 @@
     "prepare": "nice-move git hooks",
     "snapshot": "ava --fail-fast -u -w",
     "test": "ava --fail-fast",
+    "try:build": "nodemon",
+    "try:watch": "nodemon -- --watch",
     "version:pin": "syncpack fix-mismatches"
   },
   "devDependencies": {
@@ -22,6 +24,7 @@
     "ava": "^6.4.0",
     "eslint": "^9.30.1",
     "garou": "^0.9.11",
+    "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "syncpack": "^13.0.4",
     "typescript": "~5.8.3",
@@ -38,6 +41,17 @@
   "ava": {
     "require": [
       "./tests/helper/setup.mjs"
+    ]
+  },
+  "nodemonConfig": {
+    "delay": 5,
+    "exec": "webpack",
+    "ext": "js,cjs,mjs,json,wxs",
+    "quiet": true,
+    "watch": [
+      "packages/**",
+      "webpack.config.mjs",
+      "package.json"
     ]
   },
   "prettier": "@nice-move/all-in-base/prettier"

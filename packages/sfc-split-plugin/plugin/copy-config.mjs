@@ -1,67 +1,67 @@
 import { fileURLToPath } from 'node:url';
 
-const PLUGIN_NAME = 'CopyConfigPlugin';
-
 function reach(path) {
   return fileURLToPath(import.meta.resolve(path));
 }
+
+const emptyJSON = reach('@best-shot/sfc-split-plugin/helper/empty.json');
+const yamlLoader = reach('yaml-patch-loader');
 
 export class CopyConfigPlugin {
   constructor({ type = false } = {}) {
     this.type = type;
   }
 
+  addConfigSmartEntry({
+    layer,
+    from = layer,
+    name = layer,
+    filename = from,
+    options,
+  }) {
+    const path = `./${from}.yaml`;
+
+    this.compiler.options.entry[name] = {
+      import: [path],
+      layer,
+      runtime: false,
+      filename,
+    };
+
+    this.compiler.options.resolve.fallback[path] = emptyJSON;
+
+    this.compiler.options.module.rules.push({
+      issuerLayer: layer,
+      loader: yamlLoader,
+      type: 'asset/resource',
+      generator: {
+        filename: `${filename}.json`,
+      },
+      options,
+    });
+  }
+
   apply(compiler) {
     const { type } = this;
+    this.compiler = compiler;
 
-    const yamlLoader = reach('yaml-patch-loader');
-    const emptyYaml = reach('@best-shot/sfc-split-plugin/helper/empty.yaml');
-
-    compiler.hooks.entryOption.tap(PLUGIN_NAME, (context, entry) => {
-      entry['project-config'] = {
-        import: ['./project.config.yaml'],
-        layer: 'project-config',
-      };
-
-      entry['project-private-config'] = {
-        import: ['./project.private.config.yaml'],
-        layer: 'project-private-config',
-      };
-
-      compiler.options.resolve.fallback ??= {};
-
-      Object.assign(compiler.options.resolve.fallback, {
-        './project.config.yaml': emptyYaml,
-        './project.private.config.yaml': emptyYaml,
+    if (type) {
+      this.addConfigSmartEntry({
+        layer: 'project.config',
+        options: {
+          modify: (json) => ({
+            srcMiniprogramRoot: '',
+            miniprogramRoot: '',
+            pluginRoot: '',
+            ...json,
+            compileType: type,
+          }),
+        },
       });
 
-      compiler.options.module.rules.push(
-        {
-          issuerLayer: 'project-config',
-          loader: yamlLoader,
-          options: {
-            modify: (json) => ({
-              srcMiniprogramRoot: '',
-              miniprogramRoot: '',
-              pluginRoot: '',
-              ...json,
-              compileType: type,
-            }),
-          },
-          type: 'asset/resource',
-          generator: {
-            filename: 'project.config.json',
-          },
-        },
-        {
-          issuerLayer: 'project-private-config',
-          loader: yamlLoader,
-          type: 'asset/resource',
-          generator: {
-            filename: 'project.private.config.json',
-          },
-        },
-      );
-    });
+      this.addConfigSmartEntry({
+        layer: 'project.private.config',
+      });
+    }
   }
 }

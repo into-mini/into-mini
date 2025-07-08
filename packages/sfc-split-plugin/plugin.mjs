@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { fileURLToPath } from 'node:url';
 
 import { COMPONENT_ROOT } from './helper/index.mjs';
@@ -42,14 +43,31 @@ export class AllInOnePlugin {
     );
   }
 
+  #prepare(compiler) {
+    compiler.options.resolve.extensionAlias ??= {};
+
+    compiler.options.resolve.extensionAlias['.yaml'] = [
+      '.yaml',
+      '.yml',
+      '.json',
+    ];
+
+    compiler.options.resolve.fallback ??= {};
+
+    if (compiler.options.entry?.main) {
+      delete compiler.options.entry.main;
+    }
+  }
+
   apply(compiler) {
+    this.#prepare(compiler);
     this.#applyLoader(compiler);
 
     const { type } = this;
 
     if (type) {
-      new SfcSplitPlugin().apply(compiler);
       new AddEntryPlugin().apply(compiler);
+      new SfcSplitPlugin().apply(compiler);
       new ExposeEntryNamePlugin().apply(compiler);
       new FindEntryPlugin({ type }).apply(compiler);
       new CopyConfigPlugin({ type }).apply(compiler);
