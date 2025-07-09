@@ -1,0 +1,19 @@
+{
+  "name": "@into-mini/wxml-loader",
+  "version": "0.0.0",
+  "license": "MIT",
+  "keywords": [],
+  "main": "index.mjs",
+  "type": "module",
+  "dependencies": {
+    "tab-to-space": "^1.0.1",
+    "wxml-parse": "^0.2.3"
+  },
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

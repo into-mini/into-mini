@@ -1,3 +1,5 @@
+import { toJSONString } from '@into-mini/sfc-transformer/utils.mjs';
+
 export class AddEntryPlugin {
   PLUGIN_NAME = 'AddEntryPlugin';
 
@@ -84,7 +86,7 @@ export class AddEntryPlugin {
     const io = this.#getEntries(compilation);
     compilation.emitAsset(
       '__debug__/entries.json',
-      new RawSource(JSON.stringify(io, null, 2)),
+      new RawSource(toJSONString(io)),
     );
   }
 

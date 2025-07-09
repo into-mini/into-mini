@@ -51,7 +51,8 @@
     "watch": [
       "packages/**",
       "webpack.config.mjs",
-      "package.json"
+      "package.json",
+      "plugin"
     ]
   },
   "prettier": "@nice-move/all-in-base/prettier"

@@ -35,7 +35,7 @@ export class AllInOnePlugin {
       {
         test: /\.wxml$/,
         type: 'asset/resource',
-        loader: reach('./loader/wxml-parse-loader.mjs'),
+        loader: reach('@into-mini/wxml-loader'),
         generator: {
           filename: '[entry][ext]',
         },

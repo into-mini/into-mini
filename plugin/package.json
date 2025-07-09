@@ -1,6 +1,6 @@
 {
   "name": "@best-shot/sfc-split-plugin",
-  "version": "0.14.39",
+  "version": "0.14.40",
   "license": "MIT",
   "keywords": [
     "loader",
@@ -19,6 +19,7 @@
     "@into-mini/clsx": "workspace:^",
     "@into-mini/sfc-template-traverse": "workspace:^",
     "@into-mini/sfc-transformer": "workspace:^",
+    "@into-mini/wxml-loader": "workspace:^",
     "slash": "^5.1.0",
     "webpack-virtual-modules": "^0.6.2",
     "yaml": "^2.8.0",

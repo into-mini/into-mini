@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { toJSONString } from '@into-mini/sfc-transformer/utils.mjs';
 import slash from 'slash';
 
 function createShortHash(input) {
@@ -46,9 +47,13 @@ function handleImport({
             name,
             placer,
           });
+
           const entryPath = relativePath.startsWith('..')
-            ? absolutePath
+            ? path.startsWith('.')
+              ? relativePath
+              : path
             : `./${relativePath}`;
+
           this.addDependency(resolve(absolutePath));
           this.addMissingDependency(resolve(absolutePath));
           addSmartEntry({
@@ -132,6 +137,6 @@ export default function loader(source, map, meta) {
       .map((path) => `import "./${path}";`),
     script,
   ].join('\n');
-  this.emitFile(`${thisEntryName}.json`, JSON.stringify(config, null, 2));
+  this.emitFile(`${thisEntryName}.json`, toJSONString(config));
   callback(null, file, map, meta);
 }
