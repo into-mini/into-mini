@@ -15,12 +15,8 @@ const WXS_FILENAME = 'wxs/clsx.wxs';
 export class AddWxsPlugin {
   PLUGIN_NAME = 'AddWxsPlugin';
 
-  #wxsAdded = false;
-
   apply(compiler) {
-    const {
-      sources: { RawSource },
-    } = compiler.webpack;
+    const { RawSource } = compiler.webpack.sources;
 
     compiler.hooks.compilation.tap(this.PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tap(
@@ -33,45 +29,34 @@ export class AddWxsPlugin {
     });
   }
 
-  /**
-   * 处理编译资源，检查wxml文件并在需要时添加wxs文件
-   */
   #processAssets(assets, compilation, RawSource) {
-    let needsWxs = false;
-
     // 处理所有wxml文件
-    Object.entries(assets).forEach(([filename, source]) => {
-      if (extname(filename) !== '.wxml') {
-        return;
+    for (const [filename, source] of Object.entries(assets)) {
+      if (extname(filename) === '.wxml') {
+        const content = source.source().toString();
+
+        if (content.includes(CLSX_PLACEHOLDER)) {
+          this.#addWxsFile(compilation, RawSource);
+
+          this.#replaceSource(compilation, RawSource, {
+            filename,
+            content,
+          });
+        }
       }
-
-      const content = source.source().toString();
-
-      if (!content.includes(CLSX_PLACEHOLDER)) {
-        return;
-      }
-
-      // 第一次发现占位符时添加wxs文件
-      if (!needsWxs && !this.#wxsAdded) {
-        needsWxs = true;
-        this.#addWxsFile(compilation, RawSource);
-      }
-
-      // 替换占位符为相对路径
-      const relativePath = slash(relative(join(filename, '..'), WXS_FILENAME));
-      const newContent = content.replace(CLSX_PLACEHOLDER, relativePath);
-      compilation.updateAsset(filename, new RawSource(newContent));
-    });
+    }
   }
 
-  /**
-   * 添加wxs文件到编译结果
-   */
+  #replaceSource(compilation, RawSource, { filename, content }) {
+    const relativePath = slash(relative(join(filename, '..'), WXS_FILENAME));
+    const newContent = content.replace(CLSX_PLACEHOLDER, relativePath);
+    compilation.updateAsset(filename, new RawSource(newContent));
+  }
+
   #addWxsFile(compilation, RawSource) {
     const wxsPath = import.meta.resolve('@into-mini/clsx/index.wxs');
     const wxsContent = readFileSync(fileURLToPath(wxsPath), 'utf8');
 
     compilation.emitAsset(WXS_FILENAME, new RawSource(wxsContent));
-    this.#wxsAdded = true;
   }
 }

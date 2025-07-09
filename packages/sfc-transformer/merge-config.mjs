@@ -64,7 +64,5 @@ export function mergeConfig(customBlocks, pair = []) {
         : JSON.parse(block.content),
     );
 
-  return {
-    config: configs.length > 1 ? deepMerge(...configs) : configs[0] || {},
-  };
+  return configs.length > 1 ? deepMerge(...configs) : configs[0] || {};
 }

@@ -23,6 +23,8 @@ export function parse(raw) {
   if (!descriptor.scriptSetup && !descriptor.script?.content) {
     descriptor.code = '';
 
+    descriptor.config = mergeConfig(descriptor.customBlocks);
+
     return descriptor;
   }
 

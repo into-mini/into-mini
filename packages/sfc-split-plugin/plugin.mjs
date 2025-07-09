@@ -67,11 +67,11 @@ export class AllInOnePlugin {
 
     if (type) {
       new AddEntryPlugin().apply(compiler);
+      new AddWxsPlugin().apply(compiler);
       new SfcSplitPlugin().apply(compiler);
       new ExposeEntryNamePlugin().apply(compiler);
       new FindEntryPlugin({ type }).apply(compiler);
       new CopyConfigPlugin({ type }).apply(compiler);
-      new AddWxsPlugin().apply(compiler);
     }
 
     if (type === 'miniprogram') {
