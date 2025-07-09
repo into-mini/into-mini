@@ -1,4 +1,4 @@
-import { pretty } from '@into-mini/sfc-template-traverse/pretty.mjs';
+import { pretty } from '@into-mini/sfc-transformer/pretty.mjs';
 
 export default function loader(source) {
   this.cacheable();

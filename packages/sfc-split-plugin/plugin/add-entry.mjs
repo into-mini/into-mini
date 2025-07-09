@@ -15,12 +15,12 @@ export class AddEntryPlugin {
     const { createDependency } = compiler.webpack.EntryPlugin;
 
     compilation.hooks.buildModule.tap(this.PLUGIN_NAME, () => {
-      for (const [entryName, { path, layer }] of this.newEntries.entries()) {
+      for (const [name, { path, layer }] of this.newEntries.entries()) {
         compilation.addEntry(
           compiler.context,
-          createDependency(path),
+          createDependency(path, { name }),
           {
-            name: entryName,
+            name,
             import: [path],
             layer,
           },

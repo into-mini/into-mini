@@ -1,5 +1,3 @@
-
-
 import tabToSpace from 'tab-to-space';
 import { generate, parse } from 'wxml-parse';
 

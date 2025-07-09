@@ -39,19 +39,21 @@ export function parse(raw) {
     });
 
     const Generics = result.scriptSetupAst
-      .filter(
-        (item) =>
-          item.type === 'ImportDeclaration' &&
-          item.attributes?.length > 0 &&
-          item.attributes.some(
-            (attribute) =>
-              attribute.type === 'ImportAttribute' &&
-              attribute.key.name === 'as' &&
-              attribute.value.type === 'StringLiteral' &&
-              attribute.value.value === 'generic',
-          ),
-      )
-      .map((item) => item.source.value);
+      ? result.scriptSetupAst
+          .filter(
+            (item) =>
+              item.type === 'ImportDeclaration' &&
+              item.attributes?.length > 0 &&
+              item.attributes.some(
+                (attribute) =>
+                  attribute.type === 'ImportAttribute' &&
+                  attribute.key.name === 'as' &&
+                  attribute.value.type === 'StringLiteral' &&
+                  attribute.value.value === 'generic',
+              ),
+          )
+          .map((item) => item.source.value)
+      : [];
 
     const pair = result.imports
       ? Object.values(result.imports)

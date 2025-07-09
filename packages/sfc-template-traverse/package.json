@@ -1,6 +1,6 @@
 {
   "name": "@into-mini/sfc-template-traverse",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "keywords": [
     "sfc",
@@ -11,9 +11,7 @@
   "main": "index.mjs",
   "type": "module",
   "dependencies": {
-    "neotraverse": "^0.6.18",
-    "tab-to-space": "^1.0.1",
-    "wxml-parse": "^0.2.3"
+    "neotraverse": "^0.6.18"
   },
   "peerDependencies": {
     "@vue/compiler-core": "~3.5.17"

@@ -94,12 +94,6 @@ importers:
       neotraverse:
         specifier: ^0.6.18
         version: 0.6.18
-      tab-to-space:
-        specifier: ^1.0.1
-        version: 1.0.1
-      wxml-parse:
-        specifier: ^0.2.3
-        version: 0.2.3
 
   packages/sfc-transformer:
     dependencies:
@@ -127,6 +121,12 @@ importers:
       deepmerge-ts:
         specifier: ^7.1.5
         version: 7.1.5
+      tab-to-space:
+        specifier: ^1.0.1
+        version: 1.0.1
+      wxml-parse:
+        specifier: ^0.2.3
+        version: 0.2.3
       yaml:
         specifier: ^2.8.0
         version: 2.8.0
@@ -151,6 +151,9 @@ importers:
       '@into-mini/sfc-template-traverse':
         specifier: workspace:^
         version: link:../packages/sfc-template-traverse
+      '@into-mini/sfc-transformer':
+        specifier: workspace:^
+        version: link:../packages/sfc-transformer
       '@padcom/vue-ast-serializer':
         specifier: ^0.0.1
         version: 0.0.1(@vue/compiler-core@3.5.17)(@vue/compiler-sfc@3.5.17)
