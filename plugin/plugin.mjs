@@ -37,7 +37,9 @@ export class AllInOnePlugin {
         type: 'asset/resource',
         loader: reach('@into-mini/wxml-loader'),
         generator: {
-          filename: '[entry][ext]',
+          filename: process.env.DEBUG_MINI
+            ? '[entry][hash:8][ext]'
+            : '[entry][ext]',
         },
       },
     );
