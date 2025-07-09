@@ -7,6 +7,7 @@ import {
 } from '@vue/compiler-sfc';
 
 import { action } from './action.mjs';
+import { mergeConfig } from './merge-config.mjs';
 import { transformer } from './transformer.mjs';
 
 export function parse(raw) {
@@ -37,6 +38,21 @@ export function parse(raw) {
       genDefaultAs: id,
     });
 
+    const Generics = result.scriptSetupAst
+      .filter(
+        (item) =>
+          item.type === 'ImportDeclaration' &&
+          item.attributes?.length > 0 &&
+          item.attributes.some(
+            (attribute) =>
+              attribute.type === 'ImportAttribute' &&
+              attribute.key.name === 'as' &&
+              attribute.value.type === 'StringLiteral' &&
+              attribute.value.value === 'generic',
+          ),
+      )
+      .map((item) => item.source.value);
+
     const pair = result.imports
       ? Object.values(result.imports)
           .filter(
@@ -49,6 +65,7 @@ export function parse(raw) {
           .map(({ source, local }) => ({
             local,
             source,
+            generic: Generics.includes(source),
           }))
       : [];
 
@@ -76,10 +93,14 @@ export function parse(raw) {
 
     descriptor.code = code;
 
+    descriptor.config = mergeConfig(descriptor.customBlocks, pair);
+
     return descriptor;
   }
 
   descriptor.code = descriptor.script.content;
+
+  descriptor.config = mergeConfig(descriptor.customBlocks);
 
   return descriptor;
 }

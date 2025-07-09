@@ -4,23 +4,23 @@ import { parse as yamlParse } from 'yaml';
 
 import { toJSONString } from './utils.mjs';
 
-export function mergeConfig(customBlocks, pair) {
+export function mergeConfig(customBlocks, pair = []) {
   const usingComponents =
     pair.length > 0
-      ? Object.fromEntries(
+      ? new Map(
           pair
-            .filter(({ local }) => !local.endsWith('_generic'))
+            .filter(({ generic }) => !generic)
             .map(({ local, source }) => [kebabCase(local), source]),
         )
-      : {};
+      : undefined;
 
   const componentGenerics =
     pair.length > 0
-      ? Object.fromEntries(
+      ? new Map(
           pair
-            .filter(({ local }) => local.endsWith('_generic'))
+            .filter(({ generic }) => generic)
             .map(({ local, source }) => [
-              kebabCase(local.replace(/_generic$/, '')),
+              kebabCase(local),
               { default: source },
             ]),
         )
@@ -33,8 +33,18 @@ export function mergeConfig(customBlocks, pair) {
       lang: 'json',
       content: toJSONString({
         component: true,
-        usingComponents,
-        componentGenerics,
+        ...(usingComponents?.size > 0
+          ? {
+              usingComponents: Object.fromEntries(usingComponents.entries()),
+            }
+          : undefined),
+        ...(componentGenerics?.size > 0
+          ? {
+              componentGenerics: Object.fromEntries(
+                componentGenerics.entries(),
+              ),
+            }
+          : undefined),
       }),
     },
   ];

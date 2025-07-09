@@ -1,7 +1,6 @@
 import path from 'node:path';
 
 import { parse } from '@into-mini/sfc-transformer';
-import { mergeConfig } from '@into-mini/sfc-transformer/merge-config.mjs';
 import slash from 'slash';
 import VirtualModulesPlugin from 'webpack-virtual-modules';
 
@@ -72,15 +71,8 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
     return this.#inject(resourcePath, '.wxml', tpl);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  #injectConfig(customBlocks, pair) {
-    return mergeConfig(customBlocks, pair);
-  }
-
   #processSfcFile({ source, resourcePath }) {
-    const { tpl, styles, customBlocks, code, pair = [] } = parse(source);
-
-    const { config } = this.#injectConfig(customBlocks, pair);
+    const { tpl, styles, code, config } = parse(source);
 
     const paths = [];
 
