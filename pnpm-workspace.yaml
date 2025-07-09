@@ -1,5 +1,7 @@
 packages:
   - packages/*
+  - plugin
+  - fake
   - tests
 
 patchedDependencies:

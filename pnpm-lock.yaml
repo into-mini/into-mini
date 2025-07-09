@@ -15,7 +15,7 @@ importers:
     dependencies:
       '@best-shot/sfc-split-plugin':
         specifier: workspace:*
-        version: link:packages/sfc-split-plugin
+        version: link:plugin
     devDependencies:
       '@bring-it/npm':
         specifier: ^0.6.1
@@ -58,33 +58,6 @@ importers:
         version: 6.0.1(webpack@5.99.9)
 
   packages/clsx: {}
-
-  packages/sfc-split-plugin:
-    dependencies:
-      '@into-mini/clsx':
-        specifier: workspace:^
-        version: link:../clsx
-      '@into-mini/sfc-template-traverse':
-        specifier: workspace:^
-        version: link:../sfc-template-traverse
-      '@into-mini/sfc-transformer':
-        specifier: workspace:^
-        version: link:../sfc-transformer
-      slash:
-        specifier: ^5.1.0
-        version: 5.1.0
-      webpack:
-        specifier: ^5.99.9
-        version: 5.99.9(webpack-cli@6.0.1(webpack@5.99.9))
-      webpack-virtual-modules:
-        specifier: ^0.6.2
-        version: 0.6.2
-      yaml:
-        specifier: ^2.8.0
-        version: 2.8.0
-      yaml-patch-loader:
-        specifier: ^0.1.0
-        version: 0.1.0
 
   packages/sfc-template-traverse:
     dependencies:
@@ -136,6 +109,33 @@ importers:
       '@vue-mini/core':
         specifier: '>=1.2.3'
         version: 1.2.3
+
+  plugin:
+    dependencies:
+      '@into-mini/clsx':
+        specifier: workspace:^
+        version: link:../packages/clsx
+      '@into-mini/sfc-template-traverse':
+        specifier: workspace:^
+        version: link:../packages/sfc-template-traverse
+      '@into-mini/sfc-transformer':
+        specifier: workspace:^
+        version: link:../packages/sfc-transformer
+      slash:
+        specifier: ^5.1.0
+        version: 5.1.0
+      webpack:
+        specifier: ^5.99.9
+        version: 5.99.9(webpack-cli@6.0.1(webpack@5.99.9))
+      webpack-virtual-modules:
+        specifier: ^0.6.2
+        version: 0.6.2
+      yaml:
+        specifier: ^2.8.0
+        version: 2.8.0
+      yaml-patch-loader:
+        specifier: ^0.1.0
+        version: 0.1.0
 
   tests:
     dependencies:
