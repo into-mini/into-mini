@@ -49,9 +49,7 @@ function handleImport({
           });
 
           const entryPath = relativePath.startsWith('..')
-            ? path.startsWith('.')
-              ? relativePath
-              : path
+            ? absolutePath
             : `./${relativePath}`;
 
           this.addDependency(resolve(absolutePath));
