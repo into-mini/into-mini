@@ -88,6 +88,22 @@ export class ExposeEntryNamePlugin {
 
   getPath(path, data) {
     if (path.includes('[entry]')) {
+      if (process.env.DEBUG_MINI && data?.module && data?.chunkGraph) {
+        const chunks = data.chunkGraph.getModuleChunks(data.module);
+
+        const tmp = [...chunks].map((chunk) =>
+          chunk.groupsIterable
+            ? [...chunk.groupsIterable]
+                .filter((group) => group.isInitial())
+                .map((group) => group.name)
+            : '',
+        );
+
+        if (tmp.length > 1) {
+          console.log(path, tmp);
+        }
+      }
+
       const entryName = this.getEntryNameFromCompilationData(data);
 
       return entryName ? path.replaceAll('[entry]', entryName) : path;
