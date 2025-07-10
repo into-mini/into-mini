@@ -108,7 +108,7 @@ export class AddEntryPlugin {
     compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
       this.#addEntries(compiler, compilation);
     });
-    compiler.hooks.emit.tap(PLUGIN_NAME, (compilation) => {
+    compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
       this.#emitEntries(compilation, RawSource);
     });
   }
