@@ -5,7 +5,7 @@ import {
   createEmitFile,
   readAndTrack,
 } from '../helper/hooks.mjs';
-import { getAllPages, patchConfig } from '../helper/index.mjs';
+import { getAllPages } from '../helper/index.mjs';
 
 /**
  * Webpack插件，用于处理小程序和插件的入口文件
@@ -70,7 +70,6 @@ export class FindEntryPlugin {
     );
 
     if (configType === 'miniprogram') {
-      emitFile(name, patchConfig(config));
       this.#handleVuePages(params, getAllPages(config));
     } else if (configType === 'plugin') {
       if (config.main) {
@@ -91,13 +90,6 @@ export class FindEntryPlugin {
     } = compiler.webpack;
 
     const addEntry = createAddEntry(compiler);
-
-    if (this.type === 'miniprogram') {
-      // 设置初始环境
-      compiler.hooks.afterEnvironment.tap(this.PLUGIN_NAME, () => {
-        addEntry('app', './app');
-      });
-    }
 
     // 处理入口文件和配置
     compiler.hooks.compilation.tap(this.PLUGIN_NAME, (compilation) => {
