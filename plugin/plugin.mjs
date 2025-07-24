@@ -5,7 +5,6 @@ import { COMPONENT_ROOT } from './helper/index.mjs';
 import { AddEntryPlugin } from './plugin/add-entry.mjs';
 import { AddWxsPlugin } from './plugin/add-wxs.mjs';
 import { CopyConfigPlugin } from './plugin/copy-config.mjs';
-import { EmitEntriesPlugin } from './plugin/emit-entries.mjs';
 import { EmitFakePlugin } from './plugin/emit-fake.mjs';
 import { ExposeEntryNamePlugin } from './plugin/expose-entry.mjs';
 import { FindEntryPlugin } from './plugin/find-entry.mjs';
@@ -68,7 +67,6 @@ export class AllInOnePlugin {
 
     if (type) {
       new AddEntryPlugin().apply(compiler);
-      new EmitEntriesPlugin().apply(compiler);
       new AddWxsPlugin().apply(compiler);
       new SfcSplitPlugin().apply(compiler);
       new ExposeEntryNamePlugin().apply(compiler);

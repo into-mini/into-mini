@@ -27,11 +27,12 @@ export class FindEntryPlugin {
    */
   #handleVuePages(params, pages, basePath = '.') {
     const { addEntry, compilation } = params;
-    pages.forEach((page) => {
+
+    for (const page of pages) {
       const source = `${basePath}/${page}.vue`;
       addEntry(page, source);
       compilation.fileDependencies.add(source);
-    });
+    }
   }
 
   /**

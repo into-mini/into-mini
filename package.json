@@ -17,24 +17,24 @@
     "version:pin": "syncpack fix-mismatches"
   },
   "devDependencies": {
-    "@bring-it/npm": "^0.6.1",
-    "@nice-move/all-in-base": "^0.5.3",
+    "@bring-it/npm": "^0.8.3",
+    "@nice-move/all-in-base": "^0.6.0",
     "@nice-move/syncpack-config": "^0.4.1",
-    "@types/node": "^24.0.12",
-    "ava": "^6.4.0",
-    "eslint": "^9.30.1",
+    "@types/node": "^24.1.0",
+    "ava": "^6.4.1",
+    "eslint": "^9.31.0",
     "garou": "^0.9.11",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "syncpack": "^13.0.4",
     "typescript": "~5.8.3",
-    "webpack": "^5.99.9",
+    "webpack": "^5.100.2",
     "webpack-cli": "^6.0.1"
   },
   "peerDependencies": {
     "@best-shot/sfc-split-plugin": "workspace:*"
   },
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.13.1",
   "engines": {
     "node": ">=22.11.0"
   },

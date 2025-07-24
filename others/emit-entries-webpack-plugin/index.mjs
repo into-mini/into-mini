@@ -1,8 +1,9 @@
-import { toJSONString } from '@into-mini/sfc-transformer/utils.mjs';
 import sortKeys from 'sort-keys';
 
 export class EmitEntriesPlugin {
   PLUGIN_NAME = 'EmitEntriesPlugin';
+
+  EMIT_PATH = '__debug__/entries.json';
 
   #getEntries(compilation) {
     return Object.fromEntries(
@@ -17,10 +18,16 @@ export class EmitEntriesPlugin {
     );
   }
 
+  #formatter(config) {
+    const sorted = sortKeys(config, { deep: true });
+
+    return JSON.stringify(sorted, null, 2);
+  }
+
   #emitEntries(compilation, RawSource) {
     const io = this.#getEntries(compilation);
-    const string = toJSONString(sortKeys(io, { deep: true }));
-    compilation.emitAsset('__debug__/entries.json', new RawSource(string));
+    const string = this.#formatter(io);
+    compilation.emitAsset(this.EMIT_PATH, new RawSource(string));
   }
 
   apply(compiler) {

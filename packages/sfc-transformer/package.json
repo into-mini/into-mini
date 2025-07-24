@@ -18,7 +18,7 @@
     "@into-mini/sfc-template-traverse": "workspace:^",
     "@into-mini/vue-mini-patch": "workspace:^",
     "@padcom/vue-ast-serializer": "^0.0.1",
-    "@vue/compiler-sfc": "~3.5.17",
+    "@vue/compiler-sfc": "~3.5.18",
     "change-case": "^5.4.4",
     "deepmerge-ts": "^7.1.5",
     "yaml": "^2.8.0"
