@@ -2,6 +2,7 @@
 import { fileURLToPath } from 'node:url';
 
 import { COMPONENT_ROOT } from './helper/index.mjs';
+import { configKeys } from './helper/utils.mjs';
 import { AddEntryPlugin } from './plugin/add-entry.mjs';
 import { AddWxsPlugin } from './plugin/add-wxs.mjs';
 import { CopyConfigPlugin } from './plugin/copy-config.mjs';
@@ -40,6 +41,12 @@ export class AllInOnePlugin {
           filename: '[entry][ext]',
         },
       },
+      {
+        test: /\.hack$/,
+        type: 'javascript/esm',
+        layer: configKeys.hack,
+        loader: reach('./loader/hack-entry-loader.mjs'),
+      },
     );
   }
 
@@ -57,6 +64,10 @@ export class AllInOnePlugin {
     if (compiler.options.entry?.main) {
       delete compiler.options.entry.main;
     }
+
+    Object.assign(compiler, {
+      __entries__: new Map(),
+    });
   }
 
   apply(compiler) {

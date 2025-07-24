@@ -1,19 +1,14 @@
 import { fileURLToPath } from 'node:url';
 
 import { patchConfig } from '../helper/index.mjs';
+import { configKeys } from '../helper/utils.mjs';
 
 function reach(path) {
   return fileURLToPath(import.meta.resolve(path));
 }
 
-const emptyJSON = reach('@best-shot/sfc-split-plugin/helper/empty.json');
+const emptyJSON = reach('../helper/empty.json');
 const yamlLoader = reach('yaml-patch-loader');
-
-export const configKeys = {
-  app: 'app-json',
-  projectPrivate: 'project.private.config',
-  project: 'project.config',
-};
 
 export class CopyConfigPlugin {
   constructor({ type = false } = {}) {
@@ -57,13 +52,15 @@ export class CopyConfigPlugin {
       this.addConfigSmartEntry({
         layer: configKeys.project,
         options: {
-          modify: (json) => ({
-            srcMiniprogramRoot: '',
-            miniprogramRoot: '',
-            pluginRoot: '',
-            ...json,
-            compileType: type,
-          }),
+          modify: (json) => {
+            return {
+              srcMiniprogramRoot: '',
+              miniprogramRoot: '',
+              pluginRoot: '',
+              ...json,
+              compileType: type,
+            };
+          },
         },
       });
 
@@ -82,6 +79,11 @@ export class CopyConfigPlugin {
 
         this.compiler.options.entry.app = {
           import: ['./app'],
+        };
+
+        this.compiler.options.entry.__hack__ = {
+          import: [reach('../helper/hack.hack')],
+          layer: configKeys.hack,
         };
       }
     }
