@@ -10,6 +10,7 @@ import { EmitFakePlugin } from './plugin/emit-fake.mjs';
 import { ExposeEntryNamePlugin } from './plugin/expose-entry.mjs';
 import { FindEntryPlugin } from './plugin/find-entry.mjs';
 import { SfcSplitPlugin } from './plugin/sfc-split.mjs';
+import { MinaRuntimeWebpackPlugin } from './plugin/mina-runtime.mjs';
 
 function reach(path) {
   return fileURLToPath(import.meta.resolve(path));
@@ -77,6 +78,7 @@ export class AllInOnePlugin {
     const { type } = this;
 
     if (type) {
+      new MinaRuntimeWebpackPlugin().apply(compiler);
       new AddEntryPlugin().apply(compiler);
       new AddWxsPlugin().apply(compiler);
       new SfcSplitPlugin().apply(compiler);
