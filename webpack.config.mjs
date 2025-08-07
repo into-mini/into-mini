@@ -4,16 +4,18 @@ import { AllInOnePlugin } from '@best-shot/sfc-split-plugin';
 
 export default {
   mode: 'development',
-  target: 'web',
+  target: 'es2022',
   entry: {
     // a: './a.json',
     // b: './b.json',
     // c: './c.js',
   },
-  context: resolve(process.cwd(), 'fake'),
+  context: resolve(process.cwd(), 'src'),
   cache: false,
   output: {
     clean: true,
+    chunkFormat: 'commonjs',
+    chunkLoading: 'require',
     // module: true,
   },
   devtool: false,
@@ -22,7 +24,7 @@ export default {
     // outputModule: true,
   },
   optimization: {
-    runtimeChunk: 'single',
+    // runtimeChunk: 'single',
   },
   plugins: [
     new AllInOnePlugin({

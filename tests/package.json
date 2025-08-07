@@ -16,10 +16,10 @@
     "@into-mini/clsx": "workspace:^",
     "@into-mini/sfc-template-traverse": "workspace:^",
     "@into-mini/wxml-loader": "workspace:^",
-    "ava": "^6.4.0",
-    "prettier": "^3.5.3"
+    "ava": "^6.4.1",
+    "prettier": "^3.6.2"
   },
   "engines": {
-    "node": ">=22.11.0"
+    "node": ">=22.18.0"
   }
 }

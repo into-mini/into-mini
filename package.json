@@ -16,11 +16,14 @@
     "try:watch": "nodemon -- --watch",
     "version:pin": "syncpack fix-mismatches"
   },
+  "dependencies": {
+    "@vue-mini/pinia": "^0.1.2"
+  },
   "devDependencies": {
     "@bring-it/npm": "^0.8.3",
-    "@nice-move/all-in-base": "^0.6.5",
+    "@nice-move/all-in-base": "^0.6.6",
     "@nice-move/syncpack-config": "^0.4.1",
-    "@types/node": "^24.1.0",
+    "@types/node": "^22.17.0",
     "ava": "^6.4.1",
     "eslint": "^9.32.0",
     "garou": "^0.9.12",
@@ -32,11 +35,11 @@
     "webpack-cli": "^6.0.1"
   },
   "peerDependencies": {
-    "@best-shot/sfc-split-plugin": "workspace:*"
+    "@best-shot/sfc-split-plugin": "workspace:^"
   },
   "packageManager": "pnpm@10.14.0",
   "engines": {
-    "node": ">=22.11.0"
+    "node": ">=22.18.0"
   },
   "ava": {
     "require": [

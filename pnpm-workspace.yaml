@@ -9,3 +9,6 @@ patchedDependencies:
   ava: patches/ava.patch
 
 shamefullyHoist: true
+
+catalog:
+  yaml: ^2.8.1
