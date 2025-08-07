@@ -11,6 +11,9 @@ catalogs:
       version: 2.8.1
 
 patchedDependencies:
+  '@vue-mini/core':
+    hash: 27ebdacab8824208c9e55765b91f14b3caf49962acc89f1d0e546917b4a1e522
+    path: patches/@vue-mini__core.patch
   ava:
     hash: 3efb6a6fff2c691907321ccb0ffbb8732e6d8f186cff6a6d7d09221c23efc00d
     path: patches/ava.patch
@@ -24,7 +27,7 @@ importers:
         version: link:plugin
       '@vue-mini/pinia':
         specifier: ^0.1.2
-        version: 0.1.2(@vue-mini/core@1.2.4)
+        version: 0.1.2(@vue-mini/core@1.2.4(patch_hash=27ebdacab8824208c9e55765b91f14b3caf49962acc89f1d0e546917b4a1e522))
     devDependencies:
       '@bring-it/npm':
         specifier: ^0.8.3
@@ -113,10 +116,10 @@ importers:
     dependencies:
       '@vue-mini/core':
         specifier: ^1.2.4
-        version: 1.2.4
+        version: 1.2.4(patch_hash=27ebdacab8824208c9e55765b91f14b3caf49962acc89f1d0e546917b4a1e522)
       '@vue-mini/pinia':
         specifier: ^0.1.2
-        version: 0.1.2(@vue-mini/core@1.2.4)
+        version: 0.1.2(@vue-mini/core@1.2.4(patch_hash=27ebdacab8824208c9e55765b91f14b3caf49962acc89f1d0e546917b4a1e522))
 
   packages/wxml-loader:
     dependencies:
@@ -3371,14 +3374,14 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vue-mini/core@1.2.4':
+  '@vue-mini/core@1.2.4(patch_hash=27ebdacab8824208c9e55765b91f14b3caf49962acc89f1d0e546917b4a1e522)':
     dependencies:
       '@vue/reactivity': 3.5.18
       miniprogram-api-typings: 4.0.8
 
-  '@vue-mini/pinia@0.1.2(@vue-mini/core@1.2.4)':
+  '@vue-mini/pinia@0.1.2(@vue-mini/core@1.2.4(patch_hash=27ebdacab8824208c9e55765b91f14b3caf49962acc89f1d0e546917b4a1e522))':
     dependencies:
-      '@vue-mini/core': 1.2.4
+      '@vue-mini/core': 1.2.4(patch_hash=27ebdacab8824208c9e55765b91f14b3caf49962acc89f1d0e546917b4a1e522)
 
   '@vue/compiler-core@3.5.18':
     dependencies:

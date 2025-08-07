@@ -1,78 +1,45 @@
-// eslint-disable-next-line import/named
-import { getCurrentInstance } from '@vue-mini/core';
+import { customRef, getCurrentInstance } from '@vue-mini/core';
 
-const prefix = '__';
+export function hackRef(init, fakeKey) {
+  const context = getCurrentInstance();
 
-const DefaultValues = {
-  boolean: false,
-  number: 0,
-  string: '',
-};
+  context.$triggers ??= new Map();
+  context.$storages ??= new Map();
+
+  return customRef((track, trigger) => {
+    context.$triggers.set(fakeKey, trigger);
+
+    return {
+      get() {
+        track();
+
+        return context.data[fakeKey] ?? init;
+      },
+    };
+  });
+}
 
 export function hackOptions(options) {
-  const { data, observers, ...io } = options;
+  return {
+    ...options,
+    observers: {
+      ...options.observers,
+      '**': function (changed) {
+        const { $storages, $triggers } = this;
 
-  if (!data || Object.keys(data).length === 0 || !io.setup) {
-    return options;
-  }
+        if ($triggers?.size > 0) {
+          for (const [fakeKey, trigger] of $triggers.entries()) {
+            if (fakeKey in changed) {
+              const temp = changed[fakeKey];
 
-  const $triggers = {};
-
-  const needHacks = Object.entries(data)
-    .filter(
-      ([key, value]) =>
-        key.startsWith(prefix) && (typeof value) in DefaultValues,
-    )
-    .map(([key]) => [
-      key,
-      () => {
-        if (typeof $triggers[key] === 'function') {
-          $triggers[key]();
+              if (temp !== $storages.get(fakeKey)) {
+                $storages.set(fakeKey, temp);
+                trigger();
+              }
+            }
+          }
         }
       },
-    ]);
-
-  if (needHacks.length === 0) {
-    return options;
-  }
-
-  return {
-    ...io,
-    data,
-    observers: {
-      ...observers,
-      ...Object.fromEntries(needHacks),
-    },
-    setup(props, context) {
-      const current = getCurrentInstance();
-
-      Object.defineProperty(current, '$triggers', {
-        enumerable: true,
-        configurable: false,
-        get() {
-          return $triggers;
-        },
-      });
-
-      Object.defineProperty(current, '$needHacks', {
-        enumerable: true,
-        configurable: false,
-        get() {
-          return needHacks;
-        },
-      });
-
-      Object.defineProperty(current, '$options', {
-        enumerable: true,
-        configurable: false,
-        get() {
-          return options;
-        },
-      });
-
-      return io.setup(props, {
-        ...context,
-      });
     },
   };
 }

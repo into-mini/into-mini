@@ -49,13 +49,14 @@
   "nodemonConfig": {
     "delay": 5,
     "exec": "webpack",
-    "ext": "js,cjs,mjs,json,wxs",
+    "ext": "js,cjs,mjs,json,wxs,vue",
     "quiet": true,
     "watch": [
       "packages/**",
       "webpack.config.mjs",
       "package.json",
-      "plugin"
+      "plugin",
+      "fake"
     ]
   },
   "prettier": "@nice-move/all-in-base/prettier"
