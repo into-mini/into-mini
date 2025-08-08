@@ -29,12 +29,15 @@ export function mergeOptions({
   emits,
   created,
   beforeCreate,
+  mixins = [],
+  behaviors = [],
   ...rest
 }) {
   return {
     ...rest,
     properties: toProperties(props, properties),
     data: typeof data === 'function' ? data() : data,
+    behaviors: [...mixins, ...behaviors],
     methods: {
       $emit(event, ...args) {
         this.triggerEvent(event, ...args);
