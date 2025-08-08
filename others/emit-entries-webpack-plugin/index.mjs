@@ -3,7 +3,7 @@ import sortKeys from 'sort-keys';
 export class EmitEntriesPlugin {
   PLUGIN_NAME = 'EmitEntriesPlugin';
 
-  EMIT_PATH = '__debug__/entries.json';
+  EMIT_PATH = '$debug$/entries.json';
 
   #getEntries(compilation) {
     return Object.fromEntries(
