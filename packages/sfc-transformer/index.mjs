@@ -10,20 +10,24 @@ import { action } from './action.mjs';
 import { mergeConfig } from './merge-config.mjs';
 import { transformer } from './transformer.mjs';
 
-export function parse(raw) {
+export function parse(raw, { tagMatcher } = {}) {
   const { descriptor } = parseSFC(raw, {
     sourceMap: false,
     templateParseOptions: { comments: false },
   });
 
-  descriptor.tpl = descriptor.template
-    ? action(descriptor.template).tpl
-    : '<!-- -->';
+  if (descriptor.template) {
+    const { tpl, tags } = action(descriptor.template, { tagMatcher });
+    descriptor.tpl = tpl;
+    descriptor.tags = tags;
+  }
+
+  descriptor.tpl = '<!-- -->';
 
   if (!descriptor.scriptSetup && !descriptor.script?.content) {
     descriptor.code = '';
 
-    descriptor.config = mergeConfig(descriptor.customBlocks);
+    descriptor.config = mergeConfig(descriptor);
 
     return descriptor;
   }
@@ -57,7 +61,7 @@ export function parse(raw) {
           .map((item) => item.source.value)
       : [];
 
-    const pair = result.imports
+    const pairs = result.imports
       ? Object.values(result.imports)
           .filter(
             ({ imported, isFromSetup, isType, source }) =>
@@ -73,14 +77,13 @@ export function parse(raw) {
           }))
       : [];
 
-    descriptor.pair = pair;
+    descriptor.pairs = pairs;
 
     const ast = babelParse(result.content, {
       sourceType: 'module',
-      plugins: ['importAttributes'],
     });
 
-    const names = pair.map(({ local }) => local);
+    const names = pairs.map(({ local }) => local);
 
     const isSetup =
       result.scriptSetupAst &&
@@ -93,18 +96,18 @@ export function parse(raw) {
 
     transformer(ast, names, id, isSetup);
 
-    const { code } = generate.default(ast, { importAttributesKeyword: 'with' });
+    const { code } = generate.default(ast);
 
     descriptor.code = code;
 
-    descriptor.config = mergeConfig(descriptor.customBlocks, pair);
+    descriptor.config = mergeConfig(descriptor);
 
     return descriptor;
   }
 
   descriptor.code = descriptor.script.content;
 
-  descriptor.config = mergeConfig(descriptor.customBlocks);
+  descriptor.config = mergeConfig(descriptor);
 
   return descriptor;
 }

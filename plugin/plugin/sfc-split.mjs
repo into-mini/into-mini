@@ -7,6 +7,11 @@ import VirtualModulesPlugin from 'webpack-virtual-modules';
 export class SfcSplitPlugin extends VirtualModulesPlugin {
   PLUGIN_NAME = 'SfcSplitPlugin';
 
+  constructor({ tagMatcher }) {
+    super();
+    this.tagMatcher = tagMatcher;
+  }
+
   apply(compiler) {
     this.#expose(compiler);
 
@@ -72,7 +77,9 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
   }
 
   #processSfcFile({ source, resourcePath }) {
-    const { tpl, styles, code, config } = parse(source);
+    const { tagMatcher } = this;
+
+    const { tpl, styles, code, config } = parse(source, { tagMatcher });
 
     const paths = [];
 

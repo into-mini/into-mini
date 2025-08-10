@@ -28,7 +28,7 @@ function canBeString(exp) {
 }
 
 function transform(ast, { tagMatcher } = {}) {
-  const tags = new Set();
+  const tags = new Map();
 
   traverse(ast, {
     // ROOT: (node) => console.log('ROOT:', node),
@@ -296,8 +296,12 @@ function transform(ast, { tagMatcher } = {}) {
       }
     },
     ELEMENT(node) {
-      if (tagMatcher && node.tag.startsWith(tagMatcher)) {
-        tags.add(node.tag);
+      if (tagMatcher) {
+        const { tag, path } = tagMatcher(node.tag) || {};
+
+        if (tag && tag.trim() && path && path.trim()) {
+          tags.set(tag.trim(), path.trim());
+        }
       }
       /* eslint-disable no-param-reassign */
       switch (node.tag) {
@@ -391,13 +395,13 @@ function transform(ast, { tagMatcher } = {}) {
   }
 
   return {
-    tags: [...tags], // TODO
+    tags, // TODO
     ast,
   };
 }
 
-export function action(template, options) {
-  const { ast, tags } = transform(template.ast, options);
+export function action(template, { tagMatcher }) {
+  const { ast, tags } = transform(template.ast, { tagMatcher });
 
   const tpl = serializeTemplate({ ast }).replace(
     /^<template>([\s\S]+)<\/template>$/,

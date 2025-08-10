@@ -15,6 +15,7 @@
   "peerDependencies": {
     "@into-mini/clsx": "workspace:^",
     "@into-mini/sfc-template-traverse": "workspace:^",
+    "@into-mini/sfc-transformer": "workspace:^",
     "@into-mini/wxml-loader": "workspace:^",
     "ava": "^6.4.1",
     "prettier": "^3.6.2"
