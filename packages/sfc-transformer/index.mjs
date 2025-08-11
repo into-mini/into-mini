@@ -22,7 +22,7 @@ export function parse(raw, { tagMatcher } = {}) {
     descriptor.tags = tags;
   }
 
-  descriptor.tpl = '<!-- -->';
+  descriptor.tpl ||= '<!-- -->';
 
   if (!descriptor.scriptSetup && !descriptor.script?.content) {
     descriptor.code = '';
