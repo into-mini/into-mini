@@ -15,6 +15,11 @@ export function hackRef(init, fakeKey) {
 
         return context.data[fakeKey] ?? init;
       },
+      set(value) {
+        context.setData({ [fakeKey]: value ?? init }, () => {
+          trigger();
+        });
+      },
     };
   });
 }
