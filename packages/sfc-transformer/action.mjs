@@ -27,7 +27,7 @@ function canBeString(exp) {
   );
 }
 
-function transform(ast, { tagMatcher } = {}) {
+function transform(ast, { tagMatcher, preserveTap } = {}) {
   const tags = new Map();
 
   traverse(ast, {
@@ -251,7 +251,8 @@ function transform(ast, { tagMatcher } = {}) {
         return {
           type: NodeTypes.ATTRIBUTE,
           name: `bind:${
-            native.includes(ctx.parent.parent.node.tag)
+            native.includes(ctx.parent.parent.node.tag) ||
+            (preserveTap ? preserveTap(ctx.parent.parent.node.tag) : false)
               ? actions[node.arg.content] || node.arg.content
               : node.arg.content
           }`,
@@ -400,8 +401,8 @@ function transform(ast, { tagMatcher } = {}) {
   };
 }
 
-export function action(template, { tagMatcher }) {
-  const { ast, tags } = transform(template.ast, { tagMatcher });
+export function action(template, { tagMatcher, preserveTap }) {
+  const { ast, tags } = transform(template.ast, { tagMatcher, preserveTap });
 
   const tpl = serializeTemplate({ ast }).replace(
     /^<template>([\s\S]+)<\/template>$/,

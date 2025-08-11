@@ -7,9 +7,10 @@ import VirtualModulesPlugin from 'webpack-virtual-modules';
 export class SfcSplitPlugin extends VirtualModulesPlugin {
   PLUGIN_NAME = 'SfcSplitPlugin';
 
-  constructor({ tagMatcher }) {
+  constructor({ tagMatcher, preserveTap }) {
     super();
     this.tagMatcher = tagMatcher;
+    this.preserveTap = preserveTap;
   }
 
   apply(compiler) {
@@ -77,9 +78,12 @@ export class SfcSplitPlugin extends VirtualModulesPlugin {
   }
 
   #processSfcFile({ source, resourcePath }) {
-    const { tagMatcher } = this;
+    const { tagMatcher, preserveTap } = this;
 
-    const { tpl, styles, code, config } = parse(source, { tagMatcher });
+    const { tpl, styles, code, config } = parse(source, {
+      tagMatcher,
+      preserveTap,
+    });
 
     const paths = [];
 

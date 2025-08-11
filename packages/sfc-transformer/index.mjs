@@ -10,14 +10,17 @@ import { action } from './action.mjs';
 import { mergeConfig } from './merge-config.mjs';
 import { transformer } from './transformer.mjs';
 
-export function parse(raw, { tagMatcher } = {}) {
+export function parse(raw, { tagMatcher, preserveTap } = {}) {
   const { descriptor } = parseSFC(raw, {
     sourceMap: false,
     templateParseOptions: { comments: false },
   });
 
   if (descriptor.template) {
-    const { tpl, tags } = action(descriptor.template, { tagMatcher });
+    const { tpl, tags } = action(descriptor.template, {
+      tagMatcher,
+      preserveTap,
+    });
     descriptor.tpl = tpl;
     descriptor.tags = tags;
   }

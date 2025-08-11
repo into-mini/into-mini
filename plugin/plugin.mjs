@@ -17,9 +17,10 @@ function reach(path) {
 }
 
 export class AllInOnePlugin {
-  constructor({ type = false, tagMatcher } = {}) {
+  constructor({ type = false, tagMatcher, preserveTap } = {}) {
     this.type = type;
     this.tagMatcher = tagMatcher;
+    this.preserveTap = preserveTap;
   }
 
   #applyLoader(compiler) {
@@ -76,13 +77,13 @@ export class AllInOnePlugin {
     this.#prepare(compiler);
     this.#applyLoader(compiler);
 
-    const { type, tagMatcher } = this;
+    const { type, tagMatcher, preserveTap } = this;
 
     if (type) {
       new MinaRuntimeWebpackPlugin().apply(compiler);
       new AddEntryPlugin().apply(compiler);
       new AddWxsPlugin().apply(compiler);
-      new SfcSplitPlugin({ tagMatcher }).apply(compiler);
+      new SfcSplitPlugin({ tagMatcher, preserveTap }).apply(compiler);
       new ExposeEntryNamePlugin().apply(compiler);
       new FindEntryPlugin({ type }).apply(compiler);
       new CopyConfigPlugin({ type }).apply(compiler);
