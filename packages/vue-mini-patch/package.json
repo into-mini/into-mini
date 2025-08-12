@@ -7,7 +7,7 @@
   "peerDependencies": {
     "@vue-mini/core": "^1.2.4",
     "@vue-mini/pinia": "^0.1.2",
-    "vue": "^3.5.18"
+    "vue": "~3.5.18"
   },
   "publishConfig": {
     "access": "public",

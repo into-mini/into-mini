@@ -7,14 +7,15 @@ export class EmitEntriesPlugin {
 
   #getEntries(compilation) {
     return Object.fromEntries(
-      compilation.entries.entries().map(([entryName, entry]) => [
-        entryName,
-        {
-          ...entry.options,
-          import:
-            entry.options.import || entry.dependencies.map((d) => d.request),
-        },
-      ]),
+      compilation.entries
+        .values()
+        .map(({ dependencies, options: { name, ...options } }) => [
+          name,
+          {
+            ...options,
+            import: options.import || dependencies.map((d) => d.request),
+          },
+        ]),
     );
   }
 
