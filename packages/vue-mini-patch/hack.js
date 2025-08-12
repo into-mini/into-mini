@@ -1,7 +1,11 @@
-import { customRef, getCurrentInstance } from '@vue-mini/core';
+import { customRef, getCurrentInstance, ref } from 'vue';
 
 export function hackRef(init, fakeKey) {
   const context = getCurrentInstance();
+
+  if (!context) {
+    return ref(init);
+  }
 
   context.$triggers ??= new Map();
   context.$storages ??= new Map();
@@ -29,7 +33,7 @@ export function hackOptions(options) {
     ...options,
     observers: {
       ...options.observers,
-      '**': function (changed) {
+      '**': function all(changed) {
         const { $storages, $triggers } = this;
 
         if ($triggers?.size > 0) {

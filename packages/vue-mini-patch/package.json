@@ -1,12 +1,13 @@
 {
   "name": "@into-mini/vue-mini-patch",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "keywords": [],
   "type": "module",
   "peerDependencies": {
     "@vue-mini/core": "^1.2.4",
-    "@vue-mini/pinia": "^0.1.2"
+    "@vue-mini/pinia": "^0.1.2",
+    "vue": "^3.5.18"
   },
   "publishConfig": {
     "access": "public",
