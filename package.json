@@ -35,7 +35,8 @@
     "webpack-cli": "^6.0.1"
   },
   "peerDependencies": {
-    "@best-shot/sfc-split-plugin": "workspace:^"
+    "@best-shot/sfc-split-plugin": "workspace:^",
+    "emit-webpack-entries-plugin": "workspace:^"
   },
   "packageManager": "pnpm@10.14.0",
   "engines": {

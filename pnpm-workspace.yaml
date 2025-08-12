@@ -2,7 +2,7 @@ packages:
   - packages/*
   - plugin
   - fake
-  - others
+  - others/*
   - tests
 
 catalog:

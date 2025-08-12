@@ -2,13 +2,15 @@ import { resolve } from 'node:path';
 
 import { AllInOnePlugin } from '@best-shot/sfc-split-plugin';
 
+import { EmitEntriesPlugin } from 'emit-webpack-entries-plugin';
+
 export default {
   mode: 'development',
   target: 'es2025',
   entry: {
     // a: './a.json',
     // b: './b.json',
-    // c: './c.js',
+    c: 'emit-webpack-entries-plugin/package.json',
   },
   context: resolve(process.cwd(), 'fake'),
   cache: false,
@@ -34,5 +36,6 @@ export default {
     new AllInOnePlugin({
       type: 'miniprogram',
     }),
+    new EmitEntriesPlugin(),
   ],
 };

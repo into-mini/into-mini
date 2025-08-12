@@ -1,3 +1,1 @@
-import { Toast } from 'tdesign-mobile-vue';
-
-console.log(Toast);
+console.log(444444444444);

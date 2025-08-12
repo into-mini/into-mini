@@ -28,6 +28,9 @@ importers:
       '@vue-mini/pinia':
         specifier: ^0.1.2
         version: 0.1.2(@vue-mini/core@1.2.4(patch_hash=27ebdacab8824208c9e55765b91f14b3caf49962acc89f1d0e546917b4a1e522))
+      emit-webpack-entries-plugin:
+        specifier: workspace:^
+        version: link:others/emit-entries-webpack-plugin
     devDependencies:
       '@bring-it/npm':
         specifier: ^0.8.3
@@ -70,6 +73,12 @@ importers:
         version: 6.0.1(webpack@5.101.1)
 
   fake: {}
+
+  others/emit-entries-webpack-plugin:
+    dependencies:
+      sort-keys:
+        specifier: ^5.1.0
+        version: 5.1.0
 
   packages/clsx: {}
 
@@ -1789,6 +1798,10 @@ packages:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
 
+  is-plain-obj@4.1.0:
+    resolution: {integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==}
+    engines: {node: '>=12'}
+
   is-plain-object@2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
     engines: {node: '>=0.10.0'}
@@ -2506,6 +2519,10 @@ packages:
 
   slice-ansi@5.0.0:
     resolution: {integrity: sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ==}
+    engines: {node: '>=12'}
+
+  sort-keys@5.1.0:
+    resolution: {integrity: sha512-aSbHV0DaBcr7u0PVHXzM6NbZNAtrr9sF6+Qfs9UUVG7Ll3jQ6hHi8F/xqIIcn2rvIVbr0v/2zyjSdwSV47AgLQ==}
     engines: {node: '>=12'}
 
   source-map-js@1.2.1:
@@ -4745,6 +4762,8 @@ snapshots:
 
   is-number@7.0.0: {}
 
+  is-plain-obj@4.1.0: {}
+
   is-plain-object@2.0.4:
     dependencies:
       isobject: 3.0.1
@@ -5453,6 +5472,10 @@ snapshots:
     dependencies:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 4.0.0
+
+  sort-keys@5.1.0:
+    dependencies:
+      is-plain-obj: 4.1.0
 
   source-map-js@1.2.1: {}
 
