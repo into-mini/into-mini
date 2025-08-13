@@ -1,24 +1,4 @@
-function toProperties(props, properties) {
-  const io = props
-    ? Object.fromEntries(
-        Object.entries(props).map(([key, prop]) => [
-          key,
-          prop.type
-            ? {
-                ...prop,
-                type: prop.type,
-                value:
-                  typeof prop.default === 'function'
-                    ? prop.default()
-                    : prop.default,
-              }
-            : { type: prop },
-        ]),
-      )
-    : undefined;
-
-  return io || properties ? { ...io, ...properties } : undefined;
-}
+import { mergeProperties } from './lib.ts';
 
 export function mergeOptions({
   name,
@@ -35,7 +15,7 @@ export function mergeOptions({
 }) {
   return {
     ...rest,
-    properties: toProperties(props, properties),
+    properties: mergeProperties(props, properties),
     data: typeof data === 'function' ? data() : data,
     behaviors: [...mixins, ...behaviors],
     methods: {

@@ -53,6 +53,9 @@ importers:
       garou:
         specifier: ^0.9.13
         version: 0.9.13(eslint@9.33.0)(typescript@5.9.2)
+      miniprogram-api-typings:
+        specifier: ^4.1.0
+        version: 4.1.0
       nodemon:
         specifier: ^3.1.10
         version: 3.1.10
@@ -189,6 +192,9 @@ importers:
       '@into-mini/sfc-transformer':
         specifier: workspace:^
         version: link:../packages/sfc-transformer
+      '@into-mini/vue-mini-patch':
+        specifier: workspace:^
+        version: link:../packages/vue-mini-patch
       '@into-mini/wxml-loader':
         specifier: workspace:^
         version: link:../packages/wxml-loader
@@ -2054,6 +2060,9 @@ packages:
 
   miniprogram-api-typings@4.0.8:
     resolution: {integrity: sha512-q3MHCd/r0EsCFsq+nebbBbpwhsQbJg2d8lvRdRBV4KXgp+S1OzzNFpjFoy1X46NA01OD0fbCnxo7tJRSE2pqSw==}
+
+  miniprogram-api-typings@4.1.0:
+    resolution: {integrity: sha512-4RBsz27nBKyRkVGoNkRaPx24/KeJBw3zaaIlXDR8s/WBh2PbcUAc+q7wLLbp7Qsmb3bLzzUu7tqAti+B06kmjg==}
 
   minizlib@3.0.2:
     resolution: {integrity: sha512-oG62iEk+CYt5Xj2YqI5Xi9xWUeZhDI8jjQmC5oThVH5JGCTgIjr7ciJDzC7MBzYd//WvR1OTmP5Q38Q8ShQtVA==}
@@ -4983,6 +4992,8 @@ snapshots:
   minipass@7.1.2: {}
 
   miniprogram-api-typings@4.0.8: {}
+
+  miniprogram-api-typings@4.1.0: {}
 
   minizlib@3.0.2:
     dependencies:

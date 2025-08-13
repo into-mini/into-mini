@@ -27,6 +27,7 @@
     "ava": "^6.4.1",
     "eslint": "^9.33.0",
     "garou": "^0.9.13",
+    "miniprogram-api-typings": "^4.1.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "syncpack": "^13.0.4",
@@ -43,6 +44,10 @@
     "node": ">=22.18.0"
   },
   "ava": {
+    "extensions": [
+      "mts",
+      "mjs"
+    ],
     "require": [
       "./tests/helper/setup.mjs"
     ]
