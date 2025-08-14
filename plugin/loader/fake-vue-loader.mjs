@@ -48,9 +48,11 @@ function handleImport({
             placer,
           });
 
-          const entryPath = relativePath.startsWith('..')
-            ? absolutePath
-            : `./${relativePath}`;
+          const entryPath = path.startsWith('.')
+            ? relativePath.startsWith('..')
+              ? absolutePath
+              : `./${relativePath}`
+            : path;
 
           this.addDependency(resolve(absolutePath));
           this.addMissingDependency(resolve(absolutePath));
