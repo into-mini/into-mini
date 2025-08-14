@@ -9,7 +9,7 @@
     "sort-keys": "^5.1.0"
   },
   "engines": {
-    "node": ">=22.11.0"
+    "node": ">=22.18.0"
   },
   "publishConfig": {
     "access": "public",

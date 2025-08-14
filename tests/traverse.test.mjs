@@ -43,21 +43,21 @@ test('traverse', async (t) => {
 
   const clone = structuredClone(ast);
 
+  const clone2 = structuredClone(ast);
+
   traverse(clone);
 
-  const y = compare(
-    'ast', //
-    await jsStringify(ast),
-    await jsStringify(clone),
+  t.snapshot(
+    compare(
+      'ast', //
+      await jsStringify(ast),
+      await jsStringify(clone),
+    ),
   );
-
-  t.snapshot(y);
-
-  const clone2 = structuredClone(clone);
 
   traverse(clone2, {
     TEXT(node) {
-      node.content = node.content.toUpperCase();
+      node.content = `${node.content.toUpperCase()}6`;
     },
   });
 
@@ -72,7 +72,7 @@ test('traverse', async (t) => {
   t.snapshot(
     compare(
       'tpl', //
-      serialize(ast),
+      serialize(clone),
       serialize(clone2),
     ),
   );

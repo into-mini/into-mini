@@ -9,7 +9,7 @@ catalog:
   yaml: ^2.8.1
 
 patchedDependencies:
-  ava: patches/ava.patch
   '@vue-mini/core': patches/@vue-mini__core.patch
+  ava: patches/ava.patch
 
 shamefullyHoist: true
