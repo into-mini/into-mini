@@ -4,10 +4,14 @@ import test from 'ava';
 import { readFileSync } from 'node:fs';
 import { action } from '@into-mini/sfc-transformer/action.mjs';
 
-const fixture = readFileSync(
+const fixtures = readFileSync(
   new URL('./fixtures/sample2.vue', import.meta.url),
   'utf8',
-);
+)
+  .trim()
+  .replace(/<template root>([\s\S]+)<\/template>$/, '$1')
+  .split('<!---->')
+  .map((content) => ['<template>', content, '</template>'].join('\n'));
 
 function parse(raw: string) {
   const { descriptor } = parseSFC(raw, {
@@ -18,14 +22,10 @@ function parse(raw: string) {
   return action(descriptor.template);
 }
 
-test('vue', async (t) => {
-  const io = parse(fixture);
-  t.snapshot(io.ast.children[2].props);
-  t.snapshot(pretty(io.tpl));
-});
+for (const [idx, fixture] of Object.entries(fixtures)) {
+  test(idx, async (t) => {
+    const io = parse(fixture);
 
-test('vue2', async (t) => {
-  const io = parse(fixture);
-  t.snapshot(io.ast.children[2].props);
-  t.snapshot(pretty(io.tpl));
-});
+    t.snapshot(pretty(io.tpl));
+  });
+}

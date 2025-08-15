@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable consistent-return */
 import {
   ElementTypes,
   NodeTypes,
@@ -122,10 +124,10 @@ function transform(ast, { tagMatcher, preserveTap } = {}) {
           }
 
           const result = raw?.value?.content
-            ? `clsx.clsx('${raw.value.content}', ${node.exp.content})`
+            ? `clsx.clsx('${raw.value.content.trim()}', ${node.exp.content.trim()})`
             : canBeString(node.exp)
-              ? node.exp.content
-              : `clsx.clsx(${node.exp.content})`;
+              ? node.exp.content.trim()
+              : `clsx.clsx(${node.exp.content.trim()})`;
 
           if (result.includes('clsx.clsx(')) {
             ast.cached ??= {};
@@ -177,7 +179,10 @@ function transform(ast, { tagMatcher, preserveTap } = {}) {
               ? 'value'
               : 'modelValue'),
         ].join(':'),
-        value: node.exp,
+        value: {
+          type: NodeTypes.INTERPOLATION,
+          content: node.exp,
+        },
       };
     },
     DIRECTIVE_FOR(node, ctx) {
@@ -263,38 +268,29 @@ function transform(ast, { tagMatcher, preserveTap } = {}) {
         };
       }
     },
-    DIRECTIVE(node) {
-      switch (node.name) {
-        case 'if': {
-          if (node.exp?.content) {
-            return {
-              type: NodeTypes.ATTRIBUTE,
-              name: 'wx:if',
-              value: node.exp,
-            };
-          }
-          break;
-        }
-        case 'else-if': {
-          if (node.exp?.content) {
-            return {
-              type: NodeTypes.ATTRIBUTE,
-              name: 'wx:elif',
-              value: node.exp,
-            };
-          }
-          break;
-        }
-        case 'else': {
-          return {
-            type: NodeTypes.ATTRIBUTE,
-            name: 'wx:else',
-          };
-        }
-        default: {
-          break;
-        }
+    DIRECTIVE_IF(node) {
+      if (node.exp?.content) {
+        return {
+          type: NodeTypes.ATTRIBUTE,
+          name: 'wx:if',
+          value: node.exp,
+        };
       }
+    },
+    DIRECTIVE_ELSE_IF(node) {
+      if (node.exp?.content) {
+        return {
+          type: NodeTypes.ATTRIBUTE,
+          name: 'wx:elif',
+          value: node.exp,
+        };
+      }
+    },
+    DIRECTIVE_ELSE() {
+      return {
+        type: NodeTypes.ATTRIBUTE,
+        name: 'wx:else',
+      };
     },
     ELEMENT(node) {
       if (tagMatcher) {
@@ -304,7 +300,6 @@ function transform(ast, { tagMatcher, preserveTap } = {}) {
           tags.set(tag.trim(), path.trim());
         }
       }
-      /* eslint-disable no-param-reassign */
       switch (node.tag) {
         case 'template': {
           if (

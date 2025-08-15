@@ -9,6 +9,9 @@ const DirectiveTypes = {
   text: 'DIRECTIVE_TEXT',
   slot: 'DIRECTIVE_SLOT',
   on: 'DIRECTIVE_ON',
+  if: 'DIRECTIVE_IF',
+  else: 'DIRECTIVE_ELSE',
+  'else-if': 'DIRECTIVE_ELSE_IF',
 };
 
 function getCurrentVisitor(visitor, node) {

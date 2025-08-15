@@ -88,7 +88,7 @@ importers:
   packages/sfc-template-traverse:
     dependencies:
       '@vue/compiler-core':
-        specifier: ~3.5.17
+        specifier: ~3.5.18
         version: 3.5.18
       neotraverse:
         specifier: ^0.6.18
