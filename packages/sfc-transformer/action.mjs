@@ -399,10 +399,9 @@ function transform(ast, { tagMatcher, preserveTap } = {}) {
 export function action(template, { tagMatcher, preserveTap } = {}) {
   const { ast, tags } = transform(template.ast, { tagMatcher, preserveTap });
 
-  const tpl = serializeTemplate({ ast }).replace(
-    /^<template>([\s\S]+)<\/template>$/,
-    '$1',
-  );
+  const tpl = ast.children
+    .map((item) => serializeTemplate({ ast: item }))
+    .join('\n');
 
   return { ast, tpl, tags };
 }

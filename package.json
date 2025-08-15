@@ -10,7 +10,7 @@
     "lint:staged": "nice-move lint staged",
     "lint:type": "tsc -p tsconfig.json",
     "prepare": "nice-move git hooks",
-    "snapshot": "ava tests/tranform.test.mts --fail-fast -u -w",
+    "snapshot": "ava --fail-fast -u -w",
     "test": "ava --fail-fast",
     "try:build": "nodemon",
     "try:watch": "nodemon -- --watch",
@@ -32,7 +32,7 @@
     "prettier": "^3.6.2",
     "syncpack": "^13.0.4",
     "typescript": "~5.9.2",
-    "webpack": "^5.101.1",
+    "webpack": "^5.101.2",
     "webpack-cli": "^6.0.1"
   },
   "peerDependencies": {
