@@ -32,6 +32,18 @@ export default {
       name: 'vendor',
     },
   },
+  module: {
+    rules: [
+      {
+        test: /\.ts/,
+        type: 'javascript/auto',
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-typescript'],
+        },
+      },
+    ],
+  },
   plugins: [
     new AllInOnePlugin({
       type: 'miniprogram',
