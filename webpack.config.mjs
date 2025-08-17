@@ -10,7 +10,7 @@ export default {
   entry: {
     // a: './a.json',
     // b: './b.json',
-    c: 'emit-webpack-entries-plugin/package.json',
+    // c: 'emit-webpack-entries-plugin/package.json',
   },
   context: resolve(process.cwd(), 'fake'),
   cache: false,
@@ -31,6 +31,18 @@ export default {
       chunks: 'initial',
       name: 'vendor',
     },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts/,
+        type: 'javascript/auto',
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-typescript'],
+        },
+      },
+    ],
   },
   plugins: [
     new AllInOnePlugin({

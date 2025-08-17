@@ -1,7 +1,7 @@
 <template>
-  <textarea id="" name="" />
+  <ABC />
 </template>
 
 <script setup>
-console.log(555);
+import ABC from '../components/index.vue';
 </script>

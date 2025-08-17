@@ -1,9 +1,16 @@
+import type {
+  Compiler,
+  Compilation,
+  PathData,
+  Module,
+  ChunkGraph,
+} from 'webpack';
 import slash from 'slash';
 
 const PLUGIN_NAME = 'ExposeEntryNamePlugin';
 
 export class ExposeEntryNamePlugin {
-  getEntryNameFromEntries(compilation, module) {
+  getEntryNameFromEntries(compilation: Compilation, module: Module) {
     const { moduleGraph, entries } = compilation;
 
     for (const [name, io] of entries) {
@@ -33,9 +40,9 @@ export class ExposeEntryNamePlugin {
     return '';
   }
 
-  getEntryNameFromPathData(compilation, pathData) {
-    const mod = pathData.module;
-    const graph = pathData.chunkGraph;
+  getEntryNameFromPathData(compilation: Compilation, pathData: PathData) {
+    const mod = pathData.module as Module;
+    const graph = pathData.chunkGraph as ChunkGraph;
 
     if (mod && graph) {
       const [entryModule] = graph
@@ -50,10 +57,11 @@ export class ExposeEntryNamePlugin {
     return '';
   }
 
-  apply(compiler) {
+  apply(compiler: Compiler) {
     const {
       NormalModule: { getCompilationHooks },
     } = compiler.webpack;
+
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.assetPath.tap(PLUGIN_NAME, (path, pathData) => {
         if (path.includes('[entry]')) {
@@ -69,6 +77,7 @@ export class ExposeEntryNamePlugin {
 
         return path;
       });
+
       getCompilationHooks(compilation).loader.tap(
         PLUGIN_NAME,
         (loaderContext, module) => {
