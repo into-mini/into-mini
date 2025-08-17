@@ -39,7 +39,7 @@ function handleImport({
                   .slice(-2)
                   .join('/')
                   .replace(/\.vue$/, ''),
-                createShortHash(slash(absolutePath)),
+                createShortHash(slash(relativePath)),
               ].join('/')
             : relativePath.replace(/\.vue$/, '');
           const placer = toThis(entryName);
@@ -48,11 +48,9 @@ function handleImport({
             placer,
           });
 
-          const entryPath = path.startsWith('.')
-            ? relativePath.startsWith('..')
-              ? absolutePath
-              : `./${relativePath}`
-            : path;
+          const entryPath = relativePath.startsWith('..')
+            ? absolutePath
+            : `./${relativePath}`;
 
           this.addDependency(resolve(absolutePath));
           this.addMissingDependency(resolve(absolutePath));

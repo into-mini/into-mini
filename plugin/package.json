@@ -1,6 +1,6 @@
 {
   "name": "@best-shot/sfc-split-plugin",
-  "version": "0.14.63",
+  "version": "0.14.65",
   "license": "MIT",
   "keywords": [
     "loader",
