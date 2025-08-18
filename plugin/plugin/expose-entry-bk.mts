@@ -3,27 +3,13 @@ import type {
   Compilation,
   PathData,
   Module,
-  Chunk, //
+  ChunkGraph,
 } from 'webpack';
 import slash from 'slash';
 
 const PLUGIN_NAME = 'ExposeEntryNamePlugin';
 
 export class ExposeEntryNamePlugin {
-  getEntryNameFromChunk(chunk: Chunk) {
-    if (!chunk?.groupsIterable) {
-      return '';
-    }
-
-    for (const group of chunk.groupsIterable) {
-      if (group.isInitial()) {
-        return group.name;
-      }
-    }
-
-    return '';
-  }
-
   getEntryNameFromEntries(compilation: Compilation, module: Module) {
     const { moduleGraph, entries } = compilation;
 
@@ -54,26 +40,17 @@ export class ExposeEntryNamePlugin {
     return '';
   }
 
-  getEntryNameFromPathData(pathData: PathData) {
-    if (pathData?.chunk) {
-      const entryName = this.getEntryNameFromChunk(pathData.chunk as Chunk);
+  getEntryNameFromPathData(compilation: Compilation, pathData: PathData) {
+    const mod = pathData.module as Module;
+    const graph = pathData.chunkGraph as ChunkGraph;
 
-      if (entryName) {
-        return entryName;
-      }
-    }
+    if (mod && graph) {
+      const [entryModule] = graph
+        .getModuleChunks(mod)
+        .map((chunk) => [...graph.getChunkEntryModulesIterable(chunk)][0]);
 
-    if (pathData?.module && pathData?.chunkGraph) {
-      const chunks = pathData.chunkGraph.getModuleChunks(
-        pathData.module as Module,
-      );
-
-      for (const chunk of chunks) {
-        const entryName = this.getEntryNameFromChunk(chunk);
-
-        if (entryName) {
-          return entryName;
-        }
+      if (entryModule) {
+        return this.getEntryNameFromEntries(compilation, entryModule);
       }
     }
 
@@ -88,7 +65,10 @@ export class ExposeEntryNamePlugin {
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.assetPath.tap(PLUGIN_NAME, (path, pathData) => {
         if (path.includes('[entry]')) {
-          const entryName = this.getEntryNameFromPathData(pathData);
+          const entryName = this.getEntryNameFromPathData(
+            compilation,
+            pathData,
+          );
 
           return entryName
             ? path.replaceAll('[entry]', entryName)
