@@ -311,11 +311,14 @@ function transform(ast, { tagMatcher, preserveTap } = {}) {
             )
           ) {
             if (node.children.length === 1) {
-              return {
-                ...node.children[0],
-                props: [...node.children[0].props, ...node.props],
-              };
+              node.children[0].props ||= [];
+
+              node.children[0].props.push(...node.props);
+
+              return node.children[0];
             }
+
+            node.tag = 'block';
           } else {
             node.tag = 'block';
           }
