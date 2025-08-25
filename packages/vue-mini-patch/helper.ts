@@ -17,9 +17,13 @@ export function mergeOptions({
 }: MixComponentOptions): MiniComponentOptions {
   return {
     ...rest,
-    properties: mergeProperties(props, properties),
-    data: typeof data === 'function' ? data() : data,
-    behaviors: [...mixins, ...behaviors],
+    properties:
+      props || properties ? mergeProperties(props, properties) : undefined,
+    data: data && typeof data === 'function' ? data() : data,
+    behaviors:
+      mixins.length > 0 || behaviors.length > 0
+        ? [...mixins, ...behaviors]
+        : undefined,
     methods: {
       $emit(event: string, detail?: unknown) {
         this.triggerEvent(event, detail);

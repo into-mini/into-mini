@@ -1,5 +1,4 @@
-import { defineComponent } from '@vue-mini/core';
-
+import { defineComponent } from './alias/core.ts';
 import { hackOptions } from './hack.ts';
 import { mergeOptions } from './helper.ts';
 import type { MixComponentOptions } from './type.d.ts';
