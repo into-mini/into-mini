@@ -17,8 +17,8 @@
     "@babel/traverse": "^7.28.3",
     "@into-mini/sfc-template-traverse": "workspace:^",
     "@into-mini/vue-mini-patch": "workspace:^",
-    "@padcom/vue-ast-serializer": "^0.0.1",
-    "@vue/compiler-sfc": "~3.5.19",
+    "@padcom/vue-ast-serializer": "catalog:",
+    "@vue/compiler-sfc": "catalog:",
     "change-case": "^5.4.4",
     "deepmerge-ts": "^7.1.5",
     "yaml": "catalog:"

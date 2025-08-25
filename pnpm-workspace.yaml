@@ -6,6 +6,9 @@ packages:
   - tests
 
 catalog:
+  '@padcom/vue-ast-serializer': ^0.0.1
+  '@vue/compiler-sfc': ~3.5.20
+  vue: ~3.5.20
   yaml: ^2.8.1
 
 patchedDependencies:

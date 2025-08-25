@@ -6,8 +6,8 @@
   "dependencies": {
     "@babel/traverse": "^7.28.3",
     "@babel/types": "^7.28.2",
-    "@padcom/vue-ast-serializer": "^0.0.1",
-    "@vue/compiler-sfc": "~3.5.19",
+    "@padcom/vue-ast-serializer": "catalog:",
+    "@vue/compiler-sfc": "catalog:",
     "clsx": "^2.1.1",
     "diff": "^8.0.2",
     "javascript-stringify": "^2.1.0"

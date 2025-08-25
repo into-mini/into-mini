@@ -5,7 +5,7 @@
 
 <script setup>
 import { watchEffect, ref } from '@vue-mini/core';
-import { hackRef } from '@into-mini/vue-mini-patch/hack.js';
+import { hackRef } from '@into-mini/vue-mini-patch/hack.ts';
 
 const kkk = hackRef('111', 'kkk');
 
