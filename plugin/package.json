@@ -1,6 +1,6 @@
 {
   "name": "@best-shot/sfc-split-plugin",
-  "version": "0.14.65",
+  "version": "0.14.66",
   "license": "MIT",
   "keywords": [
     "loader",
@@ -29,7 +29,7 @@
     "yaml-patch-loader": "^0.1.0"
   },
   "peerDependencies": {
-    "webpack": "^5.101.2"
+    "webpack": "^5.101.3"
   },
   "engines": {
     "node": ">=22.18.0"

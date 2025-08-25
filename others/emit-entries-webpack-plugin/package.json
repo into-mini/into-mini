@@ -6,7 +6,7 @@
   "main": "index.mjs",
   "type": "module",
   "dependencies": {
-    "sort-keys": "^5.1.0"
+    "sort-keys": "^6.0.0"
   },
   "engines": {
     "node": ">=22.18.0"

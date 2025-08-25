@@ -1,24 +1,16 @@
-interface ComponentOptions {
-  props?: ArrayPropsOptions | ObjectPropsOptions;
-}
+/* eslint-disable no-param-reassign */
+import type { ComponentPropsOptions } from 'vue';
 
-type ArrayPropsOptions = string[];
-
-type ObjectPropsOptions = { [key: string]: Prop };
-
-type Prop<T = any> = PropOptions<T> | PropType<T> | null;
-
-interface PropOptions<T> {
-  type?: PropType<T>;
-  required?: boolean;
-  default?: T | ((rawProps: object) => T);
-  validator?: (value: unknown, rawProps: object) => boolean;
-}
-
-type PropType<T> = { new (): T } | { new (): T }[];
+type PropsType =
+  | BooleanConstructor
+  | NumberConstructor
+  | StringConstructor
+  | ObjectConstructor
+  | ArrayConstructor
+  | null;
 
 export function mergeProperties(
-  props?: ComponentOptions['props'],
+  props?: ComponentPropsOptions,
   properties?: WechatMiniprogram.Component.PropertyOption,
 ): WechatMiniprogram.Component.PropertyOption | undefined {
   const io =
@@ -36,15 +28,17 @@ export function mergeProperties(
               }
 
               if (Array.isArray(prop)) {
-                const temp =
-                  prop.length === 0
-                    ? {}
-                    : prop.length === 1
-                      ? { type: prop[0] }
-                      : {
-                          type: prop[0],
-                          optionalTypes: prop.slice(1),
-                        };
+                if (prop.length === 0) {
+                  return [key, {}];
+                }
+
+                const temp: WechatMiniprogram.Component.AllFullProperty =
+                  prop.length === 1
+                    ? { type: prop[0] as PropsType }
+                    : {
+                        type: prop[0] as PropsType,
+                        optionalTypes: prop.slice(1) as PropsType[],
+                      };
 
                 return [key, temp];
               }
@@ -90,6 +84,16 @@ export function mergeProperties(
 
                 if ('required' in prop) {
                   delete prop.required;
+
+                  Object.assign(prop, {
+                    observer(newVal: unknown | undefined) {
+                      if (newVal === undefined) {
+                        throw new Error(
+                          `The property ${key} is required, but it is undefined.`,
+                        );
+                      }
+                    },
+                  });
                 }
 
                 if ('validator' in prop) {

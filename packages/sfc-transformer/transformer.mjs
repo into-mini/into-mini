@@ -160,11 +160,11 @@ export function transformer(ast, names, id, isSetup) {
       isSetup
         ? {
             imported: funcName,
-            source: '@into-mini/vue-mini-patch/mini.js',
+            source: '@into-mini/vue-mini-patch/mini.ts',
           }
         : {
             imported: funcName,
-            source: '@into-mini/vue-mini-patch/base.js',
+            source: '@into-mini/vue-mini-patch/base.ts',
           },
     );
 
