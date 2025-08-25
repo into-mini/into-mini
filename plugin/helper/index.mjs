@@ -38,7 +38,6 @@ export function patchConfig(json = {}) {
     }
   }
 
-  object.lazyCodeLoading ??= 'requiredComponents';
   object.subPackages ??= [];
   object.preloadRule ??= {};
 
