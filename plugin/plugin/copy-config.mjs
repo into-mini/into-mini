@@ -52,15 +52,13 @@ export class CopyConfigPlugin {
       this.addConfigSmartEntry({
         layer: configKeys.project,
         options: {
-          modify: (json) => {
-            return {
-              srcMiniprogramRoot: '',
-              miniprogramRoot: '',
-              pluginRoot: '',
-              ...json,
-              compileType: type,
-            };
-          },
+          modify: (json) => ({
+            srcMiniprogramRoot: '',
+            miniprogramRoot: '',
+            pluginRoot: '',
+            ...json,
+            compileType: type,
+          }),
         },
       });
 

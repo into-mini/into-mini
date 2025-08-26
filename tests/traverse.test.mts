@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { readFileSync } from 'node:fs';
 
 import { traverse } from '@into-mini/sfc-template-traverse';
@@ -9,15 +10,20 @@ import { stringify } from 'javascript-stringify';
 import { format } from 'prettier';
 
 import { parse } from '@vue/compiler-sfc';
+import type { SFCTemplateBlock } from '@vue/compiler-sfc';
 
 import * as plugin from './helper/prettier.mjs';
 
-function serialize(ast) {
-  return `${pretty(serializeTemplate({ ast }))}\n`;
+function serialize(block: SFCTemplateBlock | null) {
+  return block ? `${pretty(serializeTemplate(block))}\n` : '';
 }
 
-async function jsStringify(ast) {
-  const io = await format(`export default ${stringify(ast, null, 2)}`, {
+async function jsStringify(block: SFCTemplateBlock | null) {
+  if (!block) {
+    return '';
+  }
+
+  const io = await format(`export default ${stringify(block.ast, null, 2)}`, {
     parser: 'babel',
     trailingComma: 'all',
     plugins: [plugin],
@@ -31,7 +37,7 @@ const vueString = readFileSync(
   'utf8',
 );
 
-function compare(name, oldOne, newOne) {
+function compare(name: string, oldOne: string, newOne: string) {
   return createPatch(name, oldOne, newOne, 'original', 'traversed', {
     ignoreWhitespace: true,
     stripTrailingCr: true,
@@ -39,24 +45,24 @@ function compare(name, oldOne, newOne) {
 }
 
 test('traverse', async (t) => {
-  const { ast } = parse(vueString).descriptor.template;
+  const block = parse(vueString).descriptor.template;
 
-  const clone = structuredClone(ast);
+  const clone = structuredClone(block);
 
-  const clone2 = structuredClone(ast);
+  const clone2 = structuredClone(block);
 
   traverse(clone);
 
   t.snapshot(
     compare(
       'ast', //
-      await jsStringify(ast),
+      await jsStringify(block),
       await jsStringify(clone),
     ),
   );
 
   traverse(clone2, {
-    TEXT(node) {
+    TEXT(node: { content: string }) {
       node.content = `${node.content.toUpperCase()}6`;
     },
   });

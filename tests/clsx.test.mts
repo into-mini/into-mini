@@ -1,10 +1,12 @@
-import { clsx } from '@into-mini/clsx/index.wxs';
+import clsx from '@into-mini/clsx/index.wxs';
 import test from 'ava';
+import type { ExecutionContext } from 'ava';
 import classnames from 'clsx';
+import type { ClassValue } from 'clsx';
 
-function marco(t, args) {
+function marco(t: ExecutionContext, args: ClassValue[]) {
   const original = classnames(...args);
-  const implementation = clsx(...args);
+  const implementation = clsx.clsx(...args);
 
   if (implementation === original) {
     t.pass();

@@ -1,8 +1,8 @@
 import test from 'ava';
 import { parse } from '@into-mini/sfc-transformer';
 
-function html([string]) {
-  return string.trim();
+function html([string]: TemplateStringsArray) {
+  return string ? string.trim() : '';
 }
 
 const fixtures = html`
@@ -23,7 +23,7 @@ test('base', (t) => {
 
 test('tags', (t) => {
   const io = parse(fixtures, {
-    tagMatcher(tag) {
+    tagMatcher(tag: string) {
       if (tag.startsWith('t-')) {
         return {
           tag,

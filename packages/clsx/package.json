@@ -1,12 +1,13 @@
 {
   "name": "@into-mini/clsx",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "keywords": [
     "clsx",
     "css",
     "wxs"
   ],
+  "main": "index.wxs",
   "type": "commonjs",
   "engines": {
     "node": ">=22.18.0"
