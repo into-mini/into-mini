@@ -12,7 +12,7 @@ import { format } from 'prettier';
 import { parse } from '@vue/compiler-sfc';
 import type { SFCTemplateBlock } from '@vue/compiler-sfc';
 
-import * as plugin from './helper/prettier.mjs';
+import * as plugin from './helper/prettier.mts';
 
 function serialize(block: SFCTemplateBlock | null) {
   return block ? `${pretty(serializeTemplate(block))}\n` : '';

@@ -12,6 +12,9 @@
     "diff": "^8.0.2",
     "javascript-stringify": "^2.1.0"
   },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.28.0"
+  },
   "peerDependencies": {
     "@into-mini/clsx": "workspace:^",
     "@into-mini/sfc-template-traverse": "workspace:^",

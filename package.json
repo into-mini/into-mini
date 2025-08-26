@@ -51,7 +51,7 @@
       "mjs"
     ],
     "require": [
-      "./tests/helper/setup.mjs"
+      "./tests/helper/setup.mts"
     ]
   },
   "nodemonConfig": {
