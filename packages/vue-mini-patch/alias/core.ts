@@ -22,11 +22,11 @@ export function defineComponent(
         ? function _(props, context) {
             return setup(props, {
               ...context,
-              // @ts-expect-error -----------------
-              expose: () => {},
+              // expose: () => {},
               get parent() {
                 return context.selectOwnerComponent();
               },
+              // @ts-expect-error -----------------
               emit: (event: string, detail?: unknown) => {
                 context.triggerEvent(event, detail);
               },

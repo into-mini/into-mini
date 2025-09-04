@@ -88,16 +88,7 @@ export function parse(raw, { tagMatcher, preserveTap } = {}) {
 
     const names = pairs.map(({ local }) => local);
 
-    const isSetup =
-      result.scriptSetupAst &&
-      result.scriptSetupAst.some(
-        (item) =>
-          item.type !== 'ImportDeclaration' ||
-          (item.type === 'ImportDeclaration' &&
-            item.source?.value?.endsWith('.vue')),
-      );
-
-    transformer(ast, names, id, isSetup);
+    transformer(ast, names, id);
 
     const { code } = generate.default(ast);
 

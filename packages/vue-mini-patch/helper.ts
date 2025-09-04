@@ -1,7 +1,13 @@
+/* eslint-disable unicorn/prefer-reflect-apply */
 import { mergeProperties } from './lib.ts';
-import type { MiniComponentOptions, MixComponentOptions } from './type.d.ts';
+import type {
+  MiniComponentOptions,
+  MiniPageOptions,
+  MixComponentOptions,
+  MixPageOptions,
+} from './type.d.ts';
 
-export function mergeOptions({
+export function mergeComponentOptions({
   name,
   props,
   properties,
@@ -62,6 +68,33 @@ export function mergeOptions({
           },
         });
       },
+    },
+  };
+}
+
+export function mergePageOptions({
+  name,
+  data,
+  created,
+  beforeCreate,
+  onLoad,
+  ...rest
+}: MixPageOptions): MiniPageOptions {
+  return {
+    ...rest,
+    data: data && typeof data === 'function' ? data() : data,
+    onLoad(io) {
+      if (beforeCreate) {
+        beforeCreate.apply(this);
+      }
+
+      if (created) {
+        created.apply(this);
+      }
+
+      if (onLoad) {
+        onLoad.apply(this, [io]);
+      }
     },
   };
 }

@@ -25,7 +25,7 @@ function importStatement({ imported, local = imported, source }) {
   };
 }
 
-export function transformer(ast, names, id, isSetup) {
+export function transformer(ast, names, id) {
   let hasImport = false;
 
   traverse.default(ast, {
@@ -156,17 +156,10 @@ export function transformer(ast, names, id, isSetup) {
       },
     });
 
-    const statement = importStatement(
-      isSetup
-        ? {
-            imported: funcName,
-            source: '@into-mini/vue-mini-patch/mini.ts',
-          }
-        : {
-            imported: funcName,
-            source: '@into-mini/vue-mini-patch/base.ts',
-          },
-    );
+    const statement = importStatement({
+      imported: funcName,
+      source: '@into-mini/vue-mini-patch/mini.ts',
+    });
 
     ast.program.body.unshift(statement);
   }

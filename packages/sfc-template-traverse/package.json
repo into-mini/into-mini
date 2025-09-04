@@ -1,6 +1,6 @@
 {
   "name": "@into-mini/sfc-template-traverse",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "keywords": [
     "sfc",
@@ -14,7 +14,7 @@
     "neotraverse": "^0.6.18"
   },
   "peerDependencies": {
-    "@vue/compiler-core": "~3.5.18"
+    "@vue/compiler-core": "catalog:"
   },
   "engines": {
     "node": ">=22.18.0"

@@ -17,19 +17,18 @@
     "version:pin": "syncpack fix-mismatches"
   },
   "dependencies": {
-    "@vue-mini/pinia": "^0.1.2"
+    "@vue-mini/pinia": "catalog:"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.27.1",
-    "@bring-it/npm": "^0.8.3",
-    "@nice-move/all-in-base": "^0.6.8",
+    "@bring-it/cli": "^0.11.0",
+    "@bring-it/npm": "^0.9.0",
+    "@nice-move/all-in-base": "^0.6.9",
     "@nice-move/syncpack-config": "^0.4.1",
-    "@types/node": "^22.17.2",
     "ava": "^6.4.1",
     "babel-loader": "^10.0.0",
     "eslint": "^9.34.0",
     "garou": "^0.9.13",
-    "miniprogram-api-typings": "^4.1.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "syncpack": "^13.0.4",
@@ -41,7 +40,7 @@
     "@best-shot/sfc-split-plugin": "workspace:^",
     "emit-webpack-entries-plugin": "workspace:^"
   },
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.15.1",
   "engines": {
     "node": ">=22.18.0"
   },

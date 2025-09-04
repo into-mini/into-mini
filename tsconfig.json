@@ -1,8 +1,4 @@
 {
-  "extends": "@nice-move/tsconfig/base.json",
-  "include": ["./"],
-  "compilerOptions": {
-    "skipLibCheck": true,
-    "types": ["miniprogram-api-typings"],
-  },
+  "extends": "@nice-move/tsconfig/mini.json",
+  "compilerOptions": {},
 }
