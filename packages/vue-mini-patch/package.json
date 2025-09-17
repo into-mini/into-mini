@@ -1,13 +1,17 @@
 {
   "name": "@into-mini/vue-mini-patch",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "license": "MIT",
   "keywords": [],
   "type": "module",
+  "dependencies": {
+    "qss": "^3.0.0"
+  },
   "peerDependencies": {
     "@vue-mini/core": "catalog:",
     "@vue-mini/pinia": "catalog:",
-    "vue": "catalog:"
+    "vue": "catalog:",
+    "vue-router": "catalog:"
   },
   "publishConfig": {
     "access": "public",
