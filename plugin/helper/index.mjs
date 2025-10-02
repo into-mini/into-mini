@@ -4,19 +4,16 @@ function unique(...arr) {
   return [...new Set(arr)];
 }
 
-export function getAllPages(config = {}) {
-  const {
-    entryPagePath,
-    pages = [],
-    subPackages = [],
-    tabBar: { custom = false, list = [] } = {},
-  } = config;
+export function getAllPages(config) {
+  const { entryPagePath, pages, subPackages, tabBar } = config ?? {};
+
+  const { custom = false, list = [] } = tabBar ?? {};
 
   return unique(
     entryPagePath,
-    ...pages,
+    ...(pages ?? []),
     ...list.map(({ pagePath }) => pagePath),
-    ...subPackages.flatMap(
+    ...(subPackages ?? []).flatMap(
       (subPackage) =>
         (subPackage.pages || []).map((page) => `${subPackage.root}/${page}`) ||
         [],
@@ -25,8 +22,8 @@ export function getAllPages(config = {}) {
   ).filter(Boolean);
 }
 
-export function patchConfig(json = {}) {
-  const object = structuredClone(json);
+export function patchConfig(json) {
+  const object = structuredClone(json ?? {});
 
   object.pages ??= [];
 
