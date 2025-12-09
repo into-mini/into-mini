@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "dependencies": {
-    "@babel/traverse": "^7.28.4",
-    "@babel/types": "^7.28.4",
+    "@babel/traverse": "^7.28.5",
+    "@babel/types": "^7.28.5",
     "@padcom/vue-ast-serializer": "catalog:",
     "@vue/compiler-sfc": "catalog:",
     "clsx": "^2.1.1",
@@ -22,7 +22,7 @@
     "@into-mini/vue-mini-patch": "workspace:^",
     "@into-mini/wxml-loader": "workspace:^",
     "ava": "^6.4.1",
-    "prettier": "^3.6.2"
+    "prettier": "~3.7.4"
   },
   "engines": {
     "node": ">=22.18.0"

@@ -29,7 +29,7 @@
     "yaml-patch-loader": "^0.1.0"
   },
   "peerDependencies": {
-    "webpack": "^5.101.3"
+    "webpack": "^5.103.0"
   },
   "engines": {
     "node": ">=22.18.0"

@@ -13,8 +13,8 @@
   "main": "index.mjs",
   "type": "module",
   "dependencies": {
-    "@babel/generator": "^7.28.3",
-    "@babel/traverse": "^7.28.4",
+    "@babel/generator": "^7.28.5",
+    "@babel/traverse": "^7.28.5",
     "@into-mini/sfc-template-traverse": "workspace:^",
     "@into-mini/vue-mini-patch": "workspace:^",
     "@padcom/vue-ast-serializer": "catalog:",
