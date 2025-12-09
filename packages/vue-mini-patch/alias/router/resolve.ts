@@ -14,6 +14,7 @@ export function resolve(
       const qy = query ? encode(query) : '';
 
       return {
+        name: match.name,
         meta: match.meta,
         path: match.path,
         fullPath: qy ? `${match.path}?${qy}` : match.path,

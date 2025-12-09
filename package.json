@@ -14,7 +14,8 @@
     "test": "ava --fail-fast",
     "try:build": "nodemon",
     "try:watch": "nodemon -- --watch",
-    "version:pin": "syncpack fix-mismatches"
+    "version:pin": "syncpack fix-mismatches",
+    "watch:type": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@vue-mini/pinia": "catalog:"

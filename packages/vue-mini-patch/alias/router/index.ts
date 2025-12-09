@@ -11,31 +11,35 @@ export function createRouter({ routes }: { routes: Routes }) {
   const router = readonly<Router>(new Router({ routes }));
   const route = reactive<Resolved>({ path: '/', fullPath: '/' });
 
+  function update(
+    res:
+      | WechatMiniprogram.OnAppRouteListenerResult
+      | WechatMiniprogram.OnAfterPageLoadListenerResult,
+  ): void {
+    const tmp = router.resolve({ path: res.path, query: res.query });
+
+    if (tmp) {
+      Object.assign(route || {}, tmp);
+    }
+  }
+
   return Object.freeze({
     install(app: hackedApp) {
       app.provide($$router, router);
       app.provide($$route, route);
 
       wx.onAppRoute((res) => {
-        const tmp = router.resolve({ path: res.path, query: res.query });
-
-        if (tmp) {
-          Object.assign(route, tmp);
-        }
+        update(res);
       });
 
       wx.onAfterPageLoad((res) => {
-        const tmp = router.resolve({ path: res.path, query: res.query });
-
-        if (tmp) {
-          Object.assign(route, tmp);
-        }
+        update(res);
       });
 
       setTimeout(() => {
         const io = router.resolveCurrent();
 
-        if (io && io?.fullPath && io.fullPath !== '/') {
+        if (io && io.fullPath && io.fullPath !== '/') {
           Object.assign(route, io);
         }
       }, 10);
@@ -61,20 +65,7 @@ export function useRouter() {
 }
 
 export function useRoute() {
-  const router = useRouter();
-  const route = inject<Resolved>($$route);
-
-  return new Proxy(route || ({} as Resolved), {
-    get(target, key: keyof Resolved) {
-      if (!target?.fullPath || target?.fullPath === '/') {
-        const io = router?.resolveCurrent();
-
-        return io ? io[key] : undefined;
-      }
-
-      return key in target ? target[key] : undefined;
-    },
-  });
+  return inject<Resolved>($$route);
 }
 
 export function createWebHistory() {}
