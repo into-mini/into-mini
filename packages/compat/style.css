@@ -1,0 +1,10 @@
+html,
+body {
+  height: 100%;
+}
+
+/* stylelint-disable-next-line selector-disallowed-list */
+body {
+  position: relative;
+  margin: 0;
+}

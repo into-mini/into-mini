@@ -1,4 +1,4 @@
-import base from '@nice-move/all-in-base/eslint';
+import base from '@nice-move/all-in-vue/eslint';
 
 export default [
   ...base,
