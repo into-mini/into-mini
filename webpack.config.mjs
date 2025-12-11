@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
 
-import { AllInOnePlugin } from '@best-shot/sfc-split-plugin';
+import { AllInOnePlugin } from '@into-mini/sfc-split-plugin';
 
 import { EmitEntriesPlugin } from 'emit-webpack-entries-plugin';
 

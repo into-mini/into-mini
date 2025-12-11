@@ -33,4 +33,7 @@ jobs:
     permissions:
       id-token: write
     steps:
+      - uses: airkro/bring-it@actions
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
       - uses: airkro/bring-it@actions-oidc

@@ -1,6 +1,6 @@
 {
-  "name": "@best-shot/sfc-split-plugin",
-  "version": "0.15.2",
+  "name": "@into-mini/sfc-split-plugin",
+  "version": "0.1.0",
   "license": "MIT",
   "keywords": [
     "loader",
@@ -13,6 +13,15 @@
     "webpack-plugin",
     "wxml"
   ],
+  "homepage": "https://github.com/into-mini/into-mini/tree/master/packages/sfc-split-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/into-mini/into-mini.git",
+    "directory": "packages/sfc-split-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/into-mini/into-mini/issues"
+  },
   "main": "plugin.mjs",
   "files": [
     "**/*.json",
@@ -29,6 +38,7 @@
     "yaml-patch-loader": "^0.1.0"
   },
   "peerDependencies": {
+    "@babel/core": "^7.28.5",
     "webpack": "^5.103.0"
   },
   "engines": {
