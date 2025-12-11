@@ -1,8 +1,17 @@
 {
   "name": "@into-mini/vue-mini-patch",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "license": "MIT",
   "keywords": [],
+  "homepage": "https://github.com/into-mini/into-mini/tree/master/packages/vue-mini-patch",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/into-mini/into-mini.git",
+    "directory": "packages/vue-mini-patch"
+  },
+  "bugs": {
+    "url": "https://github.com/into-mini/into-mini/issues"
+  },
   "type": "module",
   "dependencies": {
     "qss": "^3.0.0"

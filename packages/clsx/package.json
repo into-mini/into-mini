@@ -7,6 +7,15 @@
     "css",
     "wxs"
   ],
+  "homepage": "https://github.com/into-mini/into-mini/tree/master/packages/clsx",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/into-mini/into-mini.git",
+    "directory": "packages/clsx"
+  },
+  "bugs": {
+    "url": "https://github.com/into-mini/into-mini/issues"
+  },
   "main": "index.wxs",
   "type": "commonjs",
   "engines": {

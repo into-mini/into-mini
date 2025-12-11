@@ -8,6 +8,8 @@ import type { App } from 'vue';
 // eslint-disable-next-line import/export
 export * from '@vue-mini/core';
 
+export { onDetach as onMounted } from '@vue-mini/core';
+
 // eslint-disable-next-line import/export
 export function defineComponent(
   options: Parameters<typeof defineComponentRaw>[0],

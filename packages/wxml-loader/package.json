@@ -3,6 +3,15 @@
   "version": "0.0.0",
   "license": "MIT",
   "keywords": [],
+  "homepage": "https://github.com/into-mini/into-mini/tree/master/packages/wxml-loader",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/into-mini/into-mini.git",
+    "directory": "packages/wxml-loader"
+  },
+  "bugs": {
+    "url": "https://github.com/into-mini/into-mini/issues"
+  },
   "main": "index.mjs",
   "type": "module",
   "dependencies": {

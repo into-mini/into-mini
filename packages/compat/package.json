@@ -10,6 +10,15 @@
     "weapp",
     "wxml"
   ],
+  "homepage": "https://github.com/into-mini/into-mini/tree/master/packages/compat",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/into-mini/into-mini.git",
+    "directory": "packages/compat"
+  },
+  "bugs": {
+    "url": "https://github.com/into-mini/into-mini/issues"
+  },
   "main": "index.js",
   "type": "module",
   "peerDependencies": {
