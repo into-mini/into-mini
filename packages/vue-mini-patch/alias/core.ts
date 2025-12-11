@@ -1,3 +1,4 @@
+/* eslint-disable import/export */
 import {
   createApp as createAppRaw,
   defineComponent as defineComponentRaw,
@@ -5,12 +6,24 @@ import {
 } from '@vue-mini/core';
 import type { App } from 'vue';
 
-// eslint-disable-next-line import/export
+export {
+  Fragment,
+  h,
+  hasInjectionContext,
+  isVNode,
+  onActivated,
+  onBeforeMount,
+  onBeforeUnmount,
+  onBeforeUpdate,
+  onDeactivated,
+  onMounted,
+  onUnmounted,
+  onUpdated,
+  TransitionGroup,
+} from '../patch.ts';
 export * from '@vue-mini/core';
 
-export { onDetach as onMounted } from '@vue-mini/core';
-
-// eslint-disable-next-line import/export
+ 
 export function defineComponent(
   options: Parameters<typeof defineComponentRaw>[0],
   config?: Parameters<typeof defineComponentRaw>[1],
@@ -54,7 +67,7 @@ export type hackedApp = {
   globalData: unknown;
 };
 
-// eslint-disable-next-line import/export
+ 
 export function createApp(
   options: Parameters<typeof createAppRaw>[0],
 ): hackedApp {
@@ -92,5 +105,3 @@ export function createApp(
 
   return io;
 }
-
-export const hasInjectionContext = () => true;
