@@ -24,7 +24,7 @@
     "@babel/preset-typescript": "^7.28.5",
     "@bring-it/cli": "^0.11.1",
     "@bring-it/npm": "^0.9.3",
-    "@nice-move/all-in-vue": "^0.6.23",
+    "@nice-move/all-in-vue": "^0.6.24",
     "@nice-move/syncpack-config": "^0.4.2",
     "ava": "^6.4.1",
     "babel-loader": "^10.0.0",
