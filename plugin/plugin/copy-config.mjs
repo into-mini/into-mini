@@ -78,11 +78,6 @@ export class CopyConfigPlugin {
         this.compiler.options.entry.app = {
           import: ['./app'],
         };
-
-        // this.compiler.options.entry.__hack__ = {
-        //   import: [reach('../helper/hack.hack')],
-        //   layer: configKeys.hack,
-        // };
       }
     }
   }

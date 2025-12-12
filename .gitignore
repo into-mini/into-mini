@@ -183,3 +183,4 @@ $RECYCLE.BIN/
 # End of https://gitignore.io/api/ssh,certificates,node,windows
 
 src/*
+plugin/plugin/entry-rename-plugin.mjs

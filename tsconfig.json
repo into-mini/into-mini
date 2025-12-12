@@ -1,4 +1,6 @@
 {
   "extends": "@nice-move/tsconfig/mini.json",
-  "compilerOptions": {},
+  "compilerOptions": {
+    "noEmit": true,
+  },
 }

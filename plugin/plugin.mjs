@@ -8,6 +8,7 @@ import { AddWxsPlugin } from './plugin/add-wxs.mjs';
 import { CopyConfigPlugin } from './plugin/copy-config.mjs';
 import { EmitFakePlugin } from './plugin/emit-fake.mjs';
 import { ExposeEntryNamePlugin } from './plugin/expose-entry.mjs';
+// import { EntryRenamePlugin } from './plugin/entry-rename.mjs';
 import { FindEntryPlugin } from './plugin/find-entry.mjs';
 import { SfcSplitPlugin } from './plugin/sfc-split.mjs';
 import { MinaRuntimeWebpackPlugin } from './plugin/mina-runtime.mjs';
@@ -42,6 +43,7 @@ export class AllInOnePlugin {
         loader: reach('@into-mini/wxml-loader'),
         generator: {
           filename: '[entry][ext]',
+          // filename: '[contenthash:8][ext]',
         },
       },
       {
@@ -85,6 +87,9 @@ export class AllInOnePlugin {
       new AddWxsPlugin().apply(compiler);
       new SfcSplitPlugin({ tagMatcher, preserveTap }).apply(compiler);
       new ExposeEntryNamePlugin().apply(compiler);
+      // new EntryRenamePlugin({ issuer: /\.vue$/, test: /\.wxml/ }).apply(
+      //   compiler,
+      // );
       new FindEntryPlugin({ type }).apply(compiler);
       new CopyConfigPlugin({ type }).apply(compiler);
     }

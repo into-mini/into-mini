@@ -1,0 +1,18 @@
+{
+  "extends": "@nice-move/tsconfig/mini.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "files": [
+    "plugin/plugin/entry-rename.mts",
+    "plugin/plugin/expose-entry.mts"
+  ]
+}
