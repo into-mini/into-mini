@@ -3,7 +3,7 @@
   "compilerOptions": {
     "allowJs": false,
     "noEmit": false,
-    "allowImportingTsExtensions": false,
+    "rewriteRelativeImportExtensions": true,
     "types": [
       "node"
     ],
@@ -11,8 +11,8 @@
       "node_modules/@types"
     ]
   },
-  "files": [
-    "plugin/plugin/entry-rename.mts",
-    "plugin/plugin/expose-entry.mts"
+  "include": [
+    "plugin",
+    "packages/sfc-split-loader/src"
   ]
 }

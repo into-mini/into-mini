@@ -10,10 +10,12 @@
     "@vue/compiler-sfc": "catalog:",
     "clsx": "^2.1.1",
     "diff": "^8.0.2",
-    "javascript-stringify": "^2.1.0"
+    "javascript-stringify": "^2.1.0",
+    "loader-runner": "^4.3.1"
   },
   "devDependencies": {
-    "@types/babel__traverse": "^7.28.0"
+    "@types/babel__traverse": "^7.28.0",
+    "@types/loader-runner": "^2.2.8"
   },
   "peerDependencies": {
     "@into-mini/clsx": "workspace:^",

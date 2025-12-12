@@ -3,20 +3,6 @@ import slash from 'slash';
 const PLUGIN_NAME = 'ExposeEntryNamePlugin';
 
 export class ExposeEntryNamePlugin {
-  getEntryNameFromChunk(chunk) {
-    if (!chunk?.groupsIterable) {
-      return '';
-    }
-
-    for (const group of chunk.groupsIterable) {
-      if (group.isInitial()) {
-        return group.name;
-      }
-    }
-
-    return '';
-  }
-
   getEntryNameFromEntries(compilation, module) {
     const { moduleGraph, entries } = compilation;
 
@@ -47,24 +33,17 @@ export class ExposeEntryNamePlugin {
     return '';
   }
 
-  getEntryNameFromPathData(pathData) {
-    if (pathData?.chunk) {
-      const entryName = this.getEntryNameFromChunk(pathData.chunk);
+  getEntryNameFromPathData(compilation, pathData) {
+    const mod = pathData.module;
+    const graph = pathData.chunkGraph;
 
-      if (entryName) {
-        return entryName;
-      }
-    }
+    if (mod && graph) {
+      const [entryModule] = graph
+        .getModuleChunks(mod)
+        .map((chunk) => [...graph.getChunkEntryModulesIterable(chunk)][0]);
 
-    if (pathData?.module && pathData?.chunkGraph) {
-      const chunks = pathData.chunkGraph.getModuleChunks(pathData.module);
-
-      for (const chunk of chunks) {
-        const entryName = this.getEntryNameFromChunk(chunk);
-
-        if (entryName) {
-          return entryName;
-        }
+      if (entryModule) {
+        return this.getEntryNameFromEntries(compilation, entryModule);
       }
     }
 
@@ -78,7 +57,10 @@ export class ExposeEntryNamePlugin {
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.assetPath.tap(PLUGIN_NAME, (path, pathData) => {
         if (path.includes('[entry]')) {
-          const entryName = this.getEntryNameFromPathData(pathData);
+          const entryName = this.getEntryNameFromPathData(
+            compilation,
+            pathData,
+          );
 
           return entryName
             ? path.replaceAll('[entry]', entryName)
