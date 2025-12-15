@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
 import { registerHooks } from 'node:module';
 import { readFileSync } from 'node:fs';
 

@@ -12,7 +12,7 @@
     ]
   },
   "include": [
-    "plugin",
+    "packages/sfc-split-plugin",
     "packages/sfc-split-loader/src"
   ]
 }

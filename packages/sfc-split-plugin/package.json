@@ -30,6 +30,7 @@
   "type": "module",
   "dependencies": {
     "@into-mini/clsx": "workspace:^",
+    "@into-mini/sfc-split-loader": "workspace:^",
     "@into-mini/sfc-transformer": "workspace:^",
     "@into-mini/wxml-loader": "workspace:^",
     "slash": "^5.1.0",
@@ -39,6 +40,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.28.5",
+    "mini-css-extract-plugin": "^2.9.4",
     "webpack": "^5.103.0"
   },
   "engines": {

@@ -7,6 +7,7 @@
     "name": "Eric"
   },
   "scripts": {
+    "lint:eslint": "eslint . --quiet --fix --concurrency=auto",
     "lint:staged": "nice-move lint staged",
     "lint:type": "tsc -p tsconfig.json",
     "prepare": "nice-move git hooks",
