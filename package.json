@@ -40,6 +40,7 @@
     "webpack-cli": "^6.0.1"
   },
   "peerDependencies": {
+    "@into-mini/auto-entries-plugin": "workspace:^",
     "@into-mini/sfc-split-plugin": "workspace:^",
     "emit-webpack-entries-plugin": "workspace:^"
   },

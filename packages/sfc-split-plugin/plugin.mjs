@@ -1,23 +1,18 @@
-/* eslint-disable no-param-reassign */
 import { fileURLToPath } from 'node:url';
 
-import { COMPONENT_ROOT } from './helper/index.mjs';
-import { configKeys } from './helper/utils.mjs';
-import { AddEntryPlugin } from './plugin/add-entry.mjs';
 import { AddWxsPlugin } from './plugin/add-wxs.mjs';
-import { CopyConfigPlugin } from './plugin/copy-config.mjs';
-import { EmitFakePlugin } from './plugin/emit-fake.mjs';
 import { ExposeEntryNamePlugin } from './plugin/expose-entry.mjs';
 // import { EntryRenamePlugin } from './plugin/entry-rename.mjs';
-import { FindEntryPlugin } from './plugin/find-entry.mjs';
-import { SfcSplitPlugin } from './plugin/sfc-split.mjs';
+import { SfcSplitPluginBase } from './plugin/sfc-split.mjs';
 import { MinaRuntimeWebpackPlugin } from './plugin/mina-runtime.mjs';
+
+export const COMPONENT_ROOT = 'as-components';
 
 function reach(path) {
   return fileURLToPath(import.meta.resolve(path));
 }
 
-export class AllInOnePlugin {
+export class SfcSplitPlugin {
   constructor({ type = false, tagMatcher, preserveTap } = {}) {
     this.type = type;
     this.tagMatcher = tagMatcher;
@@ -46,56 +41,22 @@ export class AllInOnePlugin {
           // filename: '[contenthash:8][ext]',
         },
       },
-      {
-        test: /\.hack$/,
-        type: 'javascript/esm',
-        layer: configKeys.hack,
-        loader: reach('./loader/hack-entry-loader.mjs'),
-      },
     );
   }
 
-  #prepare(compiler) {
-    compiler.options.resolve.extensionAlias ??= {};
-
-    compiler.options.resolve.extensionAlias['.yaml'] = [
-      '.yaml',
-      '.yml',
-      '.json',
-    ];
-
-    compiler.options.resolve.fallback ??= {};
-
-    if (compiler.options.entry?.main) {
-      delete compiler.options.entry.main;
-    }
-
-    Object.assign(compiler, {
-      __entries__: new Map(),
-    });
-  }
-
   apply(compiler) {
-    this.#prepare(compiler);
     this.#applyLoader(compiler);
 
     const { type, tagMatcher, preserveTap } = this;
 
     if (type) {
-      new MinaRuntimeWebpackPlugin().apply(compiler);
-      new AddEntryPlugin().apply(compiler);
       new AddWxsPlugin().apply(compiler);
-      new SfcSplitPlugin({ tagMatcher, preserveTap }).apply(compiler);
+      new MinaRuntimeWebpackPlugin().apply(compiler);
+      new SfcSplitPluginBase({ tagMatcher, preserveTap }).apply(compiler);
       new ExposeEntryNamePlugin().apply(compiler);
       // new EntryRenamePlugin({ issuer: /\.vue$/, test: /\.wxml/ }).apply(
       //   compiler,
       // );
-      new FindEntryPlugin({ type }).apply(compiler);
-      new CopyConfigPlugin({ type }).apply(compiler);
-    }
-
-    if (type === 'miniprogram') {
-      new EmitFakePlugin().apply(compiler);
     }
   }
 }

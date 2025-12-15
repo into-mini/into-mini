@@ -1,4 +1,4 @@
-import { toJSONString } from '@into-mini/sfc-transformer/utils.mjs';
+import { toJSONString } from './utils.mjs';
 
 import { readConfig } from './read.mjs';
 

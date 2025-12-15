@@ -1,6 +1,6 @@
 {
-  "name": "@into-mini/sfc-split-plugin",
-  "version": "0.2.0",
+  "name": "@into-mini/auto-entries-plugin",
+  "version": "0.0.0",
   "license": "MIT",
   "keywords": [
     "loader",
@@ -13,11 +13,11 @@
     "webpack-plugin",
     "wxml"
   ],
-  "homepage": "https://github.com/into-mini/into-mini/tree/master/packages/sfc-split-plugin",
+  "homepage": "https://github.com/into-mini/into-mini/tree/master/packages/auto-entry-plugin",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/into-mini/into-mini.git",
-    "directory": "packages/sfc-split-plugin"
+    "directory": "packages/auto-entry-plugin"
   },
   "bugs": {
     "url": "https://github.com/into-mini/into-mini/issues"
@@ -29,17 +29,10 @@
   ],
   "type": "module",
   "dependencies": {
-    "@into-mini/clsx": "workspace:^",
-    "@into-mini/sfc-split-loader": "workspace:^",
-    "@into-mini/sfc-transformer": "workspace:^",
-    "@into-mini/wxml-loader": "workspace:^",
-    "slash": "^5.1.0",
-    "webpack-virtual-modules": "^0.6.2",
-    "yaml": "catalog:"
+    "yaml": "catalog:",
+    "yaml-patch-loader": "^0.1.0"
   },
   "peerDependencies": {
-    "@babel/core": "^7.28.5",
-    "mini-css-extract-plugin": "^2.9.4",
     "webpack": "^5.103.0"
   },
   "engines": {

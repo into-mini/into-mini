@@ -43,6 +43,9 @@ importers:
 
   .:
     dependencies:
+      '@into-mini/auto-entries-plugin':
+        specifier: workspace:^
+        version: link:packages/auto-entries-plugin
       '@into-mini/sfc-split-plugin':
         specifier: workspace:^
         version: link:packages/sfc-split-plugin
@@ -107,6 +110,18 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
 
+  packages/auto-entries-plugin:
+    dependencies:
+      webpack:
+        specifier: ^5.103.0
+        version: 5.103.0(webpack-cli@6.0.1(webpack@5.103.0))
+      yaml:
+        specifier: 'catalog:'
+        version: 2.8.2
+      yaml-patch-loader:
+        specifier: ^0.1.0
+        version: 0.1.0
+
   packages/clsx: {}
 
   packages/compat:
@@ -153,9 +168,6 @@ importers:
       yaml:
         specifier: 'catalog:'
         version: 2.8.2
-      yaml-patch-loader:
-        specifier: ^0.1.0
-        version: 0.1.0
 
   packages/sfc-template-traverse:
     dependencies:

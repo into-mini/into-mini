@@ -1,7 +1,7 @@
 import { resolve } from 'node:path';
 
-import { AllInOnePlugin } from '@into-mini/sfc-split-plugin';
-
+import { SfcSplitPlugin } from '@into-mini/sfc-split-plugin';
+import { AutoEntriesPlugin } from '@into-mini/auto-entries-plugin';
 import { EmitEntriesPlugin } from 'emit-webpack-entries-plugin';
 
 export default {
@@ -45,7 +45,10 @@ export default {
     ],
   },
   plugins: [
-    new AllInOnePlugin({
+    new SfcSplitPlugin({
+      type: 'miniprogram',
+    }),
+    new AutoEntriesPlugin({
       type: 'miniprogram',
     }),
     new EmitEntriesPlugin(),

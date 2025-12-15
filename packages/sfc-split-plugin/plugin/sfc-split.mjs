@@ -4,8 +4,8 @@ import { parse } from '@into-mini/sfc-transformer';
 import slash from 'slash';
 import VirtualModulesPlugin from 'webpack-virtual-modules';
 
-export class SfcSplitPlugin extends VirtualModulesPlugin {
-  PLUGIN_NAME = 'SfcSplitPlugin';
+export class SfcSplitPluginBase extends VirtualModulesPlugin {
+  PLUGIN_NAME = 'SfcSplitPluginBase';
 
   constructor({ tagMatcher, preserveTap }) {
     super();
