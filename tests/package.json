@@ -23,8 +23,8 @@
     "@into-mini/sfc-transformer": "workspace:^",
     "@into-mini/vue-mini-patch": "workspace:^",
     "@into-mini/wxml-loader": "workspace:^",
-    "ava": "^6.4.1",
-    "prettier": "~3.7.4"
+    "ava": "catalog:",
+    "prettier": "catalog:"
   },
   "engines": {
     "node": ">=22.18.0"

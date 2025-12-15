@@ -29,7 +29,7 @@ function canBeString(exp) {
   );
 }
 
-function transform(ast, { tagMatcher, preserveTap } = {}) {
+export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
   const tags = new Map();
 
   traverse(ast, {
@@ -400,7 +400,10 @@ function transform(ast, { tagMatcher, preserveTap } = {}) {
 }
 
 export function action(template, { tagMatcher, preserveTap } = {}) {
-  const { ast, tags } = transform(template.ast, { tagMatcher, preserveTap });
+  const { ast, tags } = transformTemplateAst(template.ast, {
+    tagMatcher,
+    preserveTap,
+  });
 
   const tpl = ast.children
     .map((item) => serializeTemplate({ ast: item }))

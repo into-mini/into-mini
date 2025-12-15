@@ -64,5 +64,6 @@ import './sample.vue?type=script&lang=js';`
 
 ```
 `import './sample2.vue?type=template&lang=html';␊
+import './sample2.vue?type=config&lang=yaml&index=0';␊
 import './sample2.vue?type=script&lang=js';`
 ```

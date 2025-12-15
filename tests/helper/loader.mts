@@ -15,7 +15,7 @@ export async function runLoader(resourcePath: string, source: string) {
         resource: resourcePath,
         loaders: [
           {
-            loader: '@into-mini/sfc-split-loader',
+            loader: '@into-mini/sfc-split-loader/src/index.mts',
           },
         ],
         readResource: (

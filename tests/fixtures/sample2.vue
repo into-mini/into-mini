@@ -43,12 +43,13 @@
   </ttt>
   <!---->
   <div @click="dad" />
+  <t-button @click="dad" />
   <!---->
   <div>
     <template v-if="s">s</template>
   </div>
   <!---->
-  <img />
+  <img :src="ksks" />
   <div/>
   <span/>
   <p/>
@@ -58,3 +59,10 @@
   <!---->
   <KfcBox />
 </template>
+
+<config lang="yaml">
+a:
+  b:
+    - 1
+    - 2
+</config>

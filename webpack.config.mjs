@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
 
-import { SfcSplitPlugin } from '@into-mini/sfc-split-plugin';
+import { SfcSplitPlugin } from '@into-mini/sfc-split-plugin/src/index.mts';
 import { AutoEntriesPlugin } from '@into-mini/auto-entries-plugin';
 import { EmitEntriesPlugin } from 'emit-webpack-entries-plugin';
 
