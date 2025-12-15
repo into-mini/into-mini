@@ -3,13 +3,14 @@ import type {
   Compilation,
   PathData,
   Module,
-  Chunk, //
+  Chunk,
+  WebpackPluginInstance, //
 } from 'webpack';
 import slash from 'slash';
 
 const PLUGIN_NAME = 'ExposeEntryNamePlugin';
 
-export class ExposeEntryNamePlugin {
+export class ExposeEntryNamePlugin implements WebpackPluginInstance {
   getEntryNameFromChunk(chunk: Chunk) {
     if (!chunk?.groupsIterable) {
       return '';

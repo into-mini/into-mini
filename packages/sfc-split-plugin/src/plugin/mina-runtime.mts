@@ -1,14 +1,15 @@
 import { dirname, relative, sep } from 'node:path';
+import type { Chunk, Compiler, WebpackPluginInstance } from 'webpack';
 
 const PLUGIN_NAME = 'MinaRuntimeWebpackPlugin';
 
-export class MinaRuntimeWebpackPlugin {
+export class MinaRuntimeWebpackPlugin implements WebpackPluginInstance {
   // 格式化依赖路径为require语句
-  #formatRequire = (from, to) =>
+  #formatRequire = (from: string, to: string) =>
     `require('./${relative(dirname(from), to).split(sep).join('/')}');\n`;
 
   // 收集并生成所有依赖的require语句
-  #generateDependencies = (chunk) => {
+  #generateDependencies = (chunk: Chunk) => {
     if (!chunk?.name) {
       return '';
     }
@@ -26,7 +27,7 @@ export class MinaRuntimeWebpackPlugin {
     return result;
   };
 
-  apply(compiler) {
+  apply(compiler: Compiler) {
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       const {
         javascript: { JavascriptModulesPlugin },

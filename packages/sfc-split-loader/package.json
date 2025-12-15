@@ -1,6 +1,6 @@
 {
   "name": "@into-mini/sfc-split-loader",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "keywords": [
     "mini-program",
@@ -19,11 +19,14 @@
   "bugs": {
     "url": "https://github.com/into-mini/into-mini/issues"
   },
-  "main": "src/index.mjs",
+  "main": "dist/index.mjs",
   "files": [
-    "src/*.mjs"
+    "dist"
   ],
   "type": "module",
+  "scripts": {
+    "prepublishOnly": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
     "@vue/compiler-sfc": "catalog:"
   },

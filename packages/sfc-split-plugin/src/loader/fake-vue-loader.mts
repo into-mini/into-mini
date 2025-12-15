@@ -1,15 +1,19 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { createHash } from 'node:crypto';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { toJSONString } from '@into-mini/sfc-transformer/utils.mjs';
 import slash from 'slash';
+import type { LoaderContext } from 'webpack';
 
-function createShortHash(input) {
+function createShortHash(input: string) {
   return createHash('sha256').update(input).digest('hex').slice(0, 8);
 }
 
-function reach(path) {
+function reach(path: string) {
   return fileURLToPath(import.meta.resolve(path));
 }
 
@@ -66,7 +70,12 @@ function handleImport({
   }
 }
 
-export default function loader(source, map, meta) {
+export default function loader(
+  this: LoaderContext<Record<string, any>>,
+  source: string,
+  map,
+  meta,
+) {
   this.cacheable();
   const callback = this.async();
   const { componentRoot } = this.getOptions();
@@ -88,6 +97,7 @@ export default function loader(source, map, meta) {
     return slash(relative(`/${thisEntryName}/..`, `/${entryName}`));
   }
 
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   const addSmartEntry = (io) => {
     this.addSmartEntry(io);
   };

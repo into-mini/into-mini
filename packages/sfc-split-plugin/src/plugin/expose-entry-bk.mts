@@ -4,12 +4,13 @@ import type {
   PathData,
   Module,
   ChunkGraph,
+  WebpackPluginInstance,
 } from 'webpack';
 import slash from 'slash';
 
 const PLUGIN_NAME = 'ExposeEntryNamePlugin';
 
-export class ExposeEntryNamePlugin {
+export class ExposeEntryNamePlugin implements WebpackPluginInstance {
   getEntryNameFromEntries(compilation: Compilation, module: Module) {
     const { moduleGraph, entries } = compilation;
 

@@ -1,10 +1,10 @@
 // @ts-expect-error -------------------
 import babel from '@babel/core';
 
-export function transformJS(input, absoluteFrom) {
+export function transformJS(input: string, absoluteFrom: string) {
   const minified = process.env.NODE_ENV === 'production';
 
-  if (!absoluteFrom.endsWith('.js')) {
+  if (!absoluteFrom.endsWith('.js') || absoluteFrom.endsWith('.mjs')) {
     return input;
   }
 

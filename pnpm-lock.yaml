@@ -71,6 +71,9 @@ importers:
       '@nice-move/syncpack-config':
         specifier: ^0.4.2
         version: 0.4.2(syncpack@13.0.4(typescript@5.9.3))
+      '@nice-move/tsconfig':
+        specifier: ^0.3.15
+        version: 0.3.15(typescript@5.9.3)
       ava:
         specifier: ^6.4.1
         version: 6.4.1(patch_hash=3efb6a6fff2c691907321ccb0ffbb8732e6d8f186cff6a6d7d09221c23efc00d)
@@ -144,18 +147,12 @@ importers:
       '@into-mini/clsx':
         specifier: workspace:^
         version: link:../clsx
-      '@into-mini/sfc-split-loader':
-        specifier: workspace:^
-        version: link:../sfc-split-loader
       '@into-mini/sfc-transformer':
         specifier: workspace:^
         version: link:../sfc-transformer
       '@into-mini/wxml-loader':
         specifier: workspace:^
         version: link:../wxml-loader
-      mini-css-extract-plugin:
-        specifier: ^2.9.4
-        version: 2.9.4(webpack@5.103.0(webpack-cli@6.0.1(webpack@5.103.0)))
       slash:
         specifier: ^5.1.0
         version: 5.1.0
@@ -667,8 +664,8 @@ packages:
     peerDependencies:
       syncpack: ^13.0.4
 
-  '@nice-move/tsconfig@0.3.13':
-    resolution: {integrity: sha512-druAr1X+kXEs33quuJeAoVySs5C916Tv09bgteZI7o7jkiYWvm0r69nTM2hDX2x9NrETpFBYoig0DxaUtCAJkQ==}
+  '@nice-move/tsconfig@0.3.15':
+    resolution: {integrity: sha512-uHYwUPCLYZONx2B/WeiRbCajl+F/MuVztFpAaVS0YMejwsviWCa372e2jci0PWh4vUB4WS7/koohTl+fYPNN8g==}
     engines: {node: '>=24.0.0 || ^22.18.0'}
     peerDependencies:
       typescript: ~5.9.3
@@ -2674,12 +2671,6 @@ packages:
     resolution: {integrity: sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA==}
     engines: {node: '>=18'}
 
-  mini-css-extract-plugin@2.9.4:
-    resolution: {integrity: sha512-ZWYT7ln73Hptxqxk2DxPU9MmapXRhxkJD6tkSR04dnQxm8BGu2hzgKLugK5yySD97u/8yy7Ma7E76k9ZdvtjkQ==}
-    engines: {node: '>= 12.13.0'}
-    peerDependencies:
-      webpack: ^5.0.0
-
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -4139,7 +4130,7 @@ snapshots:
       '@nice-move/eslint-config-vue': 0.13.13(@stylistic/eslint-plugin@5.6.1(eslint@9.39.1))(@typescript-eslint/parser@8.49.0(eslint@9.39.1)(typescript@5.9.3))(eslint@9.39.1)(typescript@5.9.3)
       '@nice-move/prettier-config': 0.15.7(@babel/core@7.28.5)(postcss@8.5.6)(prettier@3.7.4)
       '@nice-move/stylelint-config': 0.10.24(stylelint@16.26.1(typescript@5.9.3))
-      '@nice-move/tsconfig': 0.3.13(typescript@5.9.3)
+      '@nice-move/tsconfig': 0.3.15(typescript@5.9.3)
       eslint: 9.39.1
       prettier: 3.7.4
       stylelint: 16.26.1(typescript@5.9.3)
@@ -4251,7 +4242,7 @@ snapshots:
       syncpack: 13.0.4(typescript@5.9.3)
       yaml: 2.8.2
 
-  '@nice-move/tsconfig@0.3.13(typescript@5.9.3)':
+  '@nice-move/tsconfig@0.3.15(typescript@5.9.3)':
     dependencies:
       '@types/node': 24.10.2
       '@types/whatwg-url': 13.0.0
@@ -6576,12 +6567,6 @@ snapshots:
       mime-db: 1.52.0
 
   mimic-function@5.0.1: {}
-
-  mini-css-extract-plugin@2.9.4(webpack@5.103.0(webpack-cli@6.0.1(webpack@5.103.0))):
-    dependencies:
-      schema-utils: 4.3.3
-      tapable: 2.3.0
-      webpack: 5.103.0(webpack-cli@6.0.1(webpack@5.103.0))
 
   minimatch@3.1.2:
     dependencies:

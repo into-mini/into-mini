@@ -1,6 +1,6 @@
 {
   "name": "@into-mini/sfc-split-plugin",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "keywords": [
     "loader",
@@ -22,15 +22,16 @@
   "bugs": {
     "url": "https://github.com/into-mini/into-mini/issues"
   },
-  "main": "plugin.mjs",
+  "main": "dist/index.mjs",
   "files": [
-    "**/*.json",
-    "**/*.mjs"
+    "dist"
   ],
   "type": "module",
+  "scripts": {
+    "prepublishOnly": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
     "@into-mini/clsx": "workspace:^",
-    "@into-mini/sfc-split-loader": "workspace:^",
     "@into-mini/sfc-transformer": "workspace:^",
     "@into-mini/wxml-loader": "workspace:^",
     "slash": "^5.1.0",
@@ -39,7 +40,6 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.28.5",
-    "mini-css-extract-plugin": "^2.9.4",
     "webpack": "^5.103.0"
   },
   "engines": {

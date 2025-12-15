@@ -1,0 +1,14 @@
+{
+  "extends": "@nice-move/tsconfig/node.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "rewriteRelativeImportExtensions": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../node_modules/@types"
+    ]
+  }
+}

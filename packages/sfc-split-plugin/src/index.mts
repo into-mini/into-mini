@@ -1,30 +1,34 @@
 import { fileURLToPath } from 'node:url';
 
-import { AddWxsPlugin } from './plugin/add-wxs.mjs';
-import { ExposeEntryNamePlugin } from './plugin/expose-entry.mjs';
+import { AddWxsPlugin } from './plugin/add-wxs.mts';
+import { ExposeEntryNamePlugin } from './plugin/expose-entry.mts';
 // import { EntryRenamePlugin } from './plugin/entry-rename.mjs';
-import { SfcSplitPluginBase } from './plugin/sfc-split.mjs';
-import { MinaRuntimeWebpackPlugin } from './plugin/mina-runtime.mjs';
+import { SfcSplitPluginBase } from './plugin/sfc-split.mts';
+import type { Options } from './plugin/sfc-split.mts';
+import { MinaRuntimeWebpackPlugin } from './plugin/mina-runtime.mts';
+import type { Compiler, WebpackPluginInstance } from 'webpack';
 
 export const COMPONENT_ROOT = 'as-components';
 
-function reach(path) {
+function reach(path: string) {
   return fileURLToPath(import.meta.resolve(path));
 }
 
-export class SfcSplitPlugin {
-  constructor({ type = false, tagMatcher, preserveTap } = {}) {
+export class SfcSplitPlugin implements WebpackPluginInstance {
+  type: Options['type'];
+
+  tagMatcher: Options['tagMatcher'];
+
+  preserveTap: Options['preserveTap'];
+
+  constructor({ type = false, tagMatcher, preserveTap }: Options = {}) {
     this.type = type;
     this.tagMatcher = tagMatcher;
     this.preserveTap = preserveTap;
   }
 
-  #applyLoader(compiler) {
+  #applyLoader(compiler: Compiler) {
     compiler.options.module.rules.push(
-      // {
-      //   exclude: /\.(vue|wxml)$/,
-      //   layer: 'other',
-      // },
       {
         test: /\.vue$/,
         loader: reach('./loader/fake-vue-loader.mjs'),
@@ -44,7 +48,7 @@ export class SfcSplitPlugin {
     );
   }
 
-  apply(compiler) {
+  apply(compiler: Compiler) {
     this.#applyLoader(compiler);
 
     const { type, tagMatcher, preserveTap } = this;
