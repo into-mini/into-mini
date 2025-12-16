@@ -3,7 +3,7 @@
 
 import path from 'node:path';
 
-import { parse } from '@into-mini/sfc-transformer';
+import { parse } from '@into-mini/sfc-transformer/src/index.mjs';
 import slash from 'slash';
 import VirtualModulesPlugin from 'webpack-virtual-modules';
 import type { Compiler, WebpackPluginInstance } from 'webpack';

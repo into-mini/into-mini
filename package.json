@@ -31,7 +31,7 @@
     "@nice-move/tsconfig": "^0.3.15",
     "ava": "catalog:",
     "babel-loader": "^10.0.0",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "garou": "^0.9.17",
     "nodemon": "^3.1.11",
     "prettier": "catalog:",
@@ -45,7 +45,7 @@
     "@into-mini/sfc-split-plugin": "workspace:^",
     "emit-webpack-entries-plugin": "workspace:^"
   },
-  "packageManager": "pnpm@10.25.0",
+  "packageManager": "pnpm@10.26.0",
   "engines": {
     "node": ">=22.18.0"
   },

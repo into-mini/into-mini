@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { toJSONString } from '@into-mini/sfc-transformer/utils.mjs';
+import { toJSONString } from '@into-mini/sfc-transformer/src/utils.mts';
 import slash from 'slash';
 import type { LoaderContext } from 'webpack';
 

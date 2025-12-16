@@ -66,3 +66,45 @@ a:
     - 1
     - 2
 </config>
+
+<script setup>
+import ABC from '@/components/ABC.vue';
+import EFG from '@/components/EFG.vue' with { as: 'generic' };
+
+const ffffffffffff = 1;
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      a: 1,
+      b: 2,
+    };
+  },
+};
+</script>
+
+<style>
+.a {
+  color: aqua;
+}
+</style>
+
+<style lang="css">
+.b {
+  color: blue;
+}
+</style>
+
+<style lang="less">
+.c {
+  color: cyan;
+}
+</style>
+
+<style lang="scss">
+.d {
+  color: darkblue;
+}
+</style>

@@ -15,26 +15,32 @@ function reach(path: string) {
 }
 
 export class SfcSplitPlugin implements WebpackPluginInstance {
-  type: Options['type'];
-
-  tagMatcher: Options['tagMatcher'];
-
-  preserveTap: Options['preserveTap'];
+  options: Options;
 
   constructor({ type = false, tagMatcher, preserveTap }: Options = {}) {
-    this.type = type;
-    this.tagMatcher = tagMatcher;
-    this.preserveTap = preserveTap;
+    this.options = {
+      type,
+      tagMatcher,
+      preserveTap,
+    };
   }
 
   #applyLoader(compiler: Compiler) {
     compiler.options.module.rules.push(
       {
         test: /\.vue$/,
-        loader: reach('./loader/fake-vue-loader.mjs'),
-        options: {
-          componentRoot: COMPONENT_ROOT,
-        },
+        use: [
+          {
+            loader: reach('./loader/fake-vue-loader.mts'),
+            options: {
+              componentRoot: COMPONENT_ROOT,
+            },
+          },
+          {
+            loader: reach('@into-mini/sfc-split-loader/src/next.mts'),
+            options: this.options,
+          },
+        ],
       },
       {
         test: /\.wxml$/,
@@ -51,7 +57,7 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
   apply(compiler: Compiler) {
     this.#applyLoader(compiler);
 
-    const { type, tagMatcher, preserveTap } = this;
+    const { type, tagMatcher, preserveTap } = this.options;
 
     if (type) {
       new AddWxsPlugin().apply(compiler);

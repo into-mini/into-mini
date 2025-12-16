@@ -25,7 +25,7 @@ function importStatement({ imported, local = imported, source }) {
   };
 }
 
-export function transformer(ast, names, id) {
+export function transformerJS(ast, names, id) {
   let hasImport = false;
 
   traverse.default(ast, {

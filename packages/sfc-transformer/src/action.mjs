@@ -8,7 +8,7 @@ import {
 import { serializeTemplate } from '@padcom/vue-ast-serializer';
 import { kebabCase } from 'change-case';
 
-import { CLSX_PLACEHOLDER } from './utils.mjs';
+import { CLSX_PLACEHOLDER } from './utils.mts';
 
 const actions = {
   click: 'tap',
@@ -297,7 +297,7 @@ export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
         const { tag, path } = tagMatcher(node.tag) || {};
 
         if (tag && tag.trim() && path && path.trim()) {
-          tags.set(tag.trim(), path.trim());
+          tags.set(kebabCase(tag.trim()), path.trim());
         }
       }
       switch (node.tag) {
@@ -399,15 +399,10 @@ export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
   };
 }
 
-export function action(template, { tagMatcher, preserveTap } = {}) {
-  const { ast, tags } = transformTemplateAst(template.ast, {
-    tagMatcher,
-    preserveTap,
-  });
-
-  const tpl = ast.children
+export function action(template) {
+  const tpl = template.ast.children
     .map((item) => serializeTemplate({ ast: item }))
     .join('\n');
 
-  return { ast, tpl, tags };
+  return { ast: template.ast, tpl };
 }

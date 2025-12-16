@@ -53,4 +53,7 @@ export default {
     }),
     new EmitEntriesPlugin(),
   ],
+  stats: {
+    errorDetails: true,
+  },
 };

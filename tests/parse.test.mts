@@ -1,5 +1,5 @@
 import test from 'ava';
-import { parse } from '@into-mini/sfc-transformer';
+import { parse } from '@into-mini/sfc-transformer/src/index.mjs';
 
 function html([string]: TemplateStringsArray) {
   return string ? string.trim() : '';
@@ -22,18 +22,7 @@ test('base', (t) => {
 });
 
 test('tags', (t) => {
-  const io = parse(fixtures, {
-    tagMatcher(tag: string) {
-      if (tag.startsWith('t-')) {
-        return {
-          tag,
-          path: 'abcd',
-        };
-      }
-
-      return false;
-    },
-  });
+  const io = parse(fixtures);
 
   t.snapshot(io);
 });

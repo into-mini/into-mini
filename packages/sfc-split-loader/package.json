@@ -1,6 +1,6 @@
 {
   "name": "@into-mini/sfc-split-loader",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "license": "MIT",
   "keywords": [
     "mini-program",
@@ -29,14 +29,7 @@
   },
   "dependencies": {
     "@into-mini/sfc-transformer": "workspace:^",
-    "@padcom/vue-ast-serializer": "catalog:",
-    "@vue/compiler-sfc": "catalog:",
-    "deepmerge-ts": "^7.1.5",
-    "yaml": "catalog:"
-  },
-  "devDependencies": {
-    "ava": "catalog:",
-    "prettier": "catalog:"
+    "@vue/compiler-sfc": "catalog:"
   },
   "engines": {
     "node": ">=22.18.0"

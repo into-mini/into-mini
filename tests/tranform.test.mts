@@ -2,7 +2,7 @@ import { parse as parseSFC } from '@vue/compiler-sfc';
 import { pretty } from '@into-mini/wxml-loader/pretty.mjs';
 import test from 'ava';
 import { readFileSync } from 'node:fs';
-import { action } from '@into-mini/sfc-transformer/action.mjs';
+import { action } from '@into-mini/sfc-transformer/src/action.mjs';
 
 const fixtures = readFileSync(
   new URL('./fixtures/sample2.vue', import.meta.url),

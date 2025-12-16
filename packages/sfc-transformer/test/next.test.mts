@@ -22,3 +22,15 @@ test('next', async (t) => {
 
   t.snapshot(await formatVue(result));
 });
+
+test('empty1', async (t) => {
+  const result = transformer('');
+
+  t.snapshot(await formatVue(result));
+});
+
+test('empty2', async (t) => {
+  const result = transformer('<template></template>');
+
+  t.snapshot(await formatVue(result));
+});

@@ -1,10 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { Compiler, Compilation, WebpackPluginInstance } from 'webpack';
-import { sources as webpackSources } from 'webpack';
+import type {
+  Compiler,
+  Compilation,
+  WebpackPluginInstance,
+  sources as webpackSources,
+} from 'webpack';
 
-import { CLSX_PLACEHOLDER } from '@into-mini/sfc-transformer/utils.mjs';
+import { CLSX_PLACEHOLDER } from '@into-mini/sfc-transformer/src/utils.mts';
 import slash from 'slash';
 
 // WXS文件输出路径
