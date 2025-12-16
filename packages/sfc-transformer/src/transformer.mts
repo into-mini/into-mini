@@ -10,7 +10,7 @@ import { stringify } from '@padcom/vue-ast-serializer';
 
 import yaml from 'yaml';
 import { deepmerge } from 'deepmerge-ts';
-import { transformerJS } from './transformer-js.mjs';
+import { transformerJS } from './transformer-js.mts';
 import { kebabCase } from 'change-case';
 
 export type Options = {

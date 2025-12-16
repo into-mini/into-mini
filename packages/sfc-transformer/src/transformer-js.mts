@@ -1,8 +1,18 @@
 import traverse from '@babel/traverse';
+import type { babelParse } from '@vue/compiler-sfc';
+import type { Statement } from '@babel/types';
 
 const funcName = '$$asComponent';
 
-function importStatement({ imported, local = imported, source }) {
+function importStatement({
+  imported,
+  local = imported,
+  source,
+}: {
+  imported: string;
+  local?: string;
+  source: string;
+}): Statement {
   return {
     type: 'ImportDeclaration',
     specifiers: [
@@ -25,13 +35,22 @@ function importStatement({ imported, local = imported, source }) {
   };
 }
 
-export function transformerJS(ast, names, id) {
+export function transformerJS(
+  ast: ReturnType<typeof babelParse>,
+  names: string[],
+  id: string,
+) {
   let hasImport = false;
 
-  traverse.default(ast, {
+  // @ts-expect-error ------------------
+  const func = traverse.default as typeof traverse;
+
+  func(ast, {
     ImportDeclaration(path) {
       if (
-        path.node.specifiers.some((specifier) => specifier.local === funcName)
+        path.node.specifiers.some(
+          (specifier) => specifier.local.name === funcName,
+        )
       ) {
         hasImport = true;
       }
@@ -46,8 +65,9 @@ export function transformerJS(ast, names, id) {
         path.traverse({
           ObjectMethod(subPath) {
             if (
+              subPath.node.key.type === 'Identifier' &&
               subPath.node.key.name === 'setup' &&
-              (subPath.parentPath.parentPath.parentPath === path ||
+              (subPath.parentPath.parentPath?.parentPath === path ||
                 subPath.parentPath.parentPath === path)
             ) {
               subPath.traverse({
@@ -56,7 +76,9 @@ export function transformerJS(ast, names, id) {
                     subPath2.traverse({
                       ObjectProperty(subPath3) {
                         if (
+                          subPath3.node.key.type === 'Identifier' &&
                           subPath3.node.key.name === 'expose' &&
+                          subPath3.node.value.type === 'Identifier' &&
                           subPath3.node.value.name === '__expose' &&
                           subPath3.parentPath === subPath2
                         ) {
@@ -89,12 +111,14 @@ export function transformerJS(ast, names, id) {
                 },
                 VariableDeclarator(subPath2) {
                   if (
+                    subPath2.node.id.type === 'Identifier' &&
                     subPath2.node.id.name === '__returned__' &&
-                    subPath2.parentPath.parentPath.parentPath === subPath
+                    subPath2.parentPath.parentPath?.parentPath === subPath
                   ) {
                     path.traverse({
                       ObjectProperty(subPath3) {
                         if (
+                          subPath3.node.key.type === 'Identifier' &&
                           (names.includes(subPath3.node.key.name) ||
                             subPath3.node.key.name === 'props') &&
                           subPath3.parentPath.parentPath === subPath2
@@ -107,6 +131,7 @@ export function transformerJS(ast, names, id) {
                 },
                 ExpressionStatement(subPath2) {
                   if (
+                    subPath2.node.expression?.type === 'CallExpression' &&
                     subPath2.node.expression?.callee?.type === 'Identifier' &&
                     subPath2.node.expression.callee.name === '__expose' &&
                     subPath2.parentPath.parentPath === subPath
@@ -121,11 +146,11 @@ export function transformerJS(ast, names, id) {
                     subPath2.node.callee.object.name === 'Object' &&
                     subPath2.node.callee.property.type === 'Identifier' &&
                     subPath2.node.callee.property.name === 'defineProperty' &&
-                    subPath2.node.arguments[0].type === 'Identifier' &&
+                    subPath2.node.arguments[0]?.type === 'Identifier' &&
                     subPath2.node.arguments[0].name === '__returned__' &&
-                    subPath2.node.arguments[1].type === 'StringLiteral' &&
+                    subPath2.node.arguments[1]?.type === 'StringLiteral' &&
                     subPath2.node.arguments[1].value === '__isScriptSetup' &&
-                    subPath2.parentPath.parentPath.parentPath === subPath
+                    subPath2.parentPath.parentPath?.parentPath === subPath
                   ) {
                     subPath2.remove();
                   }
@@ -156,7 +181,7 @@ export function transformerJS(ast, names, id) {
       },
     });
 
-    const statement = importStatement({
+    const statement: Statement = importStatement({
       imported: funcName,
       source: '@into-mini/vue-mini-patch/mini.ts',
     });
