@@ -8,7 +8,7 @@ import type {
   sources as webpackSources,
 } from 'webpack';
 
-import { CLSX_PLACEHOLDER } from '@into-mini/sfc-transformer/src/utils.mts';
+import { CLSX_PLACEHOLDER } from '@into-mini/sfc-transformer/dist/utils.mjs';
 import slash from 'slash';
 
 // WXS文件输出路径

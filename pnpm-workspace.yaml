@@ -21,3 +21,6 @@ patchedDependencies:
   ava: patches/ava.patch
 
 shamefullyHoist: true
+
+overrides:
+  '@nice-move/tsconfig': ^0.4.0

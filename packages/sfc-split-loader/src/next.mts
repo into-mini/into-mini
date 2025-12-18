@@ -1,6 +1,6 @@
 import type { LoaderContext } from 'webpack';
 
-import { transformer } from '@into-mini/sfc-transformer/src/transformer.mts';
+import { transformer } from '@into-mini/sfc-transformer/dist/transformer.mjs';
 import type { Options } from '@into-mini/sfc-transformer/src/transformer.mts';
 
 export default function loader(this: LoaderContext<Options>, source: string) {

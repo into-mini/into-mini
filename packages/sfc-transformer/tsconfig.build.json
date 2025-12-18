@@ -1,16 +1,7 @@
 {
-  "extends": "@nice-move/tsconfig/node.json",
+  "extends": "@nice-move/tsconfig/node-bundle.json",
   "compilerOptions": {
-    "noEmit": false,
-    "outDir": "dist",
-    "allowJs": true,
-    "rewriteRelativeImportExtensions": true,
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "../../node_modules/@types"
-    ]
+    "outDir": "dist"
   },
   "include": [
     "src"

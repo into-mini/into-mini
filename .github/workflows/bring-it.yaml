@@ -34,3 +34,5 @@ jobs:
       id-token: write
     steps:
       - uses: airkro/bring-it@actions-oidc
+        with:
+          custom-command-after: pnpm recursive run prepublishOnly

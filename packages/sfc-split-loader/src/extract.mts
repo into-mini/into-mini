@@ -16,8 +16,6 @@ export function extractBlock(source: string, options: ExtractOptions): string {
         .join('\n')}`,
     );
   }
-
-  console.log(source);
   switch (options.type) {
     case 'template': {
       if (descriptor.template) {
