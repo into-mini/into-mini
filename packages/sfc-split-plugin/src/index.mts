@@ -54,12 +54,12 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
         resourceQuery: /type=template/,
         type: 'asset/resource',
         generator: {
-          filename: '[hash:8].wxml',
+          filename: '[path][name].[hash:8].wxml',
         },
         use: [
-          {
-            loader: reach('@into-mini/wxml-loader'),
-          },
+          // {
+          //   loader: reach('@into-mini/wxml-loader'),
+          // },
           {
             loader: theLoader,
           },
@@ -78,7 +78,7 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
       {
         test: /\.vue$/,
         issuer: /\.vue$/,
-        resourceQuery: [/type=config/],
+        resourceQuery: [/type=config&lang=json/],
         type: 'asset/resource',
         generator: {
           filename: '[path][hash:8].json',
@@ -88,6 +88,7 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
       {
         test: /\.vue$/,
         resourceQuery: { not: /type=/ },
+        type: 'javascript/esm',
         enforce: 'pre',
         use: [
           {
@@ -114,7 +115,7 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
       // new ExposeEntryNamePlugin().apply(compiler);
       new EntryRenamePlugin({
         issuer: /\.vue$/,
-        test: /\.wxml/,
+        test: /\.wxml|json/,
       }).apply(compiler);
     }
   }

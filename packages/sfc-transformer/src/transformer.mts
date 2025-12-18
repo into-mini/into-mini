@@ -166,7 +166,7 @@ export function transformer(
 
   const id = '$$mainBlock';
 
-  let tags: Map<any, any> | undefined;
+  let tags: Map<string, any> | undefined;
 
   if (result.descriptor.template?.ast?.children.length) {
     tags = transformTemplateAst(result.descriptor.template.ast, {
@@ -180,7 +180,10 @@ export function transformer(
     }).descriptor.template;
   }
 
-  if (result.descriptor.script?.content.includes('export default ')) {
+  if (
+    result.descriptor.script?.content.includes('export default ') ||
+    result.descriptor.scriptSetup?.content
+  ) {
     const { pairs, script } = getGeneric(result, id);
 
     replaceConfig(result, { tags, pairs });
@@ -195,13 +198,21 @@ export function transformer(
 
     const { code } = generate(ast);
 
-    result.descriptor.script.content = code;
-
-    if (result.descriptor.scriptSetup) {
-      result.descriptor.scriptSetup = null;
-    }
+    result.descriptor.script = parseSFC(`<script>${code}</script>`, {
+      sourceMap: false,
+      templateParseOptions: { comments: true },
+    }).descriptor.script;
   } else {
+    result.descriptor.script = parseSFC('<script>Component({});</script>', {
+      sourceMap: false,
+      templateParseOptions: { comments: false },
+    }).descriptor.script;
+
     replaceConfig(result, { tags });
+  }
+
+  if (result.descriptor.scriptSetup) {
+    result.descriptor.scriptSetup = null;
   }
 
   return stringify(result);

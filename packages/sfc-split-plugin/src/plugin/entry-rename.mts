@@ -105,11 +105,9 @@ export class EntryRenamePlugin implements WebpackPluginInstance {
               continue;
             }
 
-            if (compilation.getAsset(newName)) {
-              continue;
+            if (compilation.getAsset(filename)) {
+              compilation.renameAsset(filename, newName);
             }
-
-            compilation.renameAsset(filename, newName);
           }
         },
       );

@@ -91,7 +91,7 @@ export function processVueSFC(source: string, filename: string) {
 
   // 3. 自定义块导入
   descriptor.customBlocks.forEach((block, index) => {
-    const lang = block.lang || 'txt';
+    const lang = block.lang || 'json';
     imports.push(
       `import './${filename}?type=${block.type}&lang=${lang}&index=${index}';`,
     );
