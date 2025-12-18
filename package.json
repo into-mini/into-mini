@@ -61,13 +61,12 @@
   "nodemonConfig": {
     "delay": 5,
     "exec": "webpack",
-    "ext": "js,cjs,mjs,json,wxs,vue",
+    "ext": "js,cjs,mjs,json,wxs,vue,mts",
     "quiet": true,
     "watch": [
       "packages/**",
       "webpack.config.mjs",
       "package.json",
-      "plugin",
       "fake"
     ]
   },

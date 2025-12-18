@@ -59,7 +59,11 @@ export function extractBlock(source: string, options: ExtractOptions): string {
 }
 
 export function processVueSFC(source: string, filename: string) {
-  const { descriptor, errors } = parse(source);
+  if (source.trim() === '') {
+    return '';
+  }
+
+  const { descriptor, errors } = parse(source.trim());
 
   if (errors && errors.length > 0) {
     throw new Error(

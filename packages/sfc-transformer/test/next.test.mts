@@ -1,8 +1,9 @@
 import test from 'ava';
 import { transformer } from '../src/transformer.mts';
-import { input } from './fixtures/input.mts';
 
 import { format } from 'prettier';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { getFixtureFiles } from 'into-mini-test/fixtures/index.mts';
 
 async function formatVue(code: string) {
   return format(code, {
@@ -11,26 +12,19 @@ async function formatVue(code: string) {
   });
 }
 
-test('next', async (t) => {
-  const result = transformer(input, {
-    preserveTap: (tag: string) => tag === 't-button',
-    tagMatcher: (tag: string) =>
-      tag === 't-button'
-        ? { tag: 't-button', path: '@tencent/tdesign-vue/button' }
-        : undefined,
+const fixtures = getFixtureFiles();
+
+for (const [name, fixture] of Object.entries(fixtures)) {
+  test(name, async (t) => {
+    const result = transformer(fixture, {
+      preserveTap: (tag: string) => tag === 't-button',
+      tagMatcher: (tag: string) =>
+        tag === 't-button'
+          ? { tag: 't-button', path: '@tencent/tdesign-vue/button' }
+          : undefined,
+    });
+
+    t.snapshot(fixture, 'input');
+    t.snapshot(await formatVue(result), 'output');
   });
-
-  t.snapshot(await formatVue(result));
-});
-
-test('empty1', async (t) => {
-  const result = transformer('');
-
-  t.snapshot(await formatVue(result));
-});
-
-test('empty2', async (t) => {
-  const result = transformer('<template></template>');
-
-  t.snapshot(await formatVue(result));
-});
+}
