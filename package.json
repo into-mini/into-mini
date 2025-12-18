@@ -62,7 +62,7 @@
   },
   "nodemonConfig": {
     "delay": 5,
-    "exec": "webpack",
+    "exec": "pnpm recursive run prepublishOnly;webpack",
     "ext": "js,cjs,mjs,json,wxs,vue,mts",
     "quiet": true,
     "watch": [

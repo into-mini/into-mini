@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 import { createHash } from 'node:crypto';
-import { join, relative, resolve } from 'node:path';
+import { relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import slash from 'slash';
@@ -72,25 +72,15 @@ function handleImport({
 export default function loader(
   this: LoaderContext<Record<string, any>>,
   source: string,
-  map,
-  meta,
 ) {
   this.cacheable();
   const callback = this.async();
   const { componentRoot } = this.getOptions();
   const { entryName: thisEntryName } = this;
-  const resourcePath = slash(this.resourcePath);
-  const { paths, config, script } = this.processSfcFile({
-    source,
-    resourcePath,
-  });
-  const { rootContext, context } = this;
 
-  for (const path of paths) {
-    const filePath = join(rootContext, path);
-    this.addDependency(filePath);
-    this.addMissingDependency(filePath);
-  }
+  const config = JSON.parse(source);
+
+  const { rootContext, context } = this;
 
   function toThis(entryName) {
     return slash(relative(`/${thisEntryName}/..`, `/${entryName}`));
@@ -138,12 +128,5 @@ export default function loader(
     });
   }
 
-  const file = [
-    ...paths
-      .map((path) => relative(`${resourcePath}/..`, path))
-      .map((path) => `import "./${path}";`),
-    script,
-  ].join('\n');
-  this.emitFile(`${thisEntryName}.json`, JSON.stringify(object, null, 2));
-  callback(null, file, map, meta);
+  callback(null, JSON.stringify(config));
 }

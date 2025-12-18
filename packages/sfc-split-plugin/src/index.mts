@@ -29,17 +29,10 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
 
   #applyLoader(compiler: Compiler) {
     compiler.options.module.rules.push(
-      // {
-      //   test: /\.vue$/,
-      //   use: [
-      //     {
-      //       loader: reach('./loader/fake-vue-loader.mts'),
-      //       options: {
-      //         componentRoot: COMPONENT_ROOT,
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        test: /\.vue$/,
+        use: [],
+      },
       {
         test: /\.vue$/,
         issuer: /\.vue$/,
@@ -82,7 +75,19 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
         generator: {
           filename: '[entry].json',
         },
-        loader: theLoader,
+        use: [
+          {
+            loader: reach(
+              '@into-mini/sfc-split-plugin/dist/loader/entry-loader.mjs',
+            ),
+            options: {
+              componentRoot: COMPONENT_ROOT,
+            },
+          },
+          {
+            loader: theLoader,
+          },
+        ],
       },
       {
         test: /\.vue$/,
