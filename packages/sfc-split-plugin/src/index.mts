@@ -57,9 +57,9 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
           filename: '[path][name].[hash:8].wxml',
         },
         use: [
-          // {
-          //   loader: reach('@into-mini/wxml-loader'),
-          // },
+          {
+            loader: reach('@into-mini/wxml-loader'),
+          },
           {
             loader: theLoader,
           },
@@ -89,16 +89,13 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
         test: /\.vue$/,
         resourceQuery: { not: /type=/ },
         type: 'javascript/esm',
+        loader: theLoader,
+      },
+      {
+        test: /\.vue$/,
         enforce: 'pre',
-        use: [
-          {
-            loader: theLoader,
-          },
-          {
-            loader: reach('@into-mini/sfc-split-loader/src/next.mts'),
-            options: this.options,
-          },
-        ],
+        loader: reach('@into-mini/sfc-split-loader/src/next.mts'),
+        options: this.options,
       },
     );
   }

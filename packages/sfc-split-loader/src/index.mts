@@ -1,26 +1,41 @@
 /* eslint-disable import/no-default-export */
 import { basename } from 'node:path';
-import { processVueSFC, extractBlock } from './splitter.mts';
+import { processVueSFC } from './splitter.mts';
 import type { LoaderContext } from 'webpack';
+import { extractBlock } from './extract.mts';
+import { decode } from 'qss';
+
+type Query = {
+  type: string;
+  index: number;
+};
 
 export default function loader(this: LoaderContext<null>, source: string) {
   const callback = this.async();
 
   try {
-    const type = this.resourceQuery.match(/type=([^&]+)/)?.[1];
+    const { type, index } = decode<Query>(
+      this.resourceQuery.replace(/^\?/, ''),
+    );
 
     if (type) {
-      const lang = this.resourceQuery.match(/lang=([^&]+)/)?.[1];
-      const index = this.resourceQuery.match(/index=([^&]+)/)?.[1];
       const blockContent = extractBlock(source, {
         type,
-        lang: lang || 'txt',
-        index: Number(index),
+        index,
       });
+
+      if (type === 'config') {
+        console.error(this.resourceQuery, { type, index, blockContent });
+      }
+
       callback(null, blockContent);
     } else {
       const { resourcePath } = this;
-      callback(null, processVueSFC(source, basename(resourcePath)));
+      const filename = basename(resourcePath);
+
+      const imports = processVueSFC(source, filename);
+
+      callback(null, imports);
     }
   } catch (error) {
     callback(error as Error);

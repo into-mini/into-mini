@@ -26,3 +26,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.jjj {
+  width: 50px;
+}
+</style>

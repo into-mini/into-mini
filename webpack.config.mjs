@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { SfcSplitPlugin } from '@into-mini/sfc-split-plugin/src/index.mts';
 import { AutoEntriesPlugin } from '@into-mini/auto-entries-plugin';
 import { EmitEntriesPlugin } from 'emit-webpack-entries-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export default {
   mode: 'development',
@@ -53,6 +54,9 @@ export default {
       type: 'miniprogram',
     }),
     new EmitEntriesPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].wxss',
+    }),
   ],
   stats: {
     errorDetails: true,
