@@ -27,6 +27,7 @@ export default {
   },
   optimization: {
     runtimeChunk: 'single',
+    mergeDuplicateChunks: false,
     splitChunks: {
       chunks: 'initial',
       name: 'vendor',

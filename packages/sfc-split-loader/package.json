@@ -31,6 +31,10 @@
     "@into-mini/sfc-transformer": "workspace:^",
     "@vue/compiler-sfc": "catalog:"
   },
+  "devDependencies": {
+    "ava": "catalog:",
+    "loader-runner": "^4.3.1"
+  },
   "engines": {
     "node": ">=22.18.0"
   },
