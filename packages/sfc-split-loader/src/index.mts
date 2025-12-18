@@ -24,10 +24,6 @@ export default function loader(this: LoaderContext<null>, source: string) {
         index,
       });
 
-      if (type === 'config') {
-        console.error(this.resourceQuery, { type, index, blockContent });
-      }
-
       callback(null, blockContent);
     } else {
       const { resourcePath } = this;

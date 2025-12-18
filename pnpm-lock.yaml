@@ -16,10 +16,10 @@ catalogs:
       specifier: ^1.0.0
       version: 1.0.0
     '@vue/compiler-core':
-      specifier: ~3.5.25
+      specifier: ^3.5.25
       version: 3.5.25
     '@vue/compiler-sfc':
-      specifier: ~3.5.25
+      specifier: ^3.5.25
       version: 3.5.25
     ava:
       specifier: ^6.4.1
@@ -28,10 +28,10 @@ catalogs:
       specifier: ^3.7.4
       version: 3.7.4
     vue:
-      specifier: ~3.5.25
+      specifier: ^3.5.25
       version: 3.5.25
     vue-router:
-      specifier: ~4.6.3
+      specifier: ^4.6.3
       version: 4.6.3
     yaml:
       specifier: ^2.8.2
