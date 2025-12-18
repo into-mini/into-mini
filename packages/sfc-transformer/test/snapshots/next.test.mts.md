@@ -577,7 +577,7 @@ h1 {␊
   </ttt>␊
   <!---->␊
   <ttt>␊
-    <template #uuu>␊
+    <template #ooo>␊
       <ll/>␊
     </template>␊
   </ttt>␊
@@ -680,7 +680,7 @@ export default {␊
       <j />␊
     </block>␊
   </ttt>␊
-  <ttt><ll slot="uuu" slot="uuu" /></ttt>␊
+  <ttt><ll slot="ooo" /></ttt>␊
   <view bind:tap="dad" />␊
   <t-button bind:tap="dad" />␊
   <view><block wx:if="{{ s }}">s</block></view>␊

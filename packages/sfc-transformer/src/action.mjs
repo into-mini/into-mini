@@ -303,25 +303,24 @@ export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
       switch (node.tag) {
         case 'template': {
           if (
+            node.children.length === 1 &&
             node.props.some(
               (item) =>
-                (item.type === NodeTypes.DIRECTIVE ||
-                  item.type === NodeTypes.ATTRIBUTE) &&
+                (item.type === NodeTypes.ATTRIBUTE ||
+                  item.type === NodeTypes.DIRECTIVE) &&
                 item.name === 'slot',
             )
           ) {
-            if (node.children.length === 1) {
-              node.children[0].props ||= [];
+            const child = structuredClone(node.children[0]);
 
-              node.children[0].props.push(...node.props);
+            child.props ||= [];
 
-              return node.children[0];
-            }
+            child.props.push(...node.props);
 
-            node.tag = 'block';
-          } else {
-            node.tag = 'block';
+            return child;
           }
+
+          node.tag = 'block';
           break;
         }
         case 'img': {

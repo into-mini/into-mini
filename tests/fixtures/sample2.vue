@@ -37,7 +37,7 @@
   </ttt>
   <!---->
   <ttt>
-    <template #uuu>
+    <template #ooo>
       <ll/>
     </template>
   </ttt>
