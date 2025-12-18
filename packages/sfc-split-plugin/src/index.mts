@@ -3,11 +3,10 @@ import { fileURLToPath } from 'node:url';
 import { AddWxsPlugin } from './plugin/add-wxs.mts';
 import { ExposeEntryNamePlugin } from './plugin/expose-entry.mts';
 import { EntryRenamePlugin } from './plugin/entry-rename.mts';
-// import { SfcSplitPluginBase } from './plugin/sfc-split.mts';
-import type { Options } from './plugin/sfc-split.mts';
 import { MinaRuntimeWebpackPlugin } from './plugin/mina-runtime.mts';
 import type { Compiler, WebpackPluginInstance } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import type { Options } from '@into-mini/sfc-transformer/src/transformer.mts';
 
 export const COMPONENT_ROOT = 'as-components';
 
@@ -54,7 +53,7 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
         resourceQuery: /type=template/,
         type: 'asset/resource',
         generator: {
-          filename: '[path][name].[hash:8].wxml',
+          filename: '[entry].wxml',
         },
         use: [
           {
@@ -81,7 +80,7 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
         resourceQuery: [/type=config&lang=json/],
         type: 'asset/resource',
         generator: {
-          filename: '[name][hash:8].json',
+          filename: '[entry].json',
         },
         loader: theLoader,
       },
@@ -108,7 +107,6 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
     if (type) {
       new AddWxsPlugin().apply(compiler);
       new MinaRuntimeWebpackPlugin().apply(compiler);
-      // new SfcSplitPluginBase({ tagMatcher, preserveTap }).apply(compiler);
       new ExposeEntryNamePlugin().apply(compiler);
       new EntryRenamePlugin({
         issuer: /\.vue$/,

@@ -1,5 +1,3 @@
-import { toJSONString } from './utils.mjs';
-
 import { readConfig } from './read.mjs';
 
 export function createEmitFile({ PLUGIN_NAME, compilation, RawSource }) {
@@ -13,7 +11,9 @@ export function createEmitFile({ PLUGIN_NAME, compilation, RawSource }) {
         compilation.emitAsset(
           name,
           new RawSource(
-            typeof content === 'string' ? content : toJSONString(content),
+            typeof content === 'string'
+              ? content
+              : JSON.stringify(content, null, 2),
           ),
         );
       },

@@ -5,7 +5,6 @@ import { createHash } from 'node:crypto';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { toJSONString } from '@into-mini/sfc-transformer/src/utils.mts';
 import slash from 'slash';
 import type { LoaderContext } from 'webpack';
 
@@ -145,6 +144,6 @@ export default function loader(
       .map((path) => `import "./${path}";`),
     script,
   ].join('\n');
-  this.emitFile(`${thisEntryName}.json`, toJSONString(config));
+  this.emitFile(`${thisEntryName}.json`, JSON.stringify(object, null, 2));
   callback(null, file, map, meta);
 }

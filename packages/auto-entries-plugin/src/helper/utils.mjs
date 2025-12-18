@@ -4,7 +4,3 @@ export const configKeys = {
   project: 'project.config',
   hack: 'hack.entry',
 };
-
-export function toJSONString(object) {
-  return JSON.stringify(object, null, 2);
-}

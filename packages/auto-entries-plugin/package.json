@@ -1,6 +1,6 @@
 {
   "name": "@into-mini/auto-entries-plugin",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "license": "MIT",
   "keywords": [
     "loader",
@@ -22,13 +22,17 @@
   "bugs": {
     "url": "https://github.com/into-mini/into-mini/issues"
   },
-  "main": "plugin.mjs",
+  "main": "dist/plugin.mjs",
   "files": [
-    "**/*.json",
-    "**/*.mjs"
+    "dist"
   ],
   "type": "module",
+  "scripts": {
+    "prepublishOnly": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
+    "@into-mini/sfc-transformer": "workspace:^",
+    "slash": "catalog:",
     "yaml": "catalog:",
     "yaml-patch-loader": "^0.1.0"
   },
