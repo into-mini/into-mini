@@ -15,7 +15,7 @@ function reach(path: string) {
   return fileURLToPath(import.meta.resolve(path));
 }
 
-const theLoader = reach('@into-mini/sfc-split-loader/src/index.mts');
+const theLoader = reach('@into-mini/sfc-split-loader/dist/index.mjs');
 
 export class SfcSplitPlugin implements WebpackPluginInstance {
   options: Options;
@@ -94,7 +94,7 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
       {
         test: /\.vue$/,
         enforce: 'pre',
-        loader: reach('@into-mini/sfc-split-loader/src/next.mts'),
+        loader: reach('@into-mini/sfc-split-loader/dist/next.mjs'),
         options: this.options,
       },
     );
