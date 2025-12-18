@@ -16,23 +16,29 @@ function reach(path: string) {
 
 const theLoader = reach('@into-mini/sfc-split-loader/dist/index.mjs');
 
-export class SfcSplitPlugin implements WebpackPluginInstance {
-  options: Options;
+type PluginOptions = Options & {
+  loaders?: boolean;
+};
 
-  constructor({ type = false, tagMatcher, preserveTap }: Options = {}) {
+export class SfcSplitPlugin implements WebpackPluginInstance {
+  options: PluginOptions;
+
+  constructor({
+    type = false,
+    tagMatcher,
+    preserveTap,
+    loaders = true,
+  }: PluginOptions = {}) {
     this.options = {
       type,
       tagMatcher,
       preserveTap,
+      loaders,
     };
   }
 
   #applyLoader(compiler: Compiler) {
     compiler.options.module.rules.push(
-      {
-        test: /\.vue$/,
-        use: [],
-      },
       {
         test: /\.vue$/,
         issuer: /\.vue$/,
@@ -105,9 +111,11 @@ export class SfcSplitPlugin implements WebpackPluginInstance {
   }
 
   apply(compiler: Compiler) {
-    this.#applyLoader(compiler);
+    const { loaders, type } = this.options;
 
-    const { type } = this.options;
+    if (loaders) {
+      this.#applyLoader(compiler);
+    }
 
     if (type) {
       new AddWxsPlugin().apply(compiler);

@@ -74,6 +74,14 @@ import './empty2.vue?type=script&lang=js';`
 import './index2.vue?type=script&lang=js';`
 ```
 
+## raw.vue
+
+> imports
+
+```
+'import \'./raw.vue?type=script&lang=js\';'
+```
+
 ## sample.vue
 
 > imports

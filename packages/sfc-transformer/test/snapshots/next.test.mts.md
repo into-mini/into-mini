@@ -474,6 +474,46 @@ $$asComponent($$mainBlock);␊
 `
 ```
 
+## raw.vue
+
+> input
+
+```
+`<script>␊
+// Component({␊
+//   abc: 123,␊
+// });␊
+␊
+export default {␊
+  abc: 123,␊
+};␊
+</script>␊
+`
+```
+
+> output
+
+```
+`<template><!-- --></template>␊
+<script>␊
+import { $$asComponent } from "@into-mini/vue-mini-patch/mini.ts";␊
+// Component({␊
+//   abc: 123,␊
+// });␊
+␊
+const $$mainBlock = {␊
+  abc: 123,␊
+};␊
+$$asComponent($$mainBlock);␊
+</script>␊
+<config lang="json">␊
+{␊
+  "component": true␊
+}␊
+</config>␊
+`
+```
+
 ## sample.vue
 
 > input
