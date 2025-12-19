@@ -26,9 +26,9 @@
     "@babel/preset-typescript": "^7.28.5",
     "@bring-it/cli": "^0.11.1",
     "@bring-it/npm": "^0.9.3",
-    "@nice-move/all-in-vue": "^0.6.25",
+    "@nice-move/all-in-vue": "^0.6.27",
     "@nice-move/syncpack-config": "^0.4.2",
-    "@nice-move/tsconfig": "^0.3.17",
+    "@nice-move/tsconfig": "^0.4.0",
     "ava": "catalog:",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
@@ -39,7 +39,7 @@
     "prettier": "catalog:",
     "syncpack": "^13.0.4",
     "typescript": "~5.9.3",
-    "webpack": "^5.104.0",
+    "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1"
   },
   "peerDependencies": {

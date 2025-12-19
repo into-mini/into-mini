@@ -9,19 +9,19 @@ catalog:
   '@vue-mini/core': ^1.2.8
   '@vue-mini/pinia': ^1.0.0
   '@vue/compiler-core': ^3.5.25
-  '@vue/compiler-sfc': ^3.5.25
+  '@vue/compiler-sfc': ^3.5.26
+  ava: ^6.4.1
+  prettier: ^3.7.4
+  slash: ^5.1.0
   vue: ^3.5.25
   vue-router: ^4.6.3
   yaml: ^2.8.2
-  slash: ^5.1.0
-  ava: ^6.4.1
-  prettier: ^3.7.4
+
+overrides:
+  '@nice-move/tsconfig': ^0.4.0
 
 patchedDependencies:
   '@vue-mini/core': patches/@vue-mini__core.patch
   ava: patches/ava.patch
 
 shamefullyHoist: true
-
-overrides:
-  '@nice-move/tsconfig': ^0.4.0

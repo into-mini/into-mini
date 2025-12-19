@@ -41,6 +41,7 @@ export function transformerJS(
   id: string,
 ) {
   let hasImport = false;
+  let needImport = false;
 
   // @ts-expect-error ------------------
   const func = traverse.default as typeof traverse;
@@ -62,6 +63,18 @@ export function transformerJS(
     },
     VariableDeclarator(path) {
       if (path.node.id.type === 'Identifier' && path.node.id.name === id) {
+        if (path.node.init?.type === 'ObjectExpression') {
+          if (path.node.init?.properties?.length) {
+            needImport = true;
+          } else {
+            path.remove();
+
+            return;
+          }
+        } else {
+          needImport = true;
+        }
+
         path.traverse({
           ObjectMethod(subPath) {
             if (
@@ -163,7 +176,7 @@ export function transformerJS(
     },
   });
 
-  if (!hasImport) {
+  if (!hasImport && needImport) {
     ast.program.body.push({
       type: 'ExpressionStatement',
       expression: {

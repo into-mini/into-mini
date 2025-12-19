@@ -181,8 +181,8 @@ export function transformer(
   }
 
   if (
-    result.descriptor.script?.content.includes('export default ') ||
-    result.descriptor.scriptSetup?.content
+    result.descriptor.script?.content?.trim() ||
+    result.descriptor.scriptSetup?.content?.trim()
   ) {
     const { pairs, script } = getGeneric(result, id);
 

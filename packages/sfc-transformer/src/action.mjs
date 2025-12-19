@@ -389,6 +389,7 @@ export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
         },
       ],
       isSelfClosing: true,
+      children: [],
     });
   }
 

@@ -1,9 +1,9 @@
 <template>.container h1 {{ title }} p {{ description }}</template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { ref } from 'vue';
 
-export default defineComponent({
+export default {
   name: 'TestComponent',
   setup() {
     const title = ref('Test Title');
@@ -16,7 +16,7 @@ export default defineComponent({
       description,
     };
   },
-});
+};
 </script>
 
 <style lang="scss">

@@ -1,9 +1,5 @@
 <script>
-// Component({
-//   abc: 123,
-// });
-
-export default {
+Component({
   abc: 123,
-};
+});
 </script>
