@@ -112,6 +112,13 @@ export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
 
           const raw = ctx.parent.node.find((element) => findRaw(element));
 
+          ctx.parent.node[
+            ctx.parent.node.findIndex((element) => findRaw(element))
+          ] = {
+            type: NodeTypes.TEXT,
+            content: '',
+          };
+
           if (!raw?.value?.content && node.exp.ast.type === 'StringLiteral') {
             return {
               type: NodeTypes.ATTRIBUTE,
@@ -124,7 +131,7 @@ export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
           }
 
           const result = raw?.value?.content
-            ? `clsx.clsx('${raw.value.content.trim()}', ${node.exp.content.trim()})`
+            ? `clsx.clsx('${raw.value.content.trim()}', ${node.exp.content?.trim()})`
             : canBeString(node.exp)
               ? node.exp.content.trim()
               : `clsx.clsx(${node.exp.content.trim()})`;
@@ -134,7 +141,7 @@ export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
             ast.cached.clsx ||= true;
           }
 
-          return {
+          const target = {
             type: NodeTypes.ATTRIBUTE,
             name: node.arg.content,
             clsx: true,
@@ -148,6 +155,8 @@ export function transformTemplateAst(ast, { tagMatcher, preserveTap } = {}) {
               },
             },
           };
+
+          return target;
         }
 
         if (node.arg.content.startsWith('generic:') && node.exp.content) {

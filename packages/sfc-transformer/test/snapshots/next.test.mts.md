@@ -699,8 +699,8 @@ export default {␊
   <view wx:if="{{ a }}" />␊
   <view wx:elif="{{ b }}" />␊
   <view wx:else />␊
-  <view class="n" class="{{ clsx.clsx('n', [ d]) }}" />␊
-  <view class="n" class="{{ clsx.clsx('n', {f}) }}" />␊
+  <view class="{{ clsx.clsx('n', [ d]) }}" />␊
+  <view class="{{ clsx.clsx('n', {f}) }}" />␊
   <view class="{{ clsx.clsx(sss) }}" />␊
   <nx-list generic:item="item" />␊
   <view>{{ dsds }}</view>␊
