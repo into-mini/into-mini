@@ -16,10 +16,11 @@ function reach(path: string) {
   return fileURLToPath(import.meta.resolve(path));
 }
 
+const componentRoot = 'as-components';
+
 function handleImport({
   toThis,
   addSmartEntry,
-  componentRoot,
   context,
   rootContext,
   maps,
@@ -75,10 +76,9 @@ export default function loader(
 ) {
   this.cacheable();
   const callback = this.async();
-  const { componentRoot } = this.getOptions();
   const { entryName: thisEntryName } = this;
 
-  const config = JSON.parse(source);
+  const config = JSON.parse(source.trim() || '{}');
 
   const { rootContext, context } = this;
 
@@ -114,7 +114,6 @@ export default function loader(
     handleImport.bind(this)({
       toThis,
       addSmartEntry,
-      componentRoot,
       context,
       rootContext,
       maps: Object.fromEntries(

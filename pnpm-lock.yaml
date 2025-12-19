@@ -9,9 +9,15 @@ catalogs:
     '@padcom/vue-ast-serializer':
       specifier: ^0.0.1
       version: 0.0.1
+    '@vue-mini/core':
+      specifier: ^1.2.8
+      version: 1.2.8
     '@vue-mini/pinia':
       specifier: ^1.0.0
       version: 1.0.0
+    '@vue/compiler-core':
+      specifier: ^3.5.25
+      version: 3.5.26
     '@vue/compiler-sfc':
       specifier: ^3.5.26
       version: 3.5.26
@@ -24,6 +30,12 @@ catalogs:
     slash:
       specifier: ^5.1.0
       version: 5.1.0
+    vue:
+      specifier: ^3.5.25
+      version: 3.5.25
+    vue-router:
+      specifier: ^4.6.3
+      version: 4.6.3
     yaml:
       specifier: ^2.8.2
       version: 2.8.2
@@ -91,7 +103,7 @@ importers:
         version: 0.9.17(eslint@9.39.2)(typescript@5.9.3)
       mini-css-extract-plugin:
         specifier: ^2.9.4
-        version: 2.9.4(webpack@5.104.1(webpack-cli@6.0.1(webpack@5.104.1)))
+        version: 2.9.4(webpack@5.104.1)
       nodemon:
         specifier: ^3.1.11
         version: 3.1.11
@@ -129,7 +141,7 @@ importers:
         version: 5.1.0
       webpack:
         specifier: ^5.104.0
-        version: 5.104.0(webpack-cli@6.0.1(webpack@5.104.0))
+        version: 5.104.0(webpack-cli@6.0.1(webpack@5.104.1))
       yaml:
         specifier: 'catalog:'
         version: 2.8.2
@@ -178,18 +190,12 @@ importers:
       '@into-mini/wxml-loader':
         specifier: workspace:^
         version: link:../wxml-loader
-      mini-css-extract-plugin:
-        specifier: ^2.9.4
-        version: 2.9.4(webpack@5.104.1(webpack-cli@6.0.1(webpack@5.104.1)))
       slash:
         specifier: 'catalog:'
         version: 5.1.0
       webpack:
         specifier: ^5.104.0
         version: 5.104.1(webpack-cli@6.0.1(webpack@5.104.1))
-      webpack-virtual-modules:
-        specifier: ^0.6.2
-        version: 0.6.2
       yaml:
         specifier: 'catalog:'
         version: 2.8.2
@@ -198,7 +204,7 @@ importers:
     dependencies:
       '@vue/compiler-core':
         specifier: 'catalog:'
-        version: 3.5.25
+        version: 3.5.26
       neotraverse:
         specifier: ^0.6.18
         version: 0.6.18
@@ -3682,9 +3688,6 @@ packages:
     resolution: {integrity: sha512-yd1RBzSGanHkitROoPFd6qsrxt+oFhg/129YzheDGqeustzX0vTZJZsSsQjVQC4yzBQ56K55XU8gaNCtIzOnTg==}
     engines: {node: '>=10.13.0'}
 
-  webpack-virtual-modules@0.6.2:
-    resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
-
   webpack@5.104.0:
     resolution: {integrity: sha512-5DeICTX8BVgNp6afSPYXAFjskIgWGlygQH58bcozPOXgo2r/6xx39Y1+cULZ3gTxUYQP88jmwLj2anu4Xaq84g==}
     engines: {node: '>=10.13.0'}
@@ -4790,33 +4793,15 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@3.0.1(webpack-cli@6.0.1(webpack@5.104.0))(webpack@5.104.0)':
-    dependencies:
-      webpack: 5.104.0(webpack-cli@6.0.1(webpack@5.104.0))
-      webpack-cli: 6.0.1(webpack@5.104.0)
-    optional: true
-
   '@webpack-cli/configtest@3.0.1(webpack-cli@6.0.1(webpack@5.104.1))(webpack@5.104.1)':
     dependencies:
       webpack: 5.104.1(webpack-cli@6.0.1(webpack@5.104.1))
       webpack-cli: 6.0.1(webpack@5.104.1)
 
-  '@webpack-cli/info@3.0.1(webpack-cli@6.0.1(webpack@5.104.0))(webpack@5.104.0)':
-    dependencies:
-      webpack: 5.104.0(webpack-cli@6.0.1(webpack@5.104.0))
-      webpack-cli: 6.0.1(webpack@5.104.0)
-    optional: true
-
   '@webpack-cli/info@3.0.1(webpack-cli@6.0.1(webpack@5.104.1))(webpack@5.104.1)':
     dependencies:
       webpack: 5.104.1(webpack-cli@6.0.1(webpack@5.104.1))
       webpack-cli: 6.0.1(webpack@5.104.1)
-
-  '@webpack-cli/serve@3.0.1(webpack-cli@6.0.1(webpack@5.104.0))(webpack@5.104.0)':
-    dependencies:
-      webpack: 5.104.0(webpack-cli@6.0.1(webpack@5.104.0))
-      webpack-cli: 6.0.1(webpack@5.104.0)
-    optional: true
 
   '@webpack-cli/serve@3.0.1(webpack-cli@6.0.1(webpack@5.104.1))(webpack@5.104.1)':
     dependencies:
@@ -6726,7 +6711,7 @@ snapshots:
 
   mimic-function@5.0.1: {}
 
-  mini-css-extract-plugin@2.9.4(webpack@5.104.1(webpack-cli@6.0.1(webpack@5.104.1))):
+  mini-css-extract-plugin@2.9.4(webpack@5.104.1):
     dependencies:
       schema-utils: 4.3.3
       tapable: 2.3.0
@@ -7578,14 +7563,14 @@ snapshots:
 
   temp-dir@3.0.0: {}
 
-  terser-webpack-plugin@5.3.16(webpack@5.104.0(webpack-cli@6.0.1(webpack@5.104.0))):
+  terser-webpack-plugin@5.3.16(webpack@5.104.0(webpack-cli@6.0.1(webpack@5.104.1))):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.3.3
       serialize-javascript: 6.0.2
       terser: 5.44.0
-      webpack: 5.104.0(webpack-cli@6.0.1(webpack@5.104.0))
+      webpack: 5.104.0(webpack-cli@6.0.1(webpack@5.104.1))
 
   terser-webpack-plugin@5.3.16(webpack@5.104.1(webpack-cli@6.0.1(webpack@5.104.1))):
     dependencies:
@@ -7779,24 +7764,6 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
-  webpack-cli@6.0.1(webpack@5.104.0):
-    dependencies:
-      '@discoveryjs/json-ext': 0.6.3
-      '@webpack-cli/configtest': 3.0.1(webpack-cli@6.0.1(webpack@5.104.0))(webpack@5.104.0)
-      '@webpack-cli/info': 3.0.1(webpack-cli@6.0.1(webpack@5.104.0))(webpack@5.104.0)
-      '@webpack-cli/serve': 3.0.1(webpack-cli@6.0.1(webpack@5.104.0))(webpack@5.104.0)
-      colorette: 2.0.20
-      commander: 12.1.0
-      cross-spawn: 7.0.6
-      envinfo: 7.14.0
-      fastest-levenshtein: 1.0.16
-      import-local: 3.2.0
-      interpret: 3.1.1
-      rechoir: 0.8.0
-      webpack: 5.104.0(webpack-cli@6.0.1(webpack@5.104.0))
-      webpack-merge: 6.0.1
-    optional: true
-
   webpack-cli@6.0.1(webpack@5.104.1):
     dependencies:
       '@discoveryjs/json-ext': 0.6.3
@@ -7822,9 +7789,7 @@ snapshots:
 
   webpack-sources@3.3.3: {}
 
-  webpack-virtual-modules@0.6.2: {}
-
-  webpack@5.104.0(webpack-cli@6.0.1(webpack@5.104.0)):
+  webpack@5.104.0(webpack-cli@6.0.1(webpack@5.104.1)):
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.8
@@ -7848,11 +7813,11 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.3.16(webpack@5.104.0(webpack-cli@6.0.1(webpack@5.104.0)))
+      terser-webpack-plugin: 5.3.16(webpack@5.104.0(webpack-cli@6.0.1(webpack@5.104.1)))
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     optionalDependencies:
-      webpack-cli: 6.0.1(webpack@5.104.0)
+      webpack-cli: 6.0.1(webpack@5.104.1)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
