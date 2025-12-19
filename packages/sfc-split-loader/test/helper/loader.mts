@@ -3,19 +3,14 @@ import { runLoaders } from 'loader-runner';
 export async function runLoader(
   resourcePath: string,
   source: string,
+  options: object = {},
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {
     runLoaders(
       {
         context: {
           getOptions() {
-            return {
-              preserveTap: (tag: string) => tag === 't-button',
-              tagMatcher: (tag: string) =>
-                tag === 't-button'
-                  ? { tag: 't-button', path: '@tencent/tdesign-vue/button' }
-                  : undefined,
-            };
+            return options;
           },
         },
         resource: resourcePath,

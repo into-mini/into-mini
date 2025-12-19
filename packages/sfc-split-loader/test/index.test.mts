@@ -10,7 +10,13 @@ const fixtureFiles = getFixtureFiles();
 for (const [path, file] of Object.entries(fixtureFiles)) {
   test(path, async (t) => {
     // 运行loader
-    const result = await runLoader(path, file);
+    const result = await runLoader(path, file, {
+      preserveTap: (tag: string) => tag === 't-button',
+      tagMatcher: (tag: string) =>
+        tag === 't-button'
+          ? { tag: 't-button', path: '@tencent/tdesign-vue/button' }
+          : undefined,
+    });
 
     // 验证结果
     t.truthy(result, 'Loader should return a result');

@@ -4,41 +4,36 @@ import { splitVueSFC } from './splitter.mts';
 import type { LoaderContext } from 'webpack';
 import { extractBlock } from './extract.mts';
 import { decode } from 'qss';
-import type { Options } from '@into-mini/sfc-transformer/src/transformer.mts';
-import { transformer } from '@into-mini/sfc-transformer/dist/transformer.mjs';
 
 type Query = {
   type: string;
   index: number;
 };
 
-export default function loader(this: LoaderContext<Options>, source: string) {
+// 常规loader函数
+function loader(this: LoaderContext<null>, source: string) {
   const callback = this.async();
-  const options = this.getOptions();
 
   try {
-    const result = transformer(source, options);
+    const query = this.resourceQuery.replace(/^\?/, '');
+    const parsedQuery = decode<Query>(query);
 
-    const { type, index } = decode<Query>(
-      this.resourceQuery.replace(/^\?/, ''),
-    );
-
-    if (type) {
-      const blockContent = extractBlock(result, {
-        type,
-        index,
+    if (parsedQuery.type) {
+      // For block requests, extract the block
+      const blockContent = extractBlock(source, {
+        type: parsedQuery.type,
+        index: parsedQuery.index,
       });
-
       callback(null, blockContent);
     } else {
-      const { resourcePath } = this;
-      const filename = basename(resourcePath);
-
-      const imports = splitVueSFC(result, filename);
-
+      // For main SFC file, split into imports
+      const filename = basename(this.resourcePath);
+      const imports = splitVueSFC(source, filename);
       callback(null, imports);
     }
   } catch (error) {
     callback(error as Error);
   }
 }
+
+export default loader;
