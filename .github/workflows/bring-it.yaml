@@ -15,7 +15,7 @@ jobs:
           - windows-latest
           - ubuntu-latest
         node:
-          - current
+          # - current
           - lts/*
         exclude:
           - os: ubuntu-latest

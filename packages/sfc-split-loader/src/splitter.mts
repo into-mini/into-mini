@@ -1,6 +1,6 @@
 import { parse } from '@vue/compiler-sfc';
 
-export function processVueSFC(source: string, filename: string) {
+export function splitVueSFC(source: string, filename: string) {
   if (source.trim() === '') {
     return '';
   }
@@ -20,14 +20,14 @@ export function processVueSFC(source: string, filename: string) {
   // 1. 模板导入
   if (descriptor.template) {
     const lang = descriptor.template.lang || 'html';
-    imports.push(`import './${filename}?type=template&lang=${lang}';`);
+    imports.push(`import '-!./${filename}?type=template&lang=${lang}';`);
   }
 
   // 2. 样式导入
   descriptor.styles.forEach((style, index) => {
     const lang = style.lang || 'css';
     imports.push(
-      `import './${filename}?type=style&lang=${lang}&index=${index}';`,
+      `import '-!./${filename}?type=style&lang=${lang}&index=${index}';`,
     );
   });
 
@@ -35,13 +35,13 @@ export function processVueSFC(source: string, filename: string) {
   descriptor.customBlocks.forEach((block, index) => {
     const lang = block.lang || 'json';
     imports.push(
-      `import './${filename}?type=${block.type}&lang=${lang}&index=${index}';`,
+      `import '-!./${filename}?type=${block.type}&lang=${lang}&index=${index}';`,
     );
   });
 
   // 4. 脚本导入
   const lang = descriptor.script?.lang || 'js';
-  imports.push(`import './${filename}?type=script&lang=${lang}';`);
+  imports.push(`import '-!./${filename}?type=script&lang=${lang}';`);
 
   // 返回脚本内容
   return imports.join('\n');

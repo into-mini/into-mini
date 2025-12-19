@@ -1,6 +1,6 @@
 /* eslint-disable import/no-default-export */
 import { basename } from 'node:path';
-import { processVueSFC } from './splitter.mts';
+import { splitVueSFC } from './splitter.mts';
 import type { LoaderContext } from 'webpack';
 import { extractBlock } from './extract.mts';
 import { decode } from 'qss';
@@ -14,13 +14,10 @@ type Query = {
 
 export default function loader(this: LoaderContext<Options>, source: string) {
   const callback = this.async();
-  const { tagMatcher, preserveTap } = this.getOptions();
+  const options = this.getOptions();
 
   try {
-    const result = transformer(source, {
-      tagMatcher,
-      preserveTap,
-    });
+    const result = transformer(source, options);
 
     const { type, index } = decode<Query>(
       this.resourceQuery.replace(/^\?/, ''),
@@ -37,7 +34,7 @@ export default function loader(this: LoaderContext<Options>, source: string) {
       const { resourcePath } = this;
       const filename = basename(resourcePath);
 
-      const imports = processVueSFC(result, filename);
+      const imports = splitVueSFC(result, filename);
 
       callback(null, imports);
     }
