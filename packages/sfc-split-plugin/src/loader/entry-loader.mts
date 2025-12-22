@@ -19,14 +19,7 @@ function reach(path: string) {
 
 const componentRoot = 'as-components';
 
-function handleImport({
-  toThis,
-  addSmartEntry,
-  context,
-  rootContext,
-  maps,
-  callback,
-}) {
+function handleImport({ addSmartEntry, context, rootContext, maps, callback }) {
   if (Object.keys(maps).length > 0) {
     for (const [name, path] of Object.entries(maps)) {
       if (path.endsWith('.vue') && !path.startsWith('plugin://')) {
@@ -47,7 +40,9 @@ function handleImport({
                 createShortHash(slash(relativePath)),
               ].join('/')
             : relativePath.replace(/\.vue$/, '');
-          const placer = toThis(entryName);
+
+          const placer = `/${entryName}`;
+
           callback({
             name,
             placer,
@@ -77,15 +72,10 @@ export default function loader(
 ) {
   this.cacheable();
   const callback = this.async();
-  const { entryName: thisEntryName } = this;
 
   const config = JSON.parse(source.trim() || '{}');
 
   const { rootContext, context } = this;
-
-  function toThis(entryName) {
-    return slash(relative(`/${thisEntryName}/..`, `/${entryName}`));
-  }
 
   // eslint-disable-next-line unicorn/consistent-function-scoping
   const addSmartEntry = (io) => {
@@ -94,7 +84,6 @@ export default function loader(
 
   if (config?.usingComponents) {
     handleImport.bind(this)({
-      toThis,
       addSmartEntry,
       componentRoot,
       context,
@@ -113,7 +102,6 @@ export default function loader(
 
   if (config?.componentGenerics) {
     handleImport.bind(this)({
-      toThis,
       addSmartEntry,
       context,
       rootContext,

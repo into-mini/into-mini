@@ -57,7 +57,7 @@ export default {
         resourceQuery: /type=template/,
         type: 'asset/resource',
         generator: {
-          filename: '[entry].[contenthash:8].wxml',
+          filename: '[entry].wxml',
         },
       },
       {
@@ -72,8 +72,13 @@ export default {
         resourceQuery: /type=config/,
         type: 'asset/resource',
         generator: {
-          filename: '[entry].[contenthash:8].json',
+          filename: '[entry].json',
         },
+        use: [
+          {
+            loader: '@into-mini/sfc-split-plugin/src/loader/entry-loader.mts',
+          },
+        ],
       },
       {
         test: /\.vue$/,

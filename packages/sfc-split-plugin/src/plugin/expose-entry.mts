@@ -1,12 +1,10 @@
 import type {
   Compiler,
-  Compilation,
   PathData,
   Module,
   Chunk,
-  WebpackPluginInstance, //
+  WebpackPluginInstance,
 } from 'webpack';
-import slash from 'slash';
 
 const PLUGIN_NAME = 'ExposeEntryNamePlugin';
 
@@ -19,36 +17,6 @@ export class ExposeEntryNamePlugin implements WebpackPluginInstance {
     for (const group of chunk.groupsIterable) {
       if (group.isInitial()) {
         return group.name;
-      }
-    }
-
-    return '';
-  }
-
-  getEntryNameFromEntries(compilation: Compilation, module: Module) {
-    const { moduleGraph, entries } = compilation;
-
-    for (const [name, io] of entries) {
-      for (const dep of io.dependencies) {
-        const entryModule = moduleGraph.getModule(dep);
-
-        if (entryModule) {
-          if (
-            // @ts-expect-error ------------
-            entryModule.request && // @ts-expect-error ------------
-            slash(entryModule.request) === slash(module.request)
-          ) {
-            return name;
-          }
-
-          if (
-            // @ts-expect-error ------------
-            entryModule?.resource && // @ts-expect-error ------------
-            slash(entryModule?.resource) === slash(module.resource)
-          ) {
-            return name;
-          }
-        }
       }
     }
 
@@ -82,10 +50,6 @@ export class ExposeEntryNamePlugin implements WebpackPluginInstance {
   }
 
   apply(compiler: Compiler) {
-    const {
-      NormalModule: { getCompilationHooks },
-    } = compiler.webpack;
-
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.assetPath.tap(PLUGIN_NAME, (path, pathData) => {
         if (path.includes('[entry]')) {
@@ -98,19 +62,6 @@ export class ExposeEntryNamePlugin implements WebpackPluginInstance {
 
         return path;
       });
-
-      getCompilationHooks(compilation).loader.tap(
-        PLUGIN_NAME,
-        (loaderContext, module) => {
-          Object.defineProperty(loaderContext, 'entryName', {
-            enumerable: true,
-            configurable: false,
-            get: () => {
-              return this.getEntryNameFromEntries(compilation, module);
-            },
-          });
-        },
-      );
     });
   }
 }
