@@ -4,6 +4,7 @@
 import { createHash } from 'node:crypto';
 import { relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sortKeys from 'sort-keys';
 
 import slash from 'slash';
 import type { LoaderContext } from 'webpack';
@@ -127,5 +128,12 @@ export default function loader(
     });
   }
 
-  callback(null, JSON.stringify(config));
+  config.componentGenerics &&= sortKeys(config.componentGenerics);
+  config.usingComponents &&= sortKeys(config.usingComponents);
+
+  const shouldFormat = this._compiler?.options?.optimization?.minimize !== true;
+
+  const spaces = shouldFormat ? 2 : 0;
+
+  callback(null, JSON.stringify(config, null, spaces));
 }

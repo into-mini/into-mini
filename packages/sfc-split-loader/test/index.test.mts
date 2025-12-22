@@ -11,6 +11,7 @@ for (const [path, file] of Object.entries(fixtureFiles)) {
   test(path, async (t) => {
     // 运行loader
     const result = await runLoader(path, file, {
+      type: 'miniprogram',
       preserveTap: (tag: string) => tag === 't-button',
       tagMatcher: (tag: string) =>
         tag === 't-button'

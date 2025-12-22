@@ -7,6 +7,7 @@
     "name": "Eric"
   },
   "scripts": {
+    "build": "webpack",
     "lint:eslint": "eslint . --quiet --fix --concurrency=auto",
     "lint:staged": "nice-move lint staged",
     "lint:type": "tsc -p tsconfig.json",
@@ -47,7 +48,7 @@
     "@into-mini/sfc-split-plugin": "workspace:^",
     "emit-webpack-entries-plugin": "workspace:^"
   },
-  "packageManager": "pnpm@10.26.0",
+  "packageManager": "pnpm@10.26.1",
   "engines": {
     "node": ">=22.18.0"
   },
@@ -62,7 +63,7 @@
   },
   "nodemonConfig": {
     "delay": 5,
-    "exec": "pnpm recursive run prepublishOnly;webpack",
+    "exec": "webpack",
     "ext": "js,cjs,mjs,json,wxs,vue,mts",
     "quiet": true,
     "watch": [

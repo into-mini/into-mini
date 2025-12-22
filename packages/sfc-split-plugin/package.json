@@ -1,6 +1,6 @@
 {
   "name": "@into-mini/sfc-split-plugin",
-  "version": "0.6.1",
+  "version": "0.6.4",
   "license": "MIT",
   "keywords": [
     "loader",
@@ -32,14 +32,13 @@
   },
   "dependencies": {
     "@into-mini/clsx": "workspace:^",
-    "@into-mini/sfc-split-loader": "workspace:^",
     "@into-mini/sfc-transformer": "workspace:^",
-    "@into-mini/wxml-loader": "workspace:^",
     "slash": "catalog:",
+    "sort-keys": "catalog:",
     "yaml": "catalog:"
   },
   "peerDependencies": {
-    "webpack": "^5.104.0"
+    "webpack": "^5.104.1"
   },
   "engines": {
     "node": ">=22.18.0"

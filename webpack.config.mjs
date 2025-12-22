@@ -9,6 +9,8 @@ export default {
   mode: 'development',
   target: 'es2025',
   entry: {
+    // 'pages/index': './pages/index.vue',
+    // 'pages/index2': './pages/index2.vue',
     // a: './a.json',
     // b: './b.json',
     // c: 'emit-webpack-entries-plugin/package.json',
@@ -23,12 +25,11 @@ export default {
   },
   devtool: false,
   experiments: {
-    layers: true,
+    // layers: true,
     // outputModule: true,
   },
   optimization: {
     runtimeChunk: 'single',
-    mergeDuplicateChunks: false,
     splitChunks: {
       chunks: 'initial',
       name: 'vendor',
@@ -44,6 +45,40 @@ export default {
           presets: ['@babel/preset-typescript'],
         },
       },
+      {
+        test: /\.vue$/,
+        issuer: /\.vue$/,
+        resourceQuery: /type=script/,
+        type: 'javascript/esm',
+      },
+      {
+        test: /\.vue$/,
+        issuer: /\.vue$/,
+        resourceQuery: /type=template/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[entry].[contenthash:8].wxml',
+        },
+      },
+      {
+        test: /\.vue$/,
+        issuer: /\.vue$/,
+        resourceQuery: /type=style/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.vue$/,
+        issuer: /\.vue$/,
+        resourceQuery: /type=config/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[entry].[contenthash:8].json',
+        },
+      },
+      {
+        test: /\.vue$/,
+        loader: '@into-mini/sfc-split-loader/src/index.mts',
+      },
     ],
   },
   plugins: [
@@ -58,7 +93,4 @@ export default {
       filename: '[name].wxss',
     }),
   ],
-  stats: {
-    errorDetails: true,
-  },
 };

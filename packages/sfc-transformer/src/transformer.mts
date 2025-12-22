@@ -3,7 +3,7 @@ import {
   compileScript,
   parse as parseSFC,
 } from '@vue/compiler-sfc';
-import type { SFCParseResult } from '@vue/compiler-sfc';
+import type { SFCDescriptor, SFCParseResult } from '@vue/compiler-sfc';
 import { generate } from '@babel/generator';
 import { transformTemplateAst } from './action.mjs';
 import { stringify } from '@padcom/vue-ast-serializer';
@@ -24,6 +24,12 @@ export type Options = {
     | undefined;
 };
 
+type Pairs = {
+  local: string;
+  source: string;
+  generic: boolean;
+}[];
+
 function replaceConfig(
   result: SFCParseResult,
   {
@@ -31,11 +37,7 @@ function replaceConfig(
     pairs = [],
   }: {
     tags?: Map<any, any>;
-    pairs?: {
-      local: string;
-      source: string;
-      generic: boolean;
-    }[];
+    pairs?: Pairs;
   },
 ) {
   const exists = result.descriptor.customBlocks
@@ -108,7 +110,13 @@ function replaceConfig(
   );
 }
 
-function getGeneric(result: SFCParseResult, id: string) {
+function getGeneric(
+  result: SFCParseResult,
+  id: string,
+): {
+  pairs: Pairs;
+  script: string;
+} {
   const script = compileScript(result.descriptor, {
     id,
     sourceMap: false,
@@ -151,8 +159,24 @@ function getGeneric(result: SFCParseResult, id: string) {
 
   return {
     pairs,
-    script,
+    script: script.content.replace('const $$mainBlock = {}', ''),
   };
+}
+
+const scriptID = '$$mainBlock';
+
+function getScript(code: string): SFCDescriptor['script'] {
+  return parseSFC(`<script>${code}</script>`, {
+    sourceMap: false,
+    templateParseOptions: { comments: false },
+  }).descriptor.script;
+}
+
+function getTemplate(code: string): SFCDescriptor['template'] {
+  return parseSFC(`<template>${code}</template>`, {
+    sourceMap: false,
+    templateParseOptions: { comments: true },
+  }).descriptor.template;
 }
 
 export function transformer(
@@ -164,8 +188,6 @@ export function transformer(
     templateParseOptions: { comments: false },
   });
 
-  const id = '$$mainBlock';
-
   let tags: Map<string, any> | undefined;
 
   if (result.descriptor.template?.ast?.children.length) {
@@ -174,39 +196,28 @@ export function transformer(
       preserveTap,
     }).tags;
   } else {
-    result.descriptor.template = parseSFC('<template><!-- --></template>', {
-      sourceMap: false,
-      templateParseOptions: { comments: true },
-    }).descriptor.template;
+    result.descriptor.template = getTemplate('<!-- -->');
   }
 
   if (
     result.descriptor.script?.content?.trim() ||
     result.descriptor.scriptSetup?.content?.trim()
   ) {
-    const { pairs, script } = getGeneric(result, id);
+    const { pairs, script } = getGeneric(result, scriptID);
 
     replaceConfig(result, { tags, pairs });
 
-    const ast = babelParse(script.content, {
-      sourceType: 'module',
-    });
+    const ast = babelParse(script, { sourceType: 'module' });
 
     const names = pairs.map(({ local }) => local);
 
-    transformerJS(ast, names, id);
+    transformerJS(ast, names, scriptID);
 
     const { code } = generate(ast);
 
-    result.descriptor.script = parseSFC(`<script>${code}</script>`, {
-      sourceMap: false,
-      templateParseOptions: { comments: true },
-    }).descriptor.script;
+    result.descriptor.script = getScript(code);
   } else {
-    result.descriptor.script = parseSFC('<script>Component({});</script>', {
-      sourceMap: false,
-      templateParseOptions: { comments: false },
-    }).descriptor.script;
+    result.descriptor.script = getScript('Component({});');
 
     replaceConfig(result, { tags });
   }

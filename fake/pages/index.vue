@@ -32,3 +32,9 @@ export default {
   width: 50px;
 }
 </style>
+
+<config>
+  {
+    "title": "index2"
+  }
+</config>
