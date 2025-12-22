@@ -70,14 +70,24 @@ import './empty2.vue?type=config&lang=json&index=0';␊
 import './empty2.vue?type=script&lang=js';`
 ```
 
-## index2.vue
+## index.vue
 
 > imports
 
 ```
-`import './index2.vue?type=template&lang=html';␊
-import './index2.vue?type=config&lang=json&index=0';␊
-import './index2.vue?type=script&lang=js';`
+`import './index.vue?type=template&lang=html';␊
+import './index.vue?type=config&lang=json&index=0';␊
+import './index.vue?type=script&lang=js';`
+```
+
+## index3.vue
+
+> imports
+
+```
+`import './index3.vue?type=template&lang=html';␊
+import './index3.vue?type=config&lang=json&index=0';␊
+import './index3.vue?type=script&lang=js';`
 ```
 
 ## raw.vue

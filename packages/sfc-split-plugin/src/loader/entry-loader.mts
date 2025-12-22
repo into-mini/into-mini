@@ -21,8 +21,13 @@ const componentRoot = 'as-components';
 
 function handleImport({ addSmartEntry, context, rootContext, maps, callback }) {
   if (Object.keys(maps).length > 0) {
-    for (const [name, path] of Object.entries(maps)) {
-      if (path.endsWith('.vue') && !path.startsWith('plugin://')) {
+    for (const [name, src] of Object.entries(maps)) {
+      if (
+        (src.endsWith('.vue') || src.startsWith('vue:')) &&
+        !src.startsWith('plugin://')
+      ) {
+        const path = src.replace(/^vue:/, '');
+
         try {
           const absolutePath = slash(
             path.startsWith('.') ? resolve(context, path) : reach(path),

@@ -141,6 +141,37 @@ function getGeneric(
         .map((item) => 'source' in item && item.source?.value)
     : [];
 
+  const AsVue: Pairs = script.scriptSetupAst
+    ? script.scriptSetupAst
+        .filter(
+          (item) =>
+            item.type === 'ImportDeclaration' &&
+            item.source &&
+            item.attributes?.length &&
+            item.attributes.some(
+              (attribute) =>
+                attribute.type === 'ImportAttribute' &&
+                'name' in attribute.key &&
+                attribute.key.name === 'as' &&
+                attribute.value.type === 'StringLiteral' &&
+                attribute.value.value === 'vue',
+            ),
+        )
+        .map((item) => ({
+          local:
+            'specifiers' in item &&
+            item.specifiers?.[0] &&
+            'local' in item.specifiers[0]
+              ? item.specifiers?.[0]?.local?.name
+              : '',
+          source:
+            'source' in item && item.source?.value
+              ? `vue:${item.source.value}`
+              : '',
+          generic: false,
+        }))
+    : [];
+
   const pairs = script.imports
     ? Object.values(script.imports)
         .filter(
@@ -158,7 +189,7 @@ function getGeneric(
     : [];
 
   return {
-    pairs,
+    pairs: [...pairs, ...AsVue],
     script: script.content.replace('const $$mainBlock = {}', ''),
   };
 }

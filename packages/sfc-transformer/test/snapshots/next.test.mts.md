@@ -434,7 +434,7 @@ Component({});␊
 `
 ```
 
-## index2.vue
+## index.vue
 
 > input
 
@@ -468,6 +468,50 @@ $$asComponent($$mainBlock);␊
   "component": true,␊
   "usingComponents": {␊
     "abc": "../components/index.vue"␊
+  }␊
+}␊
+</config>␊
+`
+```
+
+## index3.vue
+
+> input
+
+```
+`<template>␊
+  <KKK />␊
+</template>␊
+␊
+<script setup>␊
+import KKK from 'into-mini-test/fixtures' with { as: 'vue' };␊
+</script>␊
+`
+```
+
+> output
+
+```
+`<template><kkk /></template>␊
+<script>␊
+import { $$asComponent } from "@into-mini/vue-mini-patch/mini.ts";␊
+const $$mainBlock = {␊
+  setup(__props, context) {␊
+    const __returned__ = {␊
+      get KKK() {␊
+        return KKK;␊
+      },␊
+    };␊
+    return __returned__;␊
+  },␊
+};␊
+$$asComponent($$mainBlock);␊
+</script>␊
+<config lang="json">␊
+{␊
+  "component": true,␊
+  "usingComponents": {␊
+    "kkk": "vue:into-mini-test/fixtures"␊
   }␊
 }␊
 </config>␊
